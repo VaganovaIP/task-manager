@@ -2,17 +2,17 @@ const {DataTypes} = require('sequelize');
 const sequelize = require('../db');
 const User = require('../models/User');
 const Board = require('../models/Board');
+const List = require('../models/List');
 
 
 const Task = sequelize.define(
     'Tasks', {
-        id:{
-            type: DataTypes.INTEGER,
-            autoIncrement:true,
+        task_id:{
+            type: DataTypes.UUID,
             primaryKey:true,
         },
         name_task:{
-            type:DataTypes.TEXT,
+            type:DataTypes.STRING,
         },
         description:{
             type:DataTypes.TEXT,
@@ -20,20 +20,34 @@ const Task = sequelize.define(
         date_start:{
             type: DataTypes.DATE,
         },
-        date_last:{
+        date_end:{
             type: DataTypes.DATE,
         },
-        status_task:{
-            type: DataTypes.DATE,
+        created_at:{
+            type: DataTypes.TIME,
+        },
+        status:{
+            type: DataTypes.BOOLEAN,
+        },
+        importance:{
+            type: DataTypes.ENUM,
         },
     }
 );
 
-
 User.hasMany(Task,{
-    foreignKey: 'user_responsible',
-    sourceKey: 'id',
+    foreignKey: 'owner_id',
+    sourceKey: 'user_id',
 });
 
+Board.hasMany(Task,{
+    foreignKey: 'board_id',
+    sourceKey: 'board_id',
+});
+
+List.hasMany(Task,{
+    foreignKey: 'list_id',
+    sourceKey: 'list_id',
+});
 
 module.exports = Task;

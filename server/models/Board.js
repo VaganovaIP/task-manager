@@ -1,13 +1,11 @@
-const {Sequelize, DataTypes, Deferrable} = require('sequelize');
+const {DataTypes} = require('sequelize');
 const sequelize = require('../db');
 const User = require('../models/User');
-const Task = require('../models/Task');
 
 const Board = sequelize.define(
     'Boards', {
-        id:{
-            type: DataTypes.INTEGER,
-            autoIncrement:true,
+        board_id:{
+            type: DataTypes.UUID,
             primaryKey:true,
         },
         name_board:{
@@ -16,15 +14,9 @@ const Board = sequelize.define(
     }
 );
 
-User.hasMany(Task,{
-    foreignKey: 'user_fk',
-    sourceKey: 'id',
-});
-
 User.hasMany(Board,{
-    foreignKey: 'user_fk',
-    sourceKey: 'id',
+    foreignKey: 'owner',
+    sourceKey: 'user_id',
 });
-
 
 module.exports = Board;

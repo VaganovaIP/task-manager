@@ -1,9 +1,8 @@
 const {Sequelize} = require('sequelize');
 
-const db = new Sequelize(
-    'chat', 'postgres', '',
+module.exports = new Sequelize(
+    'auth', 'postgres', '',
     {
-        dialect:'postgres'
-    }
-);
-module.exports = db;
+        host: "localhost",
+        dialect: "postgres",
+    });

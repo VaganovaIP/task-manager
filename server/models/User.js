@@ -5,18 +5,16 @@ const sequelize = require("../db.js");
 const User = sequelize.define(
     'Users',
     {
-        id:{
-            type: DataTypes.INTEGER,
-            autoIncrement:true,
+        user_id:{
+            type: DataTypes.UUID,
             primaryKey:true,
         },
-        firstname:{
+        username:{
+            type:DataTypes.STRING,
+        },firstname:{
             type:DataTypes.STRING,
         },
         lastname:{
-            type:DataTypes.STRING,
-        },
-        nickname:{
             type:DataTypes.STRING,
         },
         email:{
