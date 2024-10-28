@@ -11,6 +11,11 @@ const List = sequelize.define(
         name_list:{
             type:DataTypes.STRING,
         },
+    },
+{
+        timestamps: true,
+        createdAt: false,
+        updatedAt: false,
     }
 );
 

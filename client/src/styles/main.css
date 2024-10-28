@@ -1,0 +1,164 @@
+:root{
+   --main-color:#FFFFFF; 
+   --action:#455AA0;
+   --back-color:#E0E7FE;
+   --font-header:var(--main-color);
+   --font-main:#000000;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: var(--main-color);
+    color:var(--font-main);
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a:active, a:hover, a{
+    text-decoration: none;
+}
+
+ul li{
+    padding-right: 5px;
+    margin-right: 5px;
+}
+
+ul li:not(:last-of-type){
+    border-right: 1px solid var(--main-color);
+}
+
+@media screen and (max-width: 1200px) {
+    
+    
+}
+
+.container{
+    /*max-width: 1200px;*/
+    margin: 0;
+    height: 100%;
+}
+
+/*header*/
+
+.header{
+    background-color: var(--action);
+    padding: 20px 0;
+}
+
+.header .container{
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    margin-left: 20px;
+}
+
+.logo .logo-name{
+    font-size: 25px;
+    color:var(--font-header);
+}
+
+.main-menu{
+    box-sizing: border-box;
+}
+
+.menu{
+    margin-right: 20px;
+    align-items: flex-end;
+}
+
+.menu-list{
+    display:flex;
+    list-style: none;
+    margin-left: auto;
+}
+
+.menu-item{
+    color:var(--font-header);
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.main-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    min-height: 100%;
+}
+
+/*Авторизация и Регистрация*/
+
+.auth-reg{
+    display: flex;
+    padding: 3%;
+    width: 300px;
+    background-color: var(--back-color);
+    border: solid 2px transparent;
+    border-radius: 8px;
+    flex-direction: column;
+}
+
+.title-auth-reg{
+    font-size: 18px;
+    margin: auto;
+    margin-bottom: 5%;
+}
+
+.form-auth-reg{
+    width: 100%;
+    border:2px;
+
+}
+
+.form-input{
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 10px 0px;
+    text-indent: 15px;
+    background: var(--main-color);
+    border-radius: 25px;
+    color:var(--font-main);
+    outline: none;
+    border: 1px solid transparent;
+}
+
+.form-button{
+    padding: 8px 20px;
+    margin-top: 3%;
+    border-radius: 15px;
+    outline: none;
+    border: 1px solid transparent;
+    background: var(--action);
+    color:var(--main-color);
+}
+
+.auth-text{
+    margin-top: 2%;
+}
+
+.reg-link{
+    color:var(--action); 
+}
+
+/*footer*/
+
+.footer{
+    padding: 60px;
+    background-color: var(--back-color);
+}
+
+.footer .container{
+    flex-shrink:0;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -32,6 +32,11 @@ const Task = sequelize.define(
         importance:{
             type: DataTypes.ENUM,
         },
+    },
+    {
+        timestamps: true,
+        createdAt: false,
+        updatedAt: false,
     }
 );
 

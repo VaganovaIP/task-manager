@@ -11,12 +11,10 @@ const Board = sequelize.define(
         name_board:{
             type:DataTypes.STRING,
         },
-    }
+    },
+
 );
 
-User.hasMany(Board,{
-    foreignKey: 'owner',
-    sourceKey: 'user_id',
-});
+Board.hasMany(User);
 
 module.exports = Board;

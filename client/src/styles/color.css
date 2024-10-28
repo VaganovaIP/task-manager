@@ -1,0 +1,16 @@
+:root{
+    --main-color:#FFFFFF; 
+    --action:#455AA0;
+    --action-delete:#960E0E;
+    --action-add:#000000;
+    --back-color:#E0E7FE;
+    --font-header:var(--main-color);
+    --font-main:#000000;
+    --info-profile:#960E0E;
+    --board:#7775751e;
+    --head-todo:#DC6D6E;
+    --head-doing:#73BDEF;
+    --head-done:#B0DF95;
+    --shadow:#cfcccc;
+    --head-chat:#DFDFFC;
+ }

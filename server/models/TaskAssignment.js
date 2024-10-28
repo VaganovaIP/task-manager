@@ -9,6 +9,11 @@ const TaskAssignment = sequelize.define(
             type: DataTypes.UUID,
             primaryKey:true,
         },
+    },
+    {
+        timestamps: true,
+        createdAt: false,
+        updatedAt: false,
     }
 );
 
