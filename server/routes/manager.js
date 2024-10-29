@@ -6,7 +6,7 @@ const urlencodedParser = express.urlencoded({extended: false});
 
 const router = express.Router();
 router.get('/boards', boardController.getBoards);
-router.post('/boards', urlencodedParser, boardController.addBoard);
+router.post('/boards', boardController.addBoard);
 
 
 module.exports = router;

@@ -14,15 +14,21 @@ module.exports = {
 
     //
     addBoard: async (req, res) => {
-        const nameBoard = req.body.name;
-        const owner = "306dcf05-d3d6-4b43-8e06-6b6ffe2331f2";
+        console.log("Console  ");
         console.log(req.body);
+        const { first_name } = req.body;
+
+
+        // const {firstName} = req.body;
+        // const owner = "306dcf05-d3d6-4b43-8e06-6b6ffe2331f2";
+        // console.log(firstName);
+        res.redirect("/boards");
         const board_id = "306dcf05-d3d6-4b43-8e06-6b6ffe2331f1";
-        await Board.create({ board_id: board_id, name_board:nameBoard, owner: owner})
-            .then(() => {
-                res.redirect("/boards");
-            })
-    }
+        // await Board.create({ board_id: board_id, name_board:nameBoard, owner: owner})
+        //     .then(() => {
+        //         res.redirect("/boards");
+        //     })
+    },
 
 
 }

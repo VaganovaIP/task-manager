@@ -3,9 +3,8 @@ import {useEffect, useState} from "react";
 function Boards() {
     const [boards, setBoards] = useState([]);
     const getApiData = async () => {
-        const response = await fetch(
-            "http://localhost:3000/boards"
-        ).then((response) => response.json());
+        const response = await fetch('http://localhost:5000/boards')
+            .then((response) => response.json());
         // Обновим состояние
         setBoards(response);
     };
@@ -16,18 +15,20 @@ function Boards() {
 
     const [data, setData] = useState({});
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-
-        await fetch("http://localhost:3000/boards", {
-            method: 'POST',
-            body: formData
+    const handleSubmit = async () => {
+        const name = "ee";
+        const email = "sdjk";
+        await fetch('http://localhost:5000/boards', {
+            method: "POST",
+            body: JSON.stringify({
+                name,
+                email,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
         })
-            .then((response) => response.json())
-            .then((result) => {
-                setData(result);
-            });
+            .then(response => response.json());
     };
 
     return (
