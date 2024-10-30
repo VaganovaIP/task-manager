@@ -8,8 +8,9 @@ const List = require('../models/List');
 const Task = sequelize.define(
     'Tasks', {
         task_id:{
-            type: DataTypes.UUID,
-            primaryKey:true,
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
         },
         name_task:{
             type:DataTypes.STRING,
@@ -30,7 +31,7 @@ const Task = sequelize.define(
             type: DataTypes.BOOLEAN,
         },
         importance:{
-            type: DataTypes.ENUM,
+            type: DataTypes.STRING,
         },
     },
     {
@@ -38,7 +39,8 @@ const Task = sequelize.define(
         createdAt: false,
         updatedAt: false,
     }
-);
+)
+
 
 User.hasMany(Task,{
     foreignKey: 'owner_id',

@@ -5,8 +5,9 @@ const Board = require('../models/Board');
 const List = sequelize.define(
     'Lists', {
         list_id:{
-            type: DataTypes.UUID,
-            primaryKey:true,
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
         },
         name_list:{
             type:DataTypes.STRING,
@@ -17,7 +18,7 @@ const List = sequelize.define(
         createdAt: false,
         updatedAt: false,
     }
-);
+)
 
 Board.hasMany(List,{
     foreignKey: 'id_board',

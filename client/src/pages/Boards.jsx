@@ -16,12 +16,12 @@ function Boards() {
     const [data, setData] = useState({});
 
     const handleSubmit = async () => {
-        const name = "ee";
-        const email = "sdjk";
+        const name = "board test";
+        const email = "user1@.ru";
         await fetch('http://localhost:5000/boards', {
             method: "POST",
             body: JSON.stringify({
-                name,
+                name_board,
                 email,
             }),
             headers: {

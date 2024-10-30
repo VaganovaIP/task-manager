@@ -6,7 +6,8 @@ const Board = require('../models/Board');
 const BoardMember = sequelize.define(
     'BoardMembers', {
         members_id:{
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey:true,
         },
     },
@@ -15,7 +16,7 @@ const BoardMember = sequelize.define(
         createdAt: false,
         updatedAt: false,
     }
-);
+)
 
 User.hasMany(BoardMember,{
     foreignKey: 'user_id',

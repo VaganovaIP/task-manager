@@ -11,17 +11,18 @@ const User = sequelize.define(
         },
         username:{
             type:DataTypes.STRING,
-        },firstname:{
+        },
+        first_name:{
             type:DataTypes.STRING,
         },
-        lastname:{
+        last_name:{
             type:DataTypes.STRING,
         },
         email:{
             type: DataTypes.STRING,
             unique: true,
         },
-        password:{
+        password_user:{
             type: DataTypes.STRING,
         },
     },

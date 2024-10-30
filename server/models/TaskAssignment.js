@@ -6,8 +6,9 @@ const Task = require('../models/Task');
 const TaskAssignment = sequelize.define(
     'TaskAssignments', {
         members_id:{
-            type: DataTypes.UUID,
-            primaryKey:true,
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
         },
     },
     {
@@ -15,7 +16,8 @@ const TaskAssignment = sequelize.define(
         createdAt: false,
         updatedAt: false,
     }
-);
+)
+
 
 User.hasMany(TaskAssignment,{
     foreignKey: 'user_id',
