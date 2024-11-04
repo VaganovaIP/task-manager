@@ -83,13 +83,16 @@ ul li{
     display: flex;
     flex-wrap: wrap;
     grid-gap: 20px;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 .item-board{
     padding: 10px;    
     width: 200px;
     height: 150px;
-    background-color: var(--board);
     box-shadow: 1px 1px 5px var(--shadow);
 }
 

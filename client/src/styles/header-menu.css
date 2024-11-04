@@ -8,7 +8,10 @@
     height: 30px;
 }
 
-.header .container{
+.container{
+    width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
@@ -29,9 +32,7 @@
 }
 
 .search-header{
-    width: 100%;
-    padding: 7px 0px;
-    text-indent: 15px;
+    width: 40%;
     background: var(--main-color);
     border-radius: 25px;
     color:var(--font-main);
