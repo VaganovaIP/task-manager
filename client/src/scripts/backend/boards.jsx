@@ -1,13 +1,13 @@
 import {useState} from "react";
 
-export const getBoards = async (boards, setBoards) => {
+export async function getBoards(boards, setBoards) {
     const response = await fetch('http://localhost:5000/boards')
-        .then((response) => response.json());
-    setBoards(response);
+        .then((res) => res.json());
+    console.log("state get" + response);
+    return setBoards(response);
 };
 
-export const addBoard = async () => {
-    const name_board = "board test";
+export const addBoard = async (name_board) => {
     const email = "user1@.ru";
     await fetch('http://localhost:5000/boards', {
         method: "POST",

@@ -37,7 +37,6 @@ module.exports = {
             }
         })
         await Board.create({name_board, owner: user.user_id})
-        res.redirect('boards?done');
     },
 
 

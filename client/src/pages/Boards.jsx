@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../styles/list-boards.css'
 import '../styles/index.css'
-
+import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -15,10 +15,14 @@ function Boards() {
 
     const [boards, setBoards] = useState([]);
 
-    useEffect(() => {
-        getBoards(boards, setBoards).then(r => console.log(r));
-    }, []);
 
+    useEffect(() => {
+            axios.get('http://localhost:5000/boards')
+                .then((response)=>{
+                    setBoards(response.data)
+                })
+        }
+    )
     const renderListBoards = (item, key) => {
         return(
             <Card key={key} className="item-board" >
@@ -31,14 +35,20 @@ function Boards() {
         )
     }
 
-
+    const [name, setName] = useState("")
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        addBoard(name);
+    };
     const addCardBoard=()=>{
        return(
            <Card border="primary" className="item-board">
                <Card.Body>
-                   <Form onSubmit={addBoard}>
+                   <Form onSubmit={handleSubmit}>
                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                           <Form.Control type="text" placeholder="" />
+                           <Form.Control
+                               type="text" placeholder="" value={name}
+                               onChange={(e) => setName(e.target.value)}/>
                        </Form.Group>
                        <Button variant="primary" type="submit">Добавить</Button>
                    </Form>
