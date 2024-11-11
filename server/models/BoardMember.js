@@ -20,12 +20,12 @@ const BoardMember = sequelize.define(
 
 User.hasMany(BoardMember,{
     foreignKey: 'user_id',
-    sourceKey: 'user_id',
 });
+BoardMember.belongsTo(User, {foreignKey:"user_id"})
 
 Board.hasMany(BoardMember,{
     foreignKey: 'board_id',
-    sourceKey: 'board_id',
 });
+BoardMember.belongsTo(Board, {foreignKey:"board_id"})
 
 module.exports = BoardMember;

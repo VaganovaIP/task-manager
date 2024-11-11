@@ -22,7 +22,8 @@ const List = sequelize.define(
 
 Board.hasMany(List,{
     foreignKey: 'id_board',
-    sourceKey: 'board_id',
 });
+
+List.belongsTo(Board, {foreignKey:"id_board"})
 
 module.exports = List;

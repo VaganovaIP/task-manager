@@ -5,22 +5,19 @@ const User = require('../models/User');
 const Board = sequelize.define(
     'Boards', {
         board_id:{
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
+            type: DataTypes.UUID,
+            primaryKey:true,
         },
         name_board:{
             type:DataTypes.STRING,
         },
     },
-
 )
-
 
 User.hasMany(Board,{
     foreignKey: 'owner',
-    sourceKey: 'user_id',
 })
+Board.belongsTo(User, {foreignKey:"owner"})
 
 
 module.exports = Board;

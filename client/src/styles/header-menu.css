@@ -3,6 +3,7 @@
 /*header*/
 
 .header{
+    margin: 0;
     background-color: var(--action);
     padding: 10px 0;
     height: 30px;

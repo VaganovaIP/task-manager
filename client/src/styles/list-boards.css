@@ -17,6 +17,7 @@
 }
 
 .main{
+    margin: 0;
    display:flex;
    height: 100vh;
    flex-direction: column;
@@ -41,7 +42,7 @@ ul li{
 .main-content{
    width: 100%;
    display: flex;
-   height: 100%;
+
    flex-grow: 1;
 }
 
@@ -49,7 +50,7 @@ ul li{
 /*Список досок*/
 
 .boards{
-    padding: 10px;
+    margin: 0;
     flex:2;
     background-color: var(--main-color);
 }
@@ -80,16 +81,18 @@ ul li{
 }
 
 .list-boards{
+    margin: 0;
+    outline: none;
     display: flex;
     flex-wrap: wrap;
-    grid-gap: 20px;
+    gap: 5px;
     overflow: auto;
     width: 100%;
-    height: 100%;
-    overflow: auto;
+    height: 100vh;
 }
 
 .item-board{
+    margin:0;
     padding: 10px;    
     width: 200px;
     height: 150px;

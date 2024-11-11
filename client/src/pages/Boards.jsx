@@ -5,41 +5,60 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../styles/list-boards.css'
+import '../styles/header-menu.css'
 import '../styles/index.css'
 import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import {Link, redirect, useNavigate} from "react-router-dom";
+import {header} from '../components/header.jsx'
+import uuid from 'react-uuid';
+
+const client = axios.create({
+    baseURL: "http://localhost:5000/boards"
+});
 
 function Boards() {
-
     const [boards, setBoards] = useState([]);
+    const [name, setName] = useState("")
+    const navigate = useNavigate();
+
+    useEffect( () => {
+        axios
+            .get('http://localhost:5000/boards')
+            .then(data => {
+                setBoards(data.data);
+            })
+    }, []);
 
 
-    useEffect(() => {
-            axios.get('http://localhost:5000/boards')
-                .then((response)=>{
-                    setBoards(response.data)
-                })
-        }
-    )
-    const renderListBoards = (item, key) => {
+    const renderListBoards = (item) => {
         return(
-            <Card key={key} className="item-board" >
+            <Card key={item.board_id} className="item-board" >
                 <Card.Body>
                     <Card.Title>
-                        <Card.Link  href='/:{item.name_board}' >{item.name_board}</Card.Link>
+                        <Card.Link  href={`/board/${item.board_id}`}>{item.name_board}</Card.Link>
                     </Card.Title>
                 </Card.Body>
             </Card>
         )
     }
 
-    const [name, setName] = useState("")
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        addBoard(name);
+        let board_id = uuid();
+        addBoard(name, board_id);
+        const new_board = {
+            board_id:board_id,
+            name_board:name
+        }
+        setBoards([new_board, ...boards])
+        setName("");
+        //navigate(`/board/${board_id}` , { replace: false })
+
     };
+
     const addCardBoard=()=>{
        return(
            <Card border="primary" className="item-board">
@@ -58,33 +77,9 @@ function Boards() {
     }
 
 
-    const header=()=>{
-        return(
-            <Navbar bg="light" data-bs-theme="light">
-                <Container>
-                    <Navbar.Brand href="#home">Taskania</Navbar.Brand>
-                    {/*<Nav className="me-auto">*/}
-                    {/*    <Nav.Link href="#home">Home</Nav.Link>*/}
-                    {/*    <Nav.Link href="#features">Features</Nav.Link>*/}
-                    {/*    <Nav.Link href="#pricing">Pricing</Nav.Link>*/}
-                    {/*</Nav>*/}
-                    <Form className="d-flex">
-                        <Form.Control
-                            type="search"
-                            placeholder="Поиск"
-                            className="me-2"
-                            aria-label="Search"
-                        />
-                        <Button variant="outline-success" className="search-header">Найти</Button>
-                    </Form>
-                </Container>
-            </Navbar>
-        )
-    }
-
     const menu=()=>{
         return(
-           <nav className="main-menu">
+           <nav className="menu">
                <ul className="menu-list">
                    <h1 className="my-case">Мои доски</h1>
                    <li>
@@ -108,29 +103,23 @@ function Boards() {
     }
 
     return (
-        <div >
+        <div className="main">
             {header()}
-            <div className="main-content">
-                <div className="flex-shrink-1">
+            <section className="main-content">
+                <div className="main-menu">
                     {menu()}
                 </div>
-                <div className="p-2 w-100">
+                <div className="boards">
                     <ul className="list-boards">
                         {addCardBoard()}
-                        {boards.map((board, id) =>{
-                            return renderListBoards(board, id)
-                        } )}
+                        {boards.map((item) => (
+                            <li key={item.board_id}>{renderListBoards(item)}</li>
+                        ))}
                     </ul>
-                    Flex item
                 </div>
-            </div>
-            <footer className="footer">
-            </footer>
+            </section>
         </div>
     )
-}
-const header = ()=>{
-
 }
 
 export default Boards

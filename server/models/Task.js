@@ -8,8 +8,7 @@ const List = require('../models/List');
 const Task = sequelize.define(
     'Tasks', {
         task_id:{
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
+            type: DataTypes.UUID,
             primaryKey: true,
         },
         name_task:{
@@ -44,17 +43,18 @@ const Task = sequelize.define(
 
 User.hasMany(Task,{
     foreignKey: 'owner_id',
-    sourceKey: 'user_id',
 });
+Task.belongsTo(User, {foreignKey:"owner_id"})
 
 Board.hasMany(Task,{
     foreignKey: 'board_id',
-    sourceKey: 'board_id',
 });
+Task.belongsTo(Board, {foreignKey:"board_id"})
 
 List.hasMany(Task,{
     foreignKey: 'list_id',
-    sourceKey: 'list_id',
 });
+Task.belongsTo(List, {foreignKey:"list_id"})
+
 
 module.exports = Task;

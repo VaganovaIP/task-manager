@@ -18,15 +18,15 @@ const TaskAssignment = sequelize.define(
     }
 )
 
-
 User.hasMany(TaskAssignment,{
     foreignKey: 'user_id',
-    sourceKey: 'user_id',
 });
+TaskAssignment.belongsTo(User, {foreignKey:"user_id"})
 
 Task.hasMany(TaskAssignment,{
     foreignKey: 'task_id',
     sourceKey: 'task_id',
-});
+})
+TaskAssignment.belongsTo(Task, {foreignKey:"task_id"})
 
 module.exports = TaskAssignment;
