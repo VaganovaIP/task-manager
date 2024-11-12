@@ -7,7 +7,7 @@ export default function RoutesApp(){
         <BrowserRouter>
             <Routes>
                 <Route path="/boards" element={<Boards/>}></Route>
-                <Route path="/board/:name" element={<Board/>}></Route>
+                <Route path="/board/:board_id" element={<Board/>}></Route>
             </Routes>
         </BrowserRouter>
 

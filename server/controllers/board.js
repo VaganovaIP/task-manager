@@ -4,22 +4,18 @@ const Board = require('../models/Board');
 const User = require('../models/User');
 const BoardMember = require('../models/BoardMember');
 
-const findUserid = async function (email){
+const findUserById = async function (email){
     const user = await User.findOne({
         where:{
             email:email
         }
     })
-    const id = user.user_id;
-    console.log("Console  ");
-    console.log(id);
-    return id;
+    return (user.user_id);
 }
 
 module.exports = {
-
     //получение всех досок пользователя
-    getBoards: async (req, res)=>{
+    boardsView: async (req, res)=>{
         const user_id = req.params.user_id;
         await Board.findAll({
             attributes:['board_id', 'name_board'],
@@ -43,8 +39,6 @@ module.exports = {
             user_id:user.user_id,
             board_id
         })
-
+        res.status(200).send({ message: 'New list created'});
     },
-
-
 }

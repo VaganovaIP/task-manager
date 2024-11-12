@@ -55,7 +55,7 @@ function Boards() {
         }
         setBoards([new_board, ...boards])
         setName("");
-        //navigate(`/board/${board_id}` , { replace: false })
+        navigate(`/board/${board_id}` , { replace: false })
 
     };
 
