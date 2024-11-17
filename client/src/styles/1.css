@@ -1,0 +1,221 @@
+@import url("color.css");
+
+:root{
+    --main-color:#FFFFFF;
+    --action:#455AA0;
+    --back-color:#E0E7FE;
+    --font-header:var(--main-color);
+    --font-main:#000000;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Lato", sans-serif;
+}
+
+body{
+    background-color:#3a0ca3;
+    color:var(--font-main);
+    display:flex;
+    flex-direction: column;
+    min-height: 100%;
+    position: relative;
+}
+
+ul li{
+    list-style: none;
+    text-decoration: none;
+    color: var(--font-main);
+}
+
+
+.f-container{
+    height: 100vh;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.main{
+    display: flex;
+    background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
+    background: -moz-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
+    background: linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
+    overflow: hidden;
+    height: calc(100% - 68px);
+}
+
+a:active, a:hover, a{
+    text-decoration: none;
+}
+
+
+.header{
+    position: relative;
+    margin: 0px;
+    max-height: 40px;
+    background-color: #b2c9ff;
+}
+
+.header.max{
+    justify-content: flex-end;
+    flex:1;
+}
+
+.navbar-brand{
+    font-size: 28px;
+    color: var(--font-main);
+    font-family: "Lato", sans-serif;
+    font-stretch: semi-expanded;
+}
+
+.action-page-button{
+    background-color:#455AA0;
+    border: none;
+    color: var(--main-color);
+}
+
+.action-page-button:hover{
+    background-color: var(--font-header);
+    color: #1E2B32;
+}
+.form-board{
+    justify-content: center;
+}
+
+.add-button{
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    background-color: #455AA0;
+    color: #FFFFFF;
+    height: 40px;
+    border-radius: 50px;
+}
+
+.container{
+    display: flex;
+    margin: 5px;
+    padding: 5px;
+}
+
+.content{
+    display: flex;
+}
+
+.main-menu{
+    box-sizing: border-box;
+    flex-grow: 1;
+    max-width: 200px;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.name-page{
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    font-weight: normal;
+    font-size: 15px;
+    font-family: "Lato", sans-serif;
+    letter-spacing:.05rem;
+}
+
+.list-boards{
+    margin: 0;
+    outline: none;
+    display: flex;
+    flex-direction: unset;
+    flex-wrap: wrap;
+    gap: 10px;
+    row-gap: 10px;
+    align-content: flex-start;
+    overflow: auto;
+    width: 100%;
+    height: 100vh;
+    padding: 8px;
+}
+
+.item-board{
+    margin:0;
+    padding: 10px;
+    width: 200px;
+    height: 150px;
+    box-shadow: 1px 1px 5px var(--shadow);
+}
+
+.name-board{
+    font-size: 15px;
+}
+
+
+
+/*MENU*/
+.menu-container{
+    width: 100%;
+    height: 100%;
+}
+
+.menu-item{
+    height: 40px;
+    color: var(--font-main);
+}
+
+.my-case{
+    padding: 0px;
+    font-family: "Arial Rounded MT Bold";
+    font-size: 25px;
+    text-transform:uppercase;
+    font-weight: normal;
+}
+
+li:hover{
+    transition: 1s all;
+    color: #2f89fc;
+    background-color:#FFFFFF;
+    border-top-right-radius: 10px 10px;
+    border-bottom-right-radius: 10px 10px;
+    cursor: pointer;
+}
+
+.body li ul{
+    background: #1E2B32;
+    margin-left: 280px;
+    margin-top: -38px;
+    display: none;
+    position: absolute;
+    border-top-right-radius: 15px 15px;
+    border-bottom-right-radius: 15px 15px;
+}
+
+.body li:hover > ul{
+    display: block;
+    cursor: pointer;
+}
+
+
+.navigation{
+    height: 100%;
+    display: flex;
+    box-shadow: 1px 1px 5px var(--shadow);
+    border-radius: 10px 10px;
+    opacity: 85%;
+    background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
+    background: -moz-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
+    background: linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
+}
+
+.menu-name{
+    height: 60px;
+}
+
+.pro-menu{
+    padding: 0;
+}
+
+
