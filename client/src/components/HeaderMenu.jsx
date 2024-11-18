@@ -12,7 +12,7 @@ export const HeaderMenu=()=>{
     return (
             <Navbar expand="lg" className="bg-body-tertiary" >
                 <Container fluid>
-                    <Navbar.Brand href="#" text>Taskania</Navbar.Brand>
+                    <Navbar.Brand href="#">Taskania</Navbar.Brand>
                     <Form className="d-flex">
                         <Form.Control
                             type="search"
@@ -32,10 +32,10 @@ export const Menu=()=>{
     return (
         <div className="navigation">
             <CDBSidebar textColor="#212529" backgroundColor="#f8f9fa" maxWidth="200px">
-                <CDBSidebarHeader className="menu-name" prefix={<i className="fa fa-bars" maxWidth="200px" height="10px"/> }>
+                <CDBSidebarHeader className="menu-name" prefix={<i className="fa fa-bars"/> }>
                 </CDBSidebarHeader>
                 <CDBSidebarMenu>
-                    <CDBSidebarMenuItem className="menu-item" icon="th-large" >Список досок</CDBSidebarMenuItem>
+                    <CDBSidebarMenuItem className="menu-item" icon="th-large">Список досок</CDBSidebarMenuItem>
                     <CDBSidebarMenuItem className="menu-item" icon="th-list">Список задач</CDBSidebarMenuItem>
                 </CDBSidebarMenu>
 

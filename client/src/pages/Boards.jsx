@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from "axios";
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
-import {HeaderMenu, Menu} from '../components/Header-Menu.jsx'
+import {HeaderMenu, Menu} from '../components/HeaderMenu.jsx'
 import uuid from 'react-uuid';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 

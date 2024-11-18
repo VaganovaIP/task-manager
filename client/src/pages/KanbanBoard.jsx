@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useState} from "react";
-import {HeaderMenu, Menu} from "../components/Header-Menu.jsx";
+import {HeaderMenu, Menu} from "../components/HeaderMenu.jsx";
 
 export const KanbanBoard = props =>{
     const {name} = useParams()
