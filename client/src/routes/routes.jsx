@@ -6,8 +6,8 @@ export default function RoutesApp(){
     return(
         <BrowserRouter>
             <Routes>
-                <Route path="/boards" element={<Boards/>}></Route>
-                <Route path="/board/:board_id" element={<KanbanBoard/>}></Route>
+                <Route path="boards" element={<Boards/>}></Route>
+                <Route path="board/:name_board" element={<KanbanBoard/>}></Route>
             </Routes>
         </BrowserRouter>
 

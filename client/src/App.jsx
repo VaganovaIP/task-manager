@@ -1,6 +1,8 @@
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
-import './styles/index.css';
+import './styles/1.css'
+
 import {useEffect, useState} from "react";
 import RoutesApp from "./routes/routes";
 

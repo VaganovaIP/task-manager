@@ -100,7 +100,7 @@ ul li{
 
 .head-todo{
     width: 100%;
-    background-color: var(--head-todo);
+    background-color: var(--bs-emphasis-color-rgb);
     padding: 3px 3px 3px 5px;
     box-shadow: 2px 1px 5px var(--shadow); 
 }
@@ -118,24 +118,24 @@ ul li{
     padding: 3px 3px 3px 5px;
     box-shadow: 2px 1px 5px var(--shadow); 
 }
-
 .list-tasks{
     display: flex;
     flex-direction: column;
     width: 100%;
     background-color: var(--main-color);
     opacity: 75%;
-    padding: 3px 10px 3px 5px;  
-    margin-top: 2%;  
+    padding: 3px 10px 3px 5px;
+    margin-top: 2%;
 }
 
 .task{
-    padding: 3px 3px 3px 5px; 
+    padding: 3px 3px 3px 5px;
     background-color: var(--main-color);
     margin-bottom: 2px;
-    box-shadow: 2px 1px 5px var(--shadow);  
+    box-shadow: 2px 1px 5px var(--shadow);
     border-radius: 3px;
 }
+
 
 .delete-task{
     padding: 8px 10px;

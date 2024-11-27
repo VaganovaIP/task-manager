@@ -1,18 +1,15 @@
 const express = require('express');
 const boardController = require('../controllers/board');
 const boardTasksController = require('../controllers/tasksBoard');
-const listController = require('../controllers/list');
+const taskController = require('../controllers/tasksBoard');
 
-
-const urlencodedParser = express.urlencoded({extended: false});
 
 const router = express.Router();
 router.get('/boards', boardController.boardsView);
-//router.get('/boards/board/:board_id', boardTasksController.getName);
-router.get('/boards/board/:board_id', listController.listsView);
+router.get('/board/:name_board', boardTasksController.tasksView);
 
+//router.post('/boards/board/:name_board', taskController.createListTask);
 
-router.post('/boards', boardController.addBoard);
-router.post('/boards/board/:board_id', listController.addList);
+//router.post('/boards/board/:board_id', taskController.addTask);
 
 module.exports = router;

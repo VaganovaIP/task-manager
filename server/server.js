@@ -4,13 +4,16 @@ const managerRouter = require('./routes/routes');
 const lists = require('./routes/lists')
 const router = require('./routes/index')
 const cors = require('cors');
+const bodyParser = require("express");
 const port = 5000;
 
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
-app.use('/', router);
 
+app.use('/', router);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')

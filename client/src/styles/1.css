@@ -32,18 +32,26 @@ ul li{
 
 .f-container{
     height: 100vh;
+    width: 100%;
     flex-direction: column;
     flex-grow: 1;
 }
 
 .main{
     display: flex;
-    background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
+    background-color: #d3d3d3;
+background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
     background: -moz-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
     background: linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
     overflow: hidden;
     height: calc(100% - 68px);
+    width: 100%;
 }
+
+main-menu-content{
+    flex:1;
+}
+
 
 a:active, a:hover, a{
     text-decoration: none;
@@ -123,13 +131,9 @@ a:active, a:hover, a{
     padding: 5px;
 }
 
-.content{
-    display: flex;
-}
 
 .main-menu{
     box-sizing: border-box;
-    flex-grow: 1;
     max-width: 200px;
 }
 
@@ -137,7 +141,10 @@ a:active, a:hover, a{
     display: flex;
     flex-direction: column;
     margin: 0;
+    height: 100%;
     flex-grow: 1;
+    position: relative;
+
 }
 
 .name-page{
@@ -182,7 +189,6 @@ a:active, a:hover, a{
 
 /*MENU*/
 .menu-container{
-    width: 100%;
     height: 100%;
 }
 
@@ -202,10 +208,10 @@ a:active, a:hover, a{
 li:hover{
     transition: 1s all;
     color: #2f89fc;
-    background-color:#FFFFFF;
     border-top-right-radius: 10px 10px;
     border-bottom-right-radius: 10px 10px;
     cursor: pointer;
+    box-shadow: 2px 1px 5px var(--shadow);
 }
 
 .body li ul{
@@ -225,6 +231,7 @@ li:hover{
 
 
 .navigation{
+    flex-grow: 1;
     height: 100%;
     display: flex;
     box-shadow: 1px 1px 5px var(--shadow);
@@ -244,3 +251,92 @@ li:hover{
 }
 
 
+/*Kanban*/
+
+.kanban-board{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    overflow-x: auto;
+    position: absolute;
+}
+
+.kanban-columns{
+    grid-gap: 30px;
+    display: flex;
+    flex:1;
+}
+
+.column{
+    flex-direction: column;
+    max-width: 230px;
+    min-width: 200px;
+    width: 100%;
+    background-color: var(--bs-emphasis-color-rgb);
+}
+
+.head-column{
+    width: 100%;
+    background-color: var(--bs-emphasis-color-rgb);
+    padding: 3px 3px 3px 5px;
+    box-shadow: 2px 1px 5px var(--shadow);
+}
+
+.list-tasks{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--bs-emphasis-color-rgb);
+    opacity: 75%;
+    padding: 5px;
+    margin-top: 2%;
+    box-shadow: 2px 1px 5px var(--shadow);
+}
+
+.task{
+    padding: 3px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    height: 100px;
+}
+
+.task-card{
+    min-height: 70px;
+    display: flex;
+    align-content: flex-start;
+}
+
+.p{
+    font-size: 17px;
+    padding: 2px;
+}
+
+.name-task{
+    font-size: 17px;
+    padding: 2px;
+    margin-bottom: 7px;
+    color: var(--font-main);
+}
+.date-task{
+    font-size: 13px;
+    padding: 2px;
+    font-stretch: normal;
+    margin-bottom: 10px;
+}
+
+.delete-task{
+    padding: 5px;
+    color:var(--font-main);
+}
+
+.delete-task-btn{
+    --bs-btn-padding-x: 0rem;
+    --bs-btn-padding-y: 0rem;
+    --bs-btn-bg: #FFFF;
+    --bs-btn-hover-color:var(--action-delete);
+    color:var(--font-main);
+    outline: none;
+    border: none;
+    --bs-btn-active-bg:none;
+    --bs-btn-hover-bg:none;
+}

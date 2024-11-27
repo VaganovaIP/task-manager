@@ -1,4 +1,4 @@
-const listController = require('../controllers/list');
+const listController = require('../controllers/tasksBoard');
 const express = require("express");
 const boardController = require("../controllers/board");
 
@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/:board_id', listController.listsViewAll);
 
 
-router.post('/boards', boardController.addBoard);
-router.post('/boards/board/:board_id', listController.addList);
+router.post('/boards/board/:board_id', boardController.addBoard);
+//router.post('/boards/board/:board_id', listController.addList);
 
 module.exports = router;

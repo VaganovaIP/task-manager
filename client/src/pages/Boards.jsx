@@ -1,6 +1,6 @@
+import React from 'react';
 import {useEffect, useState} from "react";
-import {getBoards} from "../scripts/backend/boards.jsx";
-import {addBoard} from "../scripts/backend/boards.jsx";
+import {createBoard, getAllBoards} from "../scripts/backend/boardsActions.jsx";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -9,22 +9,27 @@ import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {HeaderMenu, Menu} from '../components/HeaderMenu.jsx'
 import uuid from 'react-uuid';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
-const client = axios.create({
-    baseURL: "http://localhost:5000/boards"
-});
+import Fuse from "fuse.js";
 
 
-function Boards() {
+export default function Boards() {
     const [boards, setBoards] = useState([]);
-    const [searchBoards, setSearchBoards] = useState([]);
+    const [searchBoards, setSearchBoards] = useState("");
     const [name, setName] = useState("")
+    const [searchName, setSearchName] = useState("");
+    const [searchResults, setSearchResults] = useState(boards);
+    const options = {keys:["name_board"]};
+    const fuse = new Fuse(boards, options);
 
     const navigate = useNavigate();
     const location = useLocation();
+    const [onSearch, setOnSearch] = useState(false);
+
 
     useEffect( () => {
-        getBoards(boards, setBoards)
+        getAllBoards(boards, setBoards)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
     }, []);
 
 
@@ -34,7 +39,7 @@ function Boards() {
             <Card key={item.board_id} className="item-board">
                 <Card.Body>
                     <Card.Title>
-                        <Link to={`/board/${item.name_board}`} state = {{id:item.board_id}}>{item.name_board}</Link>
+                        <Link to={`/board/${item.name_board}`} state = {{id:item.board_id, name_board:item.name_board}}>{item.name_board}</Link>
                     </Card.Title>
                 </Card.Body>
             </Card>
@@ -44,7 +49,9 @@ function Boards() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         let board_id = uuid();
-        addBoard(name, board_id);
+        createBoard(name, board_id)
+            .then(r=>console.log(r))
+            .catch(err => console.log(err));
         const new_board = {
             board_id:board_id,
             name_board:name
@@ -76,6 +83,19 @@ function Boards() {
     }
 
 
+    const boardSearch= (event) =>{
+        const {value} = event.target;
+        if (value.length === 0){
+            setSearchResults(boards);
+            setOnSearch(false);
+            return;
+        }
+        const results = fuse.search(value);
+        const items = results.map((result) => result.item);
+        setSearchResults(items);
+        setOnSearch(true)
+    }
+
     return (
         <div className="f-container">
                 <HeaderMenu></HeaderMenu>
@@ -84,21 +104,39 @@ function Boards() {
                     <Menu></Menu>
                 </div>
                 <div className="content">
-                    <div className="name-page">Доски</div>
-                    <ul className="list-boards">
-
-                        {addCardBoard()}
-
-                        {boards.map((item) => (
-                            <li key={item.board_id}>
-                                {renderListBoards(item)}</li>
-                        ))}
-                    </ul>
+                    <div className="name-page">Доски
+                        <Form className="d-flex">
+                            <Form.Control
+                                type="search"
+                                placeholder="Поиск"
+                                className="me-2"
+                                aria-label="Search"
+                                onChange={boardSearch}
+                            />
+                        </Form>
                     </div>
+                    <ul className="list-boards">
+                        {addCardBoard()}
+                        {console.log(onSearch)}
+                        {
+                            onSearch ? (
+                                searchResults.map((board) =>
+                                        <li key={board.board_id}>
+                                            {renderListBoards(board)}
+                                        </li>
+                                    )
+
+                            ) : (
+                                boards.map((item) => (
+                                    <li key={item.board_id}>
+                                        {renderListBoards(item)}
+                                    </li>
+                                ))
+                            )
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
-
     )
 }
-
-export default Boards
