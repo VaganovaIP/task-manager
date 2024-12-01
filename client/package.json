@@ -15,10 +15,15 @@
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "cdbreact": "^1.5.19",
+    "fuse": "^0.12.1",
+    "fuse.js": "^7.0.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.5",
     "react-dom": "^18.3.1",
-    "react-uuid": "^2.0.0"
+    "react-modal": "^3.16.1",
+    "react-uuid": "^2.0.0",
+    "reactjs-modal": "^0.3.5",
+    "reactjs-popup": "^2.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

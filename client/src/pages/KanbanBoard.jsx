@@ -1,51 +1,177 @@
-import React, {useEffect} from 'react';
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import React, {useEffect, useRef} from 'react';
+import {useLocation, useParams} from "react-router-dom";
 import {useState} from "react";
 import {HeaderMenu, Menu} from "../components/HeaderMenu.jsx";
-import {CDBBtn} from "cdbreact";
-import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import {getAllTasks} from "../scripts/backend/taskManager.jsx";
-import {getAllBoards} from "../scripts/backend/boardsActions.jsx";
+import {createList, getAllTasks, createTask} from "../scripts/backend/taskManager.jsx";
+import {createBoard, getAllBoards} from "../scripts/backend/boardsActions.jsx";
+import Form from "react-bootstrap/Form";
+import uuid from "react-uuid";
+import {RenderTaskList} from "../components/Tasks.jsx";
+import Card from "react-bootstrap/Card";
+import Popup from "reactjs-popup";
+import Modal from 'react-bootstrap/Modal';
+import Dropdown from 'react-bootstrap/Dropdown';
+import * as PropTypes from "prop-types";
 
 
-export const renderTaskList = (task, list) =>{
-    return (
-                <li className="task">
-                    <Card className="task-card">
-                        <Card.Body>
-                            <Card.Title className="name-task">
-                                {task.name_task}
-                                {/*<Link to={`/board/${item.name_board}`} state = {{id:item.board_id}}>{item.name_board}</Link>*/}
-                            </Card.Title>
-                            <Card.Text className="date-task">
-                                {/*{task.date_start} - {task.date_end}*/}
-                            </Card.Text>
-                        </Card.Body>
-                        <div className="delete-task">
-                            <Button className="delete-task-btn" variant="secondary" type="submit">
-                                <i className="bi bi-trash"></i>
-                            </Button>
-                        </div>
 
-                    </Card>
-                </li>
+
+function ModalCreateTask(props){
+    return(
+        <Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Создать задачу
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Form.Group className="mb-3" controlId="">
+                        <Form.Label>Название задачи</Form.Label>
+                        <Form.Control type="text" placeholder="Название задачи" />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Описание</Form.Label>
+                        <Form.Control as="textarea" rows={6}/>
+                    </Form.Group>
+
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={props.onHide}>Close</Button>
+            </Modal.Footer>
+        </Modal>
     )
 
 }
 
-export const KanbanBoard = (props) =>{
+
+function DropdownType(props) {
+    return null;
+}
+
+DropdownType.propTypes = {
+    as: PropTypes.any,
+    size: PropTypes.string,
+    id: PropTypes.string,
+    title: PropTypes.string,
+    children: PropTypes.node
+};
+export const KanbanBoard = () =>{
     const {name} = useParams()
     const location = useLocation()
-    const {id, name_board} = location.state;
+    const {board_id, name_board} = location.state;
     const [nameList, setNameList] = useState("")
+    const [nameTask, setNameTask] = useState("")
     const [lists, setLists] = useState([])
+    const [activeList, setActiveList] = useState("")
     const [tasks, setTasks] = useState([])
+    const [onClickCreateList, setOnClickCreateList] = useState(false)
+    const [onClickCreateTask, setOnClickCreateTask] = useState(false)
+    const ref = useRef(null);
 
     useEffect( () => {
-        getAllTasks(id, name_board, setLists, setTasks)
+        getAllTasks(board_id, name_board, setLists, setTasks)
             .catch(err => console.log(err));
     }, []);
+
+
+    const createListCard = async (event) => {
+        event.preventDefault();
+        createList(name_board, nameList, board_id)
+            .then(r=>console.log(r))
+            .catch(err => console.log(err));
+        const new_list = {
+            board_id:board_id,
+            name_list:nameList
+        }
+        setLists([...lists, new_list])
+        setNameList("");
+        setOnClickCreateList(false)
+    };
+
+    const createTaskCard = async (event) => {
+        event.preventDefault();
+        let task_id = uuid();
+        createTask(task_id, name_board, activeList, board_id, nameTask)
+            .then(r=>console.log(r))
+            .catch(err => console.log(err));
+        const new_task = {
+            task_id:task_id,
+            board_id:board_id,
+            list_id:activeList,
+            name_task:nameTask
+        }
+        setTasks([new_task, ...tasks])
+        setNameTask("");
+        setOnClickCreateTask(false)
+    };
+
+    const CardCreateList = () =>{
+        return(
+                <Card border="primary" className="item-board">
+                    <Card.Body>
+                        <Form onSubmit={createListCard}>
+                            <Form.Group className="mb-3">
+                                <Form.Control className="form-task-list"
+                                              type="text" placeholder="" value={nameList}
+                                              onChange={(e) => setNameList(e.target.value)}/>
+
+                            </Form.Group>
+                            <Button className="add-button" variant="secondary" type="submit">
+                                <i className="bi bi-plus"></i>
+                            </Button>
+                        </Form>
+                    </Card.Body>
+                </Card>
+        )
+    }
+
+    // const CardCreateTask = () =>{
+    //     return(
+    //         <div className="card-add-task">
+    //             <Card border="primary" className="item-board">
+    //                 <Card.Body>
+    //                     <Form onSubmit={createTaskCard}>
+    //                         <Form.Group className="mb-3" >
+    //                             <Form.Control className="form-board"
+    //                                           type="text" placeholder="" value={nameTask}
+    //                                           onChange={(e) => setNameList(e.target.value)
+    //                                           }/>
+    //                         </Form.Group>
+    //                         <Button className="add-button" variant="secondary" type="submit">
+    //                             <i className="bi bi-plus"></i>
+    //                         </Button>
+    //                     </Form>
+    //                 </Card.Body>
+    //             </Card>
+    //         </div>
+    //     )
+    // }
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const handleClickCreateList=()=> {
+        setOnClickCreateList(true)
+    }
+    const handleClickCreateTask=(list_id)=> {
+        setOnClickCreateTask(true)
+        setActiveList(list_id)
+    }
 
     return(
         <div className="f-container">
@@ -54,62 +180,86 @@ export const KanbanBoard = (props) =>{
                 <div className="main-menu-content">
                     <Menu></Menu>
                 </div>
-                <div className="content">
+                <div className="content" >
+                    <div className="action-page">
+                        <p className="name-page">{name_board}</p>
+                        <Button className="add-members" variant="secondary"
+                                type="button" onClick={handleClickCreateList}>
+                            <i className="bi bi-plus"></i>Добавить участника
+                        </Button>
+                        <Dropdown
+                            className="list-members"
+                            size="lg"
+                            title="Drop large">
+                            <Dropdown.Toggle variant="success" id="dropdown-basic" className="list-members">
+                                Участники доски
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                {lists.map((list) =>(
+                                    <Dropdown.Item key={list.list_id}>{list.name_list}</Dropdown.Item>
+                                ))}
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
                     <div className="kanban-board">
-                        <div>
-                            <button color="light">
-                                Добавить колонку
-                            </button>
-                        </div>
+
                         <div className="kanban-columns">
-                                {lists.map((list,index) => (
-                                        <div>
+                                {lists.map((list) => (
+                                        <div key={list.list_id}>
                                             <div className="column">
-                                                <div className="head-column" key={index}>{list.name_list}</div>
+                                                <div className="head-column">{list.name_list}</div>
                                             </div>
-                                            <ul className="list-tasks" key={list.list_id}>
+                                            <ul className="list-tasks">
                                                 {tasks.map((task) => (
-                                                        list.list_id === task.List.list_id) &&
-                                                    renderTaskList(task, list)
+                                                    list.list_id === task.List.list_id) &&
+                                                        <li className="task" key={task.task.task_id}><RenderTaskList task ={task} list={list} ></RenderTaskList></li>
+
                                                 )}
+
+                                                {/*{*/}
+                                                {/*    !onClickCreateTask ? (*/}
+                                                {/*        <Button className="add-button" variant="secondary" type="button"*/}
+                                                {/*                onClick={() => {*/}
+                                                {/*                    setActiveList(list.list_id)*/}
+                                                {/*                    setOnClickCreateTask(true)*/}
+                                                {/*                }}>*/}
+                                                {/*            <i className="bi bi-plus"></i>*/}
+                                                {/*        </Button>*/}
+                                                {/*    ):<CardCreateTask></CardCreateTask>*/}
+                                                {/*}*/}
                                             </ul>
-                                            <Button className="add-button" variant="secondary" type="submit">
+                                            <Button className="add-button" variant="secondary" type="button">
                                                 <i className="bi bi-plus"></i>
                                             </Button>
                                         </div>
+
                                     )
                                 )}
-                            {/*{lists.map((list) => (*/}
-                            {/*<ul key={list.list_id}>*/}
+                            <div className="create-list">
+                                <div className="add-list">
+                                    {
+                                        !onClickCreateList ? (
+                                                <Button className="create-list-button" variant="secondary"
+                                                        type="button" onClick={handleClickCreateList}>
+                                                    <i className="bi bi-plus"></i>Создать новую колонку
+                                                </Button>
+                                            )
+                                            :CardCreateList()
+                                    }
+                                </div>
+                            </div>
+                            <div>
+                                <button onClick={openModal}>Открыть модальное окно</button>
+                                <ModalCreateTask
+                                    show={modalIsOpen}
+                                    onHide={() => setModalIsOpen(false)}
+                                />
+                            </div>
 
-                            {/*            <div className="column">*/}
-                            {/*                <li className="head-column" key={list.list_id}>{list.name_list}</li>*/}
-                            {/*
-                            {/*            </div>*/}
-
-                            {/*</ul>      )*/}
-
-                            {/*    )}*/}
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-        // <div>
-        //
-        //     <h1>Board {id} </h1>
-        //     <form  >
-        //         <input type="text"
-        //                value={nameList}
-        //                placeholder=""
-        //                onChange={(e) => setNameList(e.target.value)}
-        //         />
-        //         <button type="submit">Добавить колонку</button>
-        //     </form>
-
-
-
-        // </div>
     )
 }

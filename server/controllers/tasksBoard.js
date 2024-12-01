@@ -21,20 +21,32 @@ async function createTask(req, res) {
 async function createList(req, res) {
     const {board_id, nameList} = req.body;
     await List.create({name_list:nameList, id_board:board_id})
+        .then(res.status(200).send({message: 'New list created'}))
+        .catch((err) => {console.log(err)})
+}
+
+async function createTask(req, res) {
+    const {board_id, name_task, list_id, task_id} = req.body;
+    await List.create({task_id, name_task, list_id, board_id})
         .then(res.status(200).send({message: 'New task created'}))
         .catch((err) => {console.log(err)})
 }
 
+
+
 module.exports = {
     createListTask:async (req, res) => {
-        const {parameter} = req.body;
-        if (parameter == 1){
+        const {formName} = req.body;
+        if (formName === "form-add-list"){
             await createList(req, res);
         }
-
-        if (parameter == 2){
+        if (formName === "form-add-task"){
             await createTask(req, res);
         }
+        //
+        // if (controlId === 2){
+        //     await createTask(req, res);
+        // }
 
     },
 

@@ -35,3 +35,35 @@ export async function viewBoards(boards, setBoards) {
             console.log(error);
         })
 };
+
+export const createList = async (name_board, name_list, board_id) => {
+    await axios.post(`${BASE_API_URL}/board/${name_board}`, {
+        formName:"form-add-list",
+        board_id: board_id,
+        nameList: name_list,
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+
+export const createTask = async (task_id, name_board, list_id, board_id, name_task) => {
+    console.log(name_board, "111")
+    await axios.post(`${BASE_API_URL}/board/${name_board}`, {
+        formName:"form-add-task",
+        task_id:task_id,
+        board_id: board_id,
+        name_task: name_task,
+        list_id:list_id
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+

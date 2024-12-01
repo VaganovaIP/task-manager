@@ -17,7 +17,8 @@ export async function getAllBoards(boards, setBoards) {
 
 export const createBoard = async (name_board, board_id) => {
     const email = "user1@.ru";
-    await axios.post(`${BASE_API_URL}/boards`, {
+    await axios
+        .post(`${BASE_API_URL}/boards`, {
         board_id: board_id,
         name_board: name_board,
         email: email,

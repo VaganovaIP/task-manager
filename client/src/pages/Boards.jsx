@@ -39,7 +39,7 @@ export default function Boards() {
             <Card key={item.board_id} className="item-board">
                 <Card.Body>
                     <Card.Title>
-                        <Link to={`/board/${item.name_board}`} state = {{id:item.board_id, name_board:item.name_board}}>{item.name_board}</Link>
+                        <Link to={`/board/${item.name_board}`} state = {{board_id:item.board_id, name_board:item.name_board}}>{item.name_board}</Link>
                     </Card.Title>
                 </Card.Body>
             </Card>
