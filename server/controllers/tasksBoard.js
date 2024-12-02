@@ -2,6 +2,7 @@ const List = require("../models/List")
 const Board = require("../models/Board");
 const Task = require("../models/Task");
 const User = require("../models/User");
+const BoardMembers = require("../models/BoardMember");
 const {values} = require("pg/lib/native/query");
 const { v4: uuidv4 } = require("uuid");
 
@@ -62,14 +63,20 @@ module.exports = {
                 attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
                      'importance', 'owner_id', 'status', 'list_id'],
                 include:[
-                        {model: List,},
-                        {model: User,},
-                        {model: Board,},
+                        {model: List},
+                        {model: User},
+                        {model: Board},
                 ],
                 where:{board_id:board_id},
                 order:[['created_at', 'DESC']],
             })
-            await res.status(200).json({lists:list, tasks:tasks })
+
+            let members = await BoardMembers.findAll({
+                include:[{model: User}],
+                where:{board_id:board_id}
+            })
+
+            await res.status(200).json({lists:list, tasks:tasks, members:members})
         } catch (err){
             console.log(err)
         }

@@ -3,7 +3,7 @@ import {useLocation, useParams} from "react-router-dom";
 import {useState} from "react";
 import {HeaderMenu, Menu} from "../components/HeaderMenu.jsx";
 import Button from "react-bootstrap/Button";
-import {createList, getAllTasks, createTask} from "../scripts/backend/taskManager.jsx";
+import {createList, getDataBoard, createTask} from "../scripts/backend/taskManager.jsx";
 import {createBoard, getAllBoards} from "../scripts/backend/boardsActions.jsx";
 import Form from "react-bootstrap/Form";
 import uuid from "react-uuid";
@@ -72,12 +72,14 @@ export const KanbanBoard = () =>{
     const [lists, setLists] = useState([])
     const [activeList, setActiveList] = useState("")
     const [tasks, setTasks] = useState([])
+    const [members, setMembers] = useState([])
+
     const [onClickCreateList, setOnClickCreateList] = useState(false)
     const [onClickCreateTask, setOnClickCreateTask] = useState(false)
     const ref = useRef(null);
 
     useEffect( () => {
-        getAllTasks(board_id, name_board, setLists, setTasks)
+        getDataBoard(board_id, name_board, setLists, setTasks, setMembers)
             .catch(err => console.log(err));
     }, []);
 
@@ -183,21 +185,32 @@ export const KanbanBoard = () =>{
                 <div className="content" >
                     <div className="action-page">
                         <p className="name-page">{name_board}</p>
-                        <Button className="add-members" variant="secondary"
-                                type="button" onClick={handleClickCreateList}>
-                            <i className="bi bi-plus"></i>Добавить участника
-                        </Button>
                         <Dropdown
                             className="list-members"
                             size="lg"
-                            title="Drop large">
+                            >
                             <Dropdown.Toggle variant="success" id="dropdown-basic" className="list-members">
                                 Участники доски
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                {lists.map((list) =>(
-                                    <Dropdown.Item key={list.list_id}>{list.name_list}</Dropdown.Item>
+                                {members.map((member) =>(
+
+                                    <Dropdown.Item key={member.members_id}>
+                                        <div className="member-info">
+                                            <p className="name-member">{member.User.username}</p>
+                                            <Button className="delete-members-btn" variant="secondary" type="submit">
+                                                <i className="bi bi-trash"></i>
+                                            </Button>
+                                        </div>
+                                    </Dropdown.Item>
                                 ))}
+                                <Dropdown.Divider></Dropdown.Divider>
+                                <Dropdown.Item>
+                                    <div className="add-button-member">
+                                    <i className="bi bi-plus"></i>
+                                        <p className="name-member">Добавить участника</p>
+                                    </div>
+                                </Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>

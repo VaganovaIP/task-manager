@@ -2,7 +2,7 @@ import axios  from "axios";
 import {BASE_API_URL} from "../../utils/api.js";
 
 
-export async function getAllTasks(board_id, name, setLists, setTasks) {
+export async function getDataBoard(board_id, name, setLists, setTasks, setMembers) {
     await axios
         .get(`${BASE_API_URL}/board/${name}`, {
             params: {
@@ -12,6 +12,7 @@ export async function getAllTasks(board_id, name, setLists, setTasks) {
         .then(res => {
             setTasks(res.data.tasks);
             setLists(res.data.lists);
+            setMembers(res.data.members);
         })
 }
 

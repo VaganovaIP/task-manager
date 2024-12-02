@@ -355,8 +355,6 @@ li:hover{
     flex-wrap: wrap;
     grid-gap:20px;
     height: 50px;
-    align-content: center;
-    vertical-align: center;
     margin: 0px;
     padding: 10px;
     /*background-color: #455AA0;*/
@@ -365,10 +363,10 @@ li:hover{
 
 .name-page{
     padding: 3px;
-    text-transform: uppercase;
     font-weight: normal;
-    font-size: 13px;
+    font-size: 15px;
     margin: 0px;
+    vertical-align: bottom;
 }
 
 .add-members {
@@ -384,4 +382,63 @@ li:hover{
     border: 0;
     height: 30px;
     font-size: 13px;
+    width: 10rem;
+    justify-content: space-between;
+}
+
+.member-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: center;
+    height: 30px;
+}
+
+.name-member{
+    margin: 0;
+}
+
+.delete-members-btn{
+    height: 20px;
+    --bs-btn-padding-x: 0rem;
+    --bs-btn-padding-y: 0rem;
+    --bs-btn-bg: #FFFF;
+    --bs-btn-hover-color:var(--action-delete);
+    color:var(--font-main);
+    outline: none;
+    border: none;
+    --bs-btn-active-bg:none;
+    --bs-btn-hover-bg:none;
+}
+
+.add-button-member{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: center;
+    height: 30px;
+    font-size: 13px;
+    color: #2f89fc;
+}
+
+.dropdown-item {
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.btn-success {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #455AA0;
+    --bs-btn-border-color: #455AA0;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #455AA0;
+    --bs-btn-hover-border-color: #455AA0;
+    --bs-btn-focus-shadow-rgb: 60, 153, 110;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #455AA0;
+    --bs-btn-active-border-color: #455AA0;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #445AA0;
+    --bs-btn-disabled-border-color: #452AA0;
 }
