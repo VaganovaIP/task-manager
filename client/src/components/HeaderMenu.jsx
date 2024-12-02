@@ -14,7 +14,7 @@ export const HeaderMenu=()=>{
     const [searchName, setSearchName] = useState("");
 
     return (
-            <Navbar expand="lg" className="bg-body-tertiary" >
+            <Navbar expand="lg" className="bg-body-tertiary">
                 <Container fluid>
                     <Navbar.Brand href="#">Taskania</Navbar.Brand>
                     <Form className="d-flex">
@@ -37,7 +37,7 @@ export const HeaderMenu=()=>{
 export const Menu=()=>{
     return (
         <div className="navigation">
-            <CDBSidebar textColor="#212529" backgroundColor="#f8f9fa" maxWidth="200px">
+            <CDBSidebar textColor="#212529" backgroundColor="#f8f9fa" maxWidth="160px" className="box-menu">
                 <CDBSidebarHeader className="menu-name" prefix={<i className="fa fa-bars"/> }>
                 </CDBSidebarHeader>
                 <CDBSidebarMenu>

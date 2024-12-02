@@ -215,7 +215,6 @@ export const KanbanBoard = () =>{
                         </Dropdown>
                     </div>
                     <div className="kanban-board">
-
                         <div className="kanban-columns">
                                 {lists.map((list) => (
                                         <div key={list.list_id}>
@@ -247,7 +246,9 @@ export const KanbanBoard = () =>{
                                         </div>
 
                                     )
-                                )}
+                                )
+
+                                }
                             <div className="create-list">
                                 <div className="add-list">
                                     {

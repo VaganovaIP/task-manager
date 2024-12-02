@@ -1,5 +1,9 @@
 @import url("color.css");
 
+/*.bg-body-tertiary{*/
+/*    border: solid 0.1rem #E0E7FE;*/
+/*}*/
+
 :root{
     --main-color:#FFFFFF;
     --action:#455AA0;
@@ -15,7 +19,6 @@
 }
 
 body{
-    background-color:#3a0ca3;
     color:var(--font-main);
     display:flex;
     flex-direction: column;
@@ -39,10 +42,10 @@ ul li{
 
 .main{
     display: flex;
-    background-color: #d3d3d3;
-    background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
-    background: -moz-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
-    background: linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
+    /*background-color: #d3d3d3;*/
+    /*background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
+    /*background: -moz-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
+    /*background: linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
     overflow: hidden;
     height: calc(100% - 68px);
     width: 100%;
@@ -132,9 +135,15 @@ a:active, a:hover, a{
 }
 
 
-.main-menu{
+.main-menu-content{
+    display: flex;
     box-sizing: border-box;
     max-width: 200px;
+    align-items: center;
+    vertical-align: center;
+    background-color: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+    box-shadow: 2px 1px 5px var(--shadow);
 }
 
 .content{
@@ -230,14 +239,20 @@ li:hover{
 
 .navigation{
     flex-grow: 1;
-    height: 100%;
+    margin: 3px;
+    height: 60%;
     display: flex;
     box-shadow: 1px 1px 5px var(--shadow);
-    border-radius: 10px 10px;
-    opacity: 85%;
-    background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
-    background: -moz-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
-    background: linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));
+    border-radius: 20px 20px;
+    /*background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
+    /*background: -moz-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
+    /*background: linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
+
+}
+
+.box-menu{
+    border-radius: 30px;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .menu-name{
@@ -357,6 +372,9 @@ li:hover{
     height: 50px;
     margin: 0px;
     padding: 10px;
+    background-color: rgba(0, 0, 0, 0.05);
+    /*border: solid 0.1rem #FFFFFF;*/
+    box-shadow: 2px 1px 5px var(--shadow);
     /*background-color: #455AA0;*/
     /*opacity: 65%;*/
 }

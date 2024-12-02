@@ -100,21 +100,25 @@ export default function Boards() {
         <div className="f-container">
                 <HeaderMenu></HeaderMenu>
             <div className="main">
-                <div>
+                <div className="main-menu-content">
                     <Menu></Menu>
                 </div>
                 <div className="content">
-                    <div className="name-page">Доски
+                    <div className="action-page">
+                        <div className="name-page">Доски
+
+                        </div>
                         <Form className="d-flex">
-                            <Form.Control
-                                type="search"
-                                placeholder="Поиск"
-                                className="me-2"
-                                aria-label="Search"
-                                onChange={boardSearch}
-                            />
-                        </Form>
+                        <Form.Control
+                            type="search"
+                            placeholder="Поиск"
+                            className="me-2"
+                            aria-label="Search"
+                            onChange={boardSearch}
+                        />
+                    </Form>
                     </div>
+
                     <ul className="list-boards">
                         {addCardBoard()}
                         {console.log(onSearch)}
