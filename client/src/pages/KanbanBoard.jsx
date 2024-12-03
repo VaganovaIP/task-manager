@@ -13,11 +13,17 @@ import Popup from "reactjs-popup";
 import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
 import * as PropTypes from "prop-types";
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'
+import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
+import {ru} from 'date-fns/locale/ru';
+registerLocale('ru', ru)
 
-
-
-
+import "react-datepicker/dist/react-datepicker.css";
 function ModalCreateTask(props){
+    const members = props.members;
+    const [value, onChange] = useState("");
+    const [startDate, setStartDate] = useState(new Date());
     return(
         <Modal
             {...props}
@@ -39,6 +45,49 @@ function ModalCreateTask(props){
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                         <Form.Label>Описание</Form.Label>
                         <Form.Control as="textarea" rows={6}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <div>
+                            <p>Срок</p>
+                            <DatePicker locale="ru" selected={startDate} onChange={(date) => setStartDate(date)} />
+                        </div>
+                        <div>
+                            <DatePicker locale="ru" selected={startDate} onChange={(date) => setStartDate(date)} />
+                        </div>
+                        <Form.Select>
+                            <option>Важность</option>
+                            <option value="1">Срочно</option>
+                            <option value="2">Срочно</option>
+                            <option value="3">Срочно</option>
+                        </Form.Select>
+                        <Dropdown
+                            className="list-members"
+                            size="lg"
+                        >
+                            <Dropdown.Toggle variant="success" id="dropdown-basic" className="list-members">
+                                Участники
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                {members.map((member) =>(
+
+                                    <Dropdown.Item key={member.members_id}>
+                                        <div className="member-info">
+                                            <p className="name-member">{member.User.username}</p>
+                                            <Button className="delete-members-btn" variant="secondary" type="submit">
+                                                <i className="bi bi-trash"></i>
+                                            </Button>
+                                        </div>
+                                    </Dropdown.Item>
+                                ))}
+                                <Dropdown.Divider></Dropdown.Divider>
+                                <Dropdown.Item>
+                                    <div className="add-button-member">
+                                        <i className="bi bi-plus"></i>
+                                        <p className="name-member">Добавить участника</p>
+                                    </div>
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Form.Group>
 
                 </Form>
@@ -240,7 +289,7 @@ export const KanbanBoard = () =>{
                                                 {/*    ):<CardCreateTask></CardCreateTask>*/}
                                                 {/*}*/}
                                             </ul>
-                                            <Button className="add-button" variant="secondary" type="button">
+                                            <Button className="add-button" variant="secondary" type="button" onClick={openModal}>
                                                 <i className="bi bi-plus"></i>
                                             </Button>
                                         </div>
@@ -267,6 +316,7 @@ export const KanbanBoard = () =>{
                                 <ModalCreateTask
                                     show={modalIsOpen}
                                     onHide={() => setModalIsOpen(false)}
+                                    members={members}
                                 />
                             </div>
 
