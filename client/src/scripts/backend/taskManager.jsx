@@ -51,11 +51,10 @@ export const createList = async (name_board, name_list, board_id) => {
         });
 };
 
-export const createTask = async (task_id, name_board, list_id, board_id, name_task) => {
-    console.log(name_board, "111")
+export const createTask = async (name_board, list_id, board_id, name_task) => {
+    console.log(name_board, "create task")
     await axios.post(`${BASE_API_URL}/board/${name_board}`, {
         formName:"form-add-task",
-        task_id:task_id,
         board_id: board_id,
         name_task: name_task,
         list_id:list_id

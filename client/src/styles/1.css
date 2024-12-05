@@ -110,8 +110,12 @@ a:active, a:hover, a{
     --bs-btn-font-size: .81rem;
     --bs-btn-font-weight: 400;
     --bs-btn-line-height: 0.4;
-}
 
+}
+.btn-secondary{
+    outline: none;
+    border: none;
+}
 .mb-3 {
     margin-bottom: 0.41rem!important;
 }
@@ -301,7 +305,7 @@ li:hover{
     flex-direction: column;
     width: 100%;
     background-color: var(--bs-emphasis-color-rgb);
-    opacity: 75%;
+    /*opacity: 75%;*/
     padding: 5px;
     margin-top: 2%;
     box-shadow: 2px 1px 5px var(--shadow);
@@ -431,12 +435,25 @@ li:hover{
 
 .add-button-member{
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
     vertical-align: center;
     height: 30px;
     font-size: 13px;
     color: #2f89fc;
+
+}
+
+.add-button-task{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    vertical-align: center;
+    height: 30px;
+    font-size: 13px;
+    color: #2f89fc;
+    background-color: #FFFFFF;
+    outline: none;
 }
 
 .dropdown-item {

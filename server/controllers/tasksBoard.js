@@ -27,8 +27,8 @@ async function createList(req, res) {
 }
 
 async function createTask(req, res) {
-    const {board_id, name_task, list_id, task_id} = req.body;
-    await List.create({task_id, name_task, list_id, board_id})
+    const {board_id, name_task, list_id} = req.body;
+    await Task.create({task_id:uuidv4(), name_task, list_id, board_id})
         .then(res.status(200).send({message: 'New task created'}))
         .catch((err) => {console.log(err)})
 }
