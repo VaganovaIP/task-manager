@@ -18,88 +18,9 @@ import 'react-calendar/dist/Calendar.css'
 import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
+import {ModalCreateTask} from "../modals/createTask"
 
 import "react-datepicker/dist/react-datepicker.css";
-function ModalCreateTask(props){
-    const members = props.members;
-    const [value, onChange] = useState("");
-    const [startDate, setStartDate] = useState(new Date());
-    return(
-        <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    Создать задачу
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="">
-                        <Form.Label>Название задачи</Form.Label>
-                        <Form.Control type="text" placeholder="Название задачи" />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Описание</Form.Label>
-                        <Form.Control as="textarea" rows={6}/>
-                    </Form.Group>
-                    <Form.Group>
-                        <div>
-                            <p>Срок</p>
-                            <DatePicker locale="ru" selected={startDate} onChange={(date) => setStartDate(date)} />
-                        </div>
-                        <div>
-                            <DatePicker locale="ru" selected={startDate} onChange={(date) => setStartDate(date)} />
-                        </div>
-                        <Form.Select>
-                            <option>Важность</option>
-                            <option value="1">Срочно</option>
-                            <option value="2">Срочно</option>
-                            <option value="3">Срочно</option>
-                        </Form.Select>
-                        <Dropdown
-                            className="list-members"
-                            size="lg"
-                        >
-                            <Dropdown.Toggle variant="success" id="dropdown-basic" className="list-members">
-                                Участники
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                {members.map((member) =>(
-
-                                    <Dropdown.Item key={member.members_id}>
-                                        <div className="member-info">
-                                            <p className="name-member">{member.User.username}</p>
-                                            <Button className="delete-members-btn" variant="secondary" type="submit">
-                                                <i className="bi bi-trash"></i>
-                                            </Button>
-                                        </div>
-                                    </Dropdown.Item>
-                                ))}
-                                <Dropdown.Divider></Dropdown.Divider>
-                                <Dropdown.Item>
-                                    <div className="add-button-member">
-                                        <i className="bi bi-plus"></i>
-                                        <p className="name-member">Добавить участника</p>
-                                    </div>
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Form.Group>
-
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
-            </Modal.Footer>
-        </Modal>
-    )
-
-}
-
 
 function DropdownType(props) {
     return null;
@@ -120,7 +41,7 @@ export const KanbanBoard = () =>{
     const [nameTask, setNameTask] = useState("")
     const [lists, setLists] = useState([])
     const [activeList, setActiveList] = useState('')
-
+    const [activeTask, setActiveTask] = useState([])
     const [tasks, setTasks] = useState([])
     const [members, setMembers] = useState([])
 
@@ -207,8 +128,9 @@ export const KanbanBoard = () =>{
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    const openModal = () => {
+    const openModal = (task) => {
         setModalIsOpen(true);
+        setActiveTask(task);
     };
 
     const closeModal = () => {
@@ -242,7 +164,6 @@ export const KanbanBoard = () =>{
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {members.map((member) =>(
-
                                     <Dropdown.Item key={member.members_id}>
                                         <div className="member-info">
                                             <p className="name-member">{member.User.username}</p>
@@ -271,11 +192,11 @@ export const KanbanBoard = () =>{
                                             </div>
                                             <ul className="list-tasks">
                                                 {tasks.map((task, index) => (
-                                                    list.list_id === task.list_id) &&
-                                                        <li className="task" key={index}>
-                                                            <RenderTaskList  task ={task} list={list}></RenderTaskList>
+                                                    list.list_id === task.list_id) &&(
+                                                        <li className="task" key={index}  onClick={()=>openModal(task)}>
+                                                            <RenderTaskList   task ={task} list={list}></RenderTaskList>
                                                         </li>
-
+                                                    )
                                                 )}
                                                 {
                                                     onClickCreateTask && list.list_id === activeList ?(
@@ -288,16 +209,19 @@ export const KanbanBoard = () =>{
                                                             <p className="name-member">Добавить задачу</p>
                                                         </Button>
                                                 }
+
                                             </ul>
+
                                             {/*<Button className="add-button" variant="secondary" type="button" onClick={openModal}>*/}
                                             {/*    <i className="bi bi-plus"></i>*/}
                                             {/*</Button>*/}
                                         </div>
 
                                     )
-                                )
 
+                                )
                                 }
+
                             <div className="create-list">
                                 <div className="add-list">
                                     {
@@ -311,13 +235,14 @@ export const KanbanBoard = () =>{
                                     }
                                 </div>
                             </div>
+                            <ModalCreateTask
+                                show={modalIsOpen}
+                                onHide={() => setModalIsOpen(false)}
+                                members={members}
+                                data_task={activeTask}
+                            />
                             <div>
                                 <button onClick={openModal}>Открыть модальное окно</button>
-                                <ModalCreateTask
-                                    show={modalIsOpen}
-                                    onHide={() => setModalIsOpen(false)}
-                                    members={members}
-                                />
                             </div>
 
                         </div>
