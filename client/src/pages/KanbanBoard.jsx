@@ -127,10 +127,11 @@ export const KanbanBoard = () =>{
     }
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
+    const [d, setD] = useState('')
     const openModal = (task) => {
         setModalIsOpen(true);
         setActiveTask(task);
+        setD(task.description)
     };
 
     const closeModal = () => {
@@ -144,6 +145,8 @@ export const KanbanBoard = () =>{
         setOnClickCreateTask(true)
         setActiveList(list_id)
     }
+
+
 
     return(
         <div className="f-container">
@@ -240,6 +243,7 @@ export const KanbanBoard = () =>{
                                 onHide={() => setModalIsOpen(false)}
                                 members={members}
                                 data_task={activeTask}
+
                             />
                             <div>
                                 <button onClick={openModal}>Открыть модальное окно</button>

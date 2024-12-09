@@ -11,18 +11,43 @@ import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
+moment().format();
+
 
 export function ModalCreateTask(props){
     const {members, data_task} = props;
-    const name = data_task.name_task
-    const [nameTask,setNameTask] = useState("")
-    const [descriptionTask,setDescriptionTask] = useState("")
-    const [value, onChange] = useState("");
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    console.log(name)
-    console.log("task " + nameTask)
+    const name = data_task.name_task;
+    const start = props.data_task.date_start;
+    const end = props.data_task.date_end;
 
+    const [nameTask,setNameTask] = useState("")
+    const [descriptionTask,setDescriptionTask] = useState(props.data_task.description)
+    const [value, onChange] = useState("");
+    console.log(start)
+    console.log(end)
+    const fstart = moment(start, "YYYY-MM-DD").format("YYYY/MM/DD");
+    const [startDate, setStartDate] = useState(new Date());
+
+    const [endDate, setEndDate] = useState(new Date(props.data_task.date_end));
+    console.log("f " + fstart)
+    console.log("task " + nameTask)
+    {console.log(props.data_task.date_start + "111")}
+    {console.log(props.data_task.date_end + "222")}
+
+    // useEffect(()=>{
+    //     async function reloadData(){
+    //         await setDescriptionTask(data_task.description)
+    //     }
+    // }
+
+    //
+    // ,[])
+    const handleTextChange=(event)=>{
+        setDescriptionTask(event.target.value)
+    }
+    // const [startDate, setStartDate] = useState(new Date());
+    const slectedDate = moment(fstart).toDate();
     return(
         <Modal
             {...props}
@@ -43,28 +68,52 @@ export function ModalCreateTask(props){
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea">
                         <Form.Label>Описание</Form.Label>
-                        <Form.Control as="textarea" rows={6} defaultValue={data_task.description}
-                                      value={descriptionTask}
-                                      onChange={(e)=>setDescriptionTask(e.target.value)}
+                        <Form.Control as="textarea" rows={6}
+                                      defaultValue={data_task.description}
+                                      onChange={handleTextChange}
+                        />
+                        <DatePicker
+                            className="form-control"
+                            placeholderText="Select date"
+                            onChange={(date) => setStartDate(date)}
+                            selected={slectedDate ? slectedDate : ""}
+                            dateFormat="yyyy-MM-dd"
                         />
                     </Form.Group>
                     <Form.Group>
                         <div>
                             <p>Срок</p>
                             <p>Срок</p>
-                            {console.log(data_task)}
-                            <DatePicker locale="ru" format='yyyy-MM-dd' defaultValue={data_task.date_start}
-                                        selected={startDate} onChange={(date) => setStartDate(date)} />
+
+                            {/*<DatePicker locale="ru" format='yyyy-MM-dd' defaultValue={data_task.date_start}*/}
+                            {/*            selected={startDate} onChange={(date) => setStartDate(date)} />*/}
+                            {/*<DatePicker*/}
+                            {/*    selected={startDate}*/}
+                            {/*    onChange={(date) => setStartDate(date)}*/}
+                            {/*    selectsStart*/}
+                            {/*    startDate={startDate}*/}
+                            {/*    // endDate={endDate}*/}
+                            {/*/>*/}
+                            {/*<DatePicker*/}
+                            {/*    locale="ru" */}
+                            {/*    selected={endDate}*/}
+                            {/*    onChange={(date) => setEndDate(date)}*/}
+                            {/*    selectsEnd*/}
+                            {/*    startDate={startDate}*/}
+                            {/*    endDate={endDate}*/}
+                            {/*    minDate={startDate}*/}
+                            {/*/>*/}
                         </div>
-                        <div>
-                            {console.log(data_task.date_end)}
-                            <DatePicker locale="ru" format='yyyy-MM-dd' defaultValue={data_task.date_end} selected={endDate} onChange={(date) => setEndDate(date)} />
-                        </div>
+
+                        {/*<div>*/}
+                        {/*    {console.log(descriptionTask + "000")}*/}
+                        {/*    <DatePicker locale="ru" format='yyyy-MM-dd' defaultValue={data_task.date_end} selected={endDate} onChange={(date) => setEndDate(date)} />*/}
+                        {/*</div>*/}
                         <Form.Select>
                             <option>Важность</option>
-                            <option value="1">Срочно</option>
-                            <option value="2">Срочно</option>
-                            <option value="3">Срочно</option>
+                            <option value="1">Низкая</option>
+                            <option value="2">Средняя</option>
+                            <option value="3">Высокая</option>
                         </Form.Select>
                         <Dropdown
                             className="list-members"
@@ -101,11 +150,10 @@ export function ModalCreateTask(props){
                 <Button onClick={
                     ()=> {
                         setNameTask(null);
-                        setEndDate(null);
+                        // setEndDate(null);
                         setStartDate(null);
-                        setDescriptionTask(null);
-                        props.onHide();
-                        setDescriptionTask(null);
+                                   props.onHide();
+
                     }}>
                     Close</Button>
             </Modal.Footer>
