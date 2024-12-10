@@ -20,34 +20,34 @@ export function ModalCreateTask(props){
     const name = data_task.name_task;
     const start = props.data_task.date_start;
     const end = props.data_task.date_end;
-
+    {console.log(props.data_task.date_start + "111")}
+    {console.log(props.data_task.date_end + "222")}
     const [nameTask,setNameTask] = useState("")
     const [descriptionTask,setDescriptionTask] = useState(props.data_task.description)
     const [value, onChange] = useState("");
-    console.log(start)
-    console.log(end)
-    const fstart = moment(start, "YYYY-MM-DD").format("YYYY/MM/DD");
-    const [startDate, setStartDate] = useState(new Date());
+    let fstart;
+    if(start === null) {
+        fstart = moment(new Date()).format("YYYY/MM/DD");
+    }else {
+        fstart = moment(start, "YYYY-MM-DD").format("YYYY/MM/DD");
+    }
+    const [selectDate, setSelectDate] = useState(new Date(fstart))
+    const fstart1 = moment(start, "YYYY-MM-DD").format("YYYY/MM/DD");
+    const [startDate, setStartDate] = useState(props.data_task.date_start);
+    const [endDate, setEndDate] = useState(props.data_task.date_end);
 
-    const [endDate, setEndDate] = useState(new Date(props.data_task.date_end));
-    console.log("f " + fstart)
-    console.log("task " + nameTask)
-    {console.log(props.data_task.date_start + "111")}
-    {console.log(props.data_task.date_end + "222")}
+    const selectedDate = moment(start).toDate();
 
-    // useEffect(()=>{
-    //     async function reloadData(){
-    //         await setDescriptionTask(data_task.description)
-    //     }
-    // }
 
-    //
-    // ,[])
+
     const handleTextChange=(event)=>{
         setDescriptionTask(event.target.value)
     }
     // const [startDate, setStartDate] = useState(new Date());
-    const slectedDate = moment(fstart).toDate();
+
+    const [dateText, setDateText] = useState('')
+    const [startDate1, setStartDate1] = useState(new Date());
+
     return(
         <Modal
             {...props}
@@ -72,18 +72,15 @@ export function ModalCreateTask(props){
                                       defaultValue={data_task.description}
                                       onChange={handleTextChange}
                         />
-                        <DatePicker
-                            className="form-control"
-                            placeholderText="Select date"
-                            onChange={(date) => setStartDate(date)}
-                            selected={slectedDate ? slectedDate : ""}
-                            dateFormat="yyyy-MM-dd"
-                        />
+                        <p>Пока без календаря, ничего не получается</p>
+                        <p>Срок</p>
+                        <Form.Control type="text" placeholder="Название задачи" defaultValue={props.data_task.date_start} onChange={(e)=>setStartDate(e.target.value)}/>
+                        <Form.Control type="text" placeholder="Название задачи" defaultValue={props.data_task.date_end} onChange={(e)=>setEndDate(e.target.value)}/>
+
                     </Form.Group>
                     <Form.Group>
                         <div>
-                            <p>Срок</p>
-                            <p>Срок</p>
+
 
                             {/*<DatePicker locale="ru" format='yyyy-MM-dd' defaultValue={data_task.date_start}*/}
                             {/*            selected={startDate} onChange={(date) => setStartDate(date)} />*/}
@@ -95,7 +92,7 @@ export function ModalCreateTask(props){
                             {/*    // endDate={endDate}*/}
                             {/*/>*/}
                             {/*<DatePicker*/}
-                            {/*    locale="ru" */}
+                            {/*    locale="ru"*/}
                             {/*    selected={endDate}*/}
                             {/*    onChange={(date) => setEndDate(date)}*/}
                             {/*    selectsEnd*/}
@@ -152,7 +149,8 @@ export function ModalCreateTask(props){
                         setNameTask(null);
                         // setEndDate(null);
                         setStartDate(null);
-                                   props.onHide();
+                        setSelectDate(null)
+                        props.onHide();
 
                     }}>
                     Close</Button>

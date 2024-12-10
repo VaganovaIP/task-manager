@@ -243,7 +243,6 @@ export const KanbanBoard = () =>{
                                 onHide={() => setModalIsOpen(false)}
                                 members={members}
                                 data_task={activeTask}
-
                             />
                             <div>
                                 <button onClick={openModal}>Открыть модальное окно</button>
