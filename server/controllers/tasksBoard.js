@@ -3,6 +3,7 @@ const Board = require("../models/Board");
 const Task = require("../models/Task");
 const User = require("../models/User");
 const BoardMembers = require("../models/BoardMember");
+const TaskAssignment = require("../models/TaskAssignment");
 const {values} = require("pg/lib/native/query");
 const { v4: uuidv4 } = require("uuid");
 
@@ -33,22 +34,27 @@ async function createTask(req, res) {
         .catch((err) => {console.log(err)})
 }
 
-
+async function addAssignments(req, res){
+    const {user_id, task_id} = req.body;
+    await TaskAssignments.create({user_id, task_id})
+        .then(res.status(200).send({message: 'New assignment created'}))
+        .catch((err) => {console.log(err)})
+}
 
 module.exports = {
     createListTask:async (req, res) => {
         const {formName} = req.body;
-        if (formName === "form-add-list"){
-            await createList(req, res);
+        switch (formName){
+            case "form-add-lis":
+                await createList(req, res);
+                break;
+            case "form-add-task":
+                await createTask(req, res);
+                break;
+            case "form-add-assignments":
+                await addAssignments(req, res);
+                break;
         }
-        if (formName === "form-add-task"){
-            await createTask(req, res);
-        }
-        //
-        // if (controlId === 2){
-        //     await createTask(req, res);
-        // }
-
     },
 
     tasksView:async (req, res)=>{
@@ -76,7 +82,15 @@ module.exports = {
                 where:{board_id:board_id}
             })
 
-            await res.status(200).json({lists:list, tasks:tasks, members:members})
+            let assignments = await TaskAssignment.findAll({
+                include:[{model: User},
+                         {model:Task,
+                             where:{board_id:board_id},
+                          include:[{model: User},]
+                         }
+                ]
+            })
+            await res.status(200).json({lists:list, tasks:tasks, members:members, assignments:assignments})
         } catch (err){
             console.log(err)
         }

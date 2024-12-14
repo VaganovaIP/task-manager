@@ -3,7 +3,7 @@ import {useLocation, useParams} from "react-router-dom";
 import {useState} from "react";
 import {HeaderMenu, Menu} from "../components/HeaderMenu.jsx";
 import Button from "react-bootstrap/Button";
-import {createList, getDataBoard, createTask} from "../scripts/backend/taskManager.jsx";
+import {createList, fetchDataBoard, createTask} from "../scripts/backend/taskManager.jsx";
 import {createBoard, getAllBoards} from "../scripts/backend/boardsActions.jsx";
 import Form from "react-bootstrap/Form";
 import uuid from "react-uuid";
@@ -44,25 +44,27 @@ export const KanbanBoard = () =>{
     const [activeTask, setActiveTask] = useState([])
     const [tasks, setTasks] = useState([])
     const [members, setMembers] = useState([])
-
+    const [assignments, setAssignments] = useState([])
+    console.log(assignments)
     const [onClickCreateList, setOnClickCreateList] = useState(false)
     const [onClickCreateTask, setOnClickCreateTask] = useState(false)
     const ref = useRef(null);
 
     useEffect( () => {
-        getDataBoard(board_id, name_board, setLists, setTasks, setMembers)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments)
             .catch(err => console.log(err));
     }, []);
 
 
     const createListCard = async (event) => {
         event.preventDefault();
-        createList(name_board, nameList, board_id)
+        const name = event.target.name.value;
+        createList(name_board, name, board_id)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_list = {
             board_id:board_id,
-            name_list:nameList
+            name_list:name
         }
         setLists([...lists, new_list])
         setNameList("");
@@ -71,13 +73,14 @@ export const KanbanBoard = () =>{
 
     const createTaskCard = async (event) => {
         event.preventDefault();
-        createTask(name_board, activeList, board_id, nameTask)
+        const name = event.target.name.value;
+        createTask(name_board, activeList, board_id, name)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_task = {
             board_id:board_id,
             list_id:activeList,
-            name_task:nameTask
+            name_task:name
         }
         setTasks([new_task, ...tasks])
         setNameTask("");
@@ -90,7 +93,7 @@ export const KanbanBoard = () =>{
                     <Card.Body>
                         <Form onSubmit={createListCard}>
                             <Form.Group className="mb-3">
-                                <Form.Control className="form-task-list"
+                                <Form.Control className="form-task-list" name="name"
                                               type="text" placeholder="" value={nameList}
                                               onChange={(e) => setNameList(e.target.value)}/>
 
@@ -111,7 +114,7 @@ export const KanbanBoard = () =>{
                     <Card.Body>
                         <Form onSubmit={createTaskCard}>
                             <Form.Group className="mb-3" >
-                                <Form.Control className="form-board"
+                                <Form.Control className="form-board" name="name"
                                               type="text" placeholder="" value={nameTask}
                                               onChange={(e) => setNameTask(e.target.value)
                                               }/>
@@ -243,6 +246,9 @@ export const KanbanBoard = () =>{
                                 onHide={() => setModalIsOpen(false)}
                                 members={members}
                                 data_task={activeTask}
+                                lists={lists}
+                                assignments={assignments}
+                                name_board={name_board}
                             />
                             <div>
                                 <button onClick={openModal}>Открыть модальное окно</button>

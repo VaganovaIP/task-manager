@@ -2,7 +2,7 @@ import axios  from "axios";
 import {BASE_API_URL} from "../../utils/api.js";
 
 
-export async function getDataBoard(board_id, name, setLists, setTasks, setMembers) {
+export async function fetchDataBoard(board_id, name, setLists, setTasks, setMembers, setAssignments) {
     await axios
         .get(`${BASE_API_URL}/board/${name}`, {
             params: {
@@ -13,6 +13,8 @@ export async function getDataBoard(board_id, name, setLists, setTasks, setMember
             setTasks(res.data.tasks);
             setLists(res.data.lists);
             setMembers(res.data.members);
+            setAssignments(res.data.assignments);
+            console.log(res.data.assignments)
         })
 }
 
@@ -38,7 +40,8 @@ export async function viewBoards(boards, setBoards) {
 };
 
 export const createList = async (name_board, name_list, board_id) => {
-    await axios.post(`${BASE_API_URL}/board/${name_board}`, {
+    await axios
+        .post(`${BASE_API_URL}/board/${name_board}`, {
         formName:"form-add-list",
         board_id: board_id,
         nameList: name_list,
@@ -53,7 +56,8 @@ export const createList = async (name_board, name_list, board_id) => {
 
 export const createTask = async (name_board, list_id, board_id, name_task) => {
     console.log(name_board, "create task")
-    await axios.post(`${BASE_API_URL}/board/${name_board}`, {
+    await axios
+        .post(`${BASE_API_URL}/board/${name_board}`, {
         formName:"form-add-task",
         board_id: board_id,
         name_task: name_task,
@@ -66,4 +70,19 @@ export const createTask = async (name_board, list_id, board_id, name_task) => {
             console.log(error);
         });
 };
+
+export const addAssignmentTask = async (name_board, user_id, task_id)=>{
+    await axios
+        .post(`${BASE_API_URL}/board/${name_board}`,{
+        formName:"form-add-assignments",
+        task_id:task_id,
+        user_id:user_id
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 

@@ -60,8 +60,8 @@
     flex:1;
     height: 100%;
     max-width: 170px;
-    background-color: var(--back-color);
-    box-shadow: 1px 1px 5px var(--shadow);
+    /*background-color: var(--back-color);*/
+    /*box-shadow: 1px 1px 5px var(--shadow);*/
 }
 
 .menu-item{
