@@ -8,6 +8,8 @@ router.get('/board/:name_board', boardTasksController.tasksView);
 
 router.post('/board/:name_board', boardTasksController.createListTask);
 router.post('/boards', boardController.addBoard);
+
+router.put('/board/:name_board', boardTasksController.saveTask);
 //router.post('/boards/board/:board_id', taskController.addTask);
 
 module.exports = router;

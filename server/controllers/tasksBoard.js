@@ -29,14 +29,16 @@ async function createList(req, res) {
 
 async function createTask(req, res) {
     const {board_id, name_task, list_id} = req.body;
-    await Task.create({task_id:uuidv4(), name_task, list_id, board_id})
+    await Task.create({task_id:uuidv4(), name_task, list_id, board_id, created_at:new Date()})
         .then(res.status(200).send({message: 'New task created'}))
         .catch((err) => {console.log(err)})
 }
 
+
+
 async function addAssignments(req, res){
     const {user_id, task_id} = req.body;
-    await TaskAssignments.create({user_id, task_id})
+    await TaskAssignment.create({user_id, task_id})
         .then(res.status(200).send({message: 'New assignment created'}))
         .catch((err) => {console.log(err)})
 }
@@ -74,7 +76,6 @@ module.exports = {
                         {model: Board},
                 ],
                 where:{board_id:board_id},
-                order:[['created_at', 'DESC']],
             })
 
             let members = await BoardMembers.findAll({
@@ -106,5 +107,15 @@ module.exports = {
             res.status(200).json(board);
             console.log(board)
         }).catch(err=>console.log(err));
-    }
+    },
+
+    saveTask:async (req, res)=>{
+        const {task_id, name_task,description,date_start,date_end,list_id,importance,status} = req.body;
+        await Task.update({name_task, description, date_start, date_end, list_id, importance, status}, {
+            where: {
+                task_id:task_id
+            }})
+            .then(res.status(200).send({message: `Task ${name_task} updated`}))
+            .catch((err) => {console.log(err)})
+    },
 }

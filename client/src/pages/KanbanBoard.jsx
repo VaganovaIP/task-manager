@@ -139,6 +139,8 @@ export const KanbanBoard = () =>{
 
     const closeModal = () => {
         setModalIsOpen(false);
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments)
+            .catch(err => console.log(err));
     };
 
     const handleClickCreateList=()=> {
@@ -243,7 +245,7 @@ export const KanbanBoard = () =>{
                             </div>
                             <ModalCreateTask
                                 show={modalIsOpen}
-                                onHide={() => setModalIsOpen(false)}
+                                onHide={()=>closeModal()}
                                 members={members}
                                 data_task={activeTask}
                                 lists={lists}
