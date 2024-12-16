@@ -3,6 +3,7 @@ const sequelize = require('../db');
 const User = require('../models/User');
 const Board = require('../models/Board');
 const List = require('../models/List');
+const db = require("../db");
 
 
 const Task = sequelize.define(
@@ -23,8 +24,8 @@ const Task = sequelize.define(
         date_end:{
             type: DataTypes.DATE,
         },
-        created_at:{
-            type: DataTypes.TIME,
+        createdAt:{
+            type: DataTypes.DATE,
         },
         status:{
             type: DataTypes.BOOLEAN,
@@ -54,7 +55,7 @@ Task.belongsTo(Board, {foreignKey:"board_id"})
 List.hasMany(Task,{
     foreignKey: 'list_id',
 });
-Task.belongsTo(List, {foreignKey:"list_id"})
+Task.belongsTo(List, {foreignKey:"list_id"});
 
 
 module.exports = Task;

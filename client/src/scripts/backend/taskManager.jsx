@@ -18,15 +18,6 @@ export async function fetchDataBoard(board_id, name, setLists, setTasks, setMemb
         })
 }
 
-// async function getAllLists() {
-//     await axios
-//         .get(`${BASE_API_URL}/boards/board/:board_id`)
-//         .then(res => {
-//             console.log(res.data.lists);
-//         })
-// }
-
-
 export async function viewBoards(boards, setBoards) {
     await axios
         .get(`${BASE_API_URL}/boards`)
@@ -54,11 +45,12 @@ export const createList = async (name_board, name_list, board_id) => {
         });
 };
 
-export const createTask = async (name_board, list_id, board_id, name_task, owner_id) => {
+export const createTask = async (task_id, name_board, list_id, board_id, name_task, owner_id) => {
     console.log(name_board, "create task")
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`, {
         formName:"form-add-task",
+        task_id:task_id,
         board_id: board_id,
         name_task: name_task,
         list_id:list_id,
@@ -75,7 +67,6 @@ export const createTask = async (name_board, list_id, board_id, name_task, owner
 export const saveTask = async (task_id, name, description, dateStart, dateEnd, list_id, importance, status, name_board)=>{
     await axios
         .put(`${BASE_API_URL}/board/${name_board}`, {
-            formName:"save-task",
             task_id:task_id,
             name_task:name,
             description:description,
@@ -94,7 +85,7 @@ export const saveTask = async (task_id, name, description, dateStart, dateEnd, l
 }
 
 
-export const addAssignmentTask = async (name_board, user_id, task_id)=>{
+export const onAddAssignmentTask = async (name_board, user_id, task_id)=>{
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`,{
         formName:"form-add-assignments",

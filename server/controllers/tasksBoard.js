@@ -6,6 +6,7 @@ const BoardMembers = require("../models/BoardMember");
 const TaskAssignment = require("../models/TaskAssignment");
 const {values} = require("pg/lib/native/query");
 const { v4: uuidv4 } = require("uuid");
+const date = require('date-and-time');
 
 async function createTask(req, res) {
     const {board_id, date_end, date_start,
@@ -28,13 +29,13 @@ async function createList(req, res) {
 }
 
 async function createTask(req, res) {
-    const {board_id, name_task, list_id} = req.body;
-    await Task.create({task_id:uuidv4(), name_task, list_id, board_id, created_at:new Date()})
+    const {board_id, name_task, list_id, task_id} = req.body;
+    const value = date.format((new Date()),
+        'YYYY/MM/DD HH:mm:ss');
+    await Task.create({task_id, name_task, list_id, board_id, created_at:new Date()})
         .then(res.status(200).send({message: 'New task created'}))
         .catch((err) => {console.log(err)})
 }
-
-
 
 async function addAssignments(req, res){
     const {user_id, task_id} = req.body;
@@ -103,7 +104,8 @@ module.exports = {
             attributes:['board_id', 'name_board'],
             where:{owner:"306dcf05-d3d6-4b43-8e06-6b6ffe2331f2"},
             order:[['createdAt', 'DESC']],
-        }, {raw:true}).then(board=>{
+        }, {raw:true})
+            .then(board=>{
             res.status(200).json(board);
             console.log(board)
         }).catch(err=>console.log(err));
@@ -111,11 +113,15 @@ module.exports = {
 
     saveTask:async (req, res)=>{
         const {task_id, name_task,description,date_start,date_end,list_id,importance,status} = req.body;
-        await Task.update({name_task, description, date_start, date_end, list_id, importance, status}, {
+        await Task.update({name_task:name_task, description:description, date_start:date_start,
+                          date_end:date_end, list_id:list_id, importance:importance, status:status },
+            {
             where: {
-                task_id:task_id
-            }})
+                task_id:task_id,
+            },
+        })
             .then(res.status(200).send({message: `Task ${name_task} updated`}))
             .catch((err) => {console.log(err)})
-    },
+    }
 }
+

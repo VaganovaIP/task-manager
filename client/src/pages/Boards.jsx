@@ -46,7 +46,7 @@ export default function Boards() {
         )
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmitCardTask = async (event) => {
         event.preventDefault();
         let board_id = uuid();
         createBoard(name, board_id)
@@ -66,7 +66,7 @@ export default function Boards() {
        return(
            <Card border="primary" className="item-board">
                <Card.Body>
-                   <Form onSubmit={handleSubmit}>
+                   <Form onSubmit={handleSubmitCardTask}>
                        <Form.Group className="mb-3" controlId="formBasicEmail">
                            <Form.Control className="form-board"
                                type="text" placeholder="" value={name}
@@ -83,7 +83,7 @@ export default function Boards() {
     }
 
 
-    const boardSearch= (event) =>{
+    const onChangeBoardSearch= (event) =>{
         const {value} = event.target;
         if (value.length === 0){
             setSearchResults(boards);
@@ -114,14 +114,13 @@ export default function Boards() {
                             placeholder="Поиск"
                             className="me-2"
                             aria-label="Search"
-                            onChange={boardSearch}
+                            onChange={onChangeBoardSearch}
                         />
                     </Form>
                     </div>
 
                     <ul className="list-boards">
                         {addCardBoard()}
-                        {console.log(onSearch)}
                         {
                             onSearch ? (
                                 searchResults.map((board) =>

@@ -56,7 +56,7 @@ export const KanbanBoard = () =>{
     }, []);
 
 
-    const createListCard = async (event) => {
+    const onCreateListCard = async (event) => {
         event.preventDefault();
         const name = event.target.name.value;
         createList(name_board, name, board_id)
@@ -71,13 +71,15 @@ export const KanbanBoard = () =>{
         setOnClickCreateList(false)
     };
 
-    const createTaskCard = async (event) => {
+    const onCreateTaskCard = async (event) => {
         event.preventDefault();
         const name = event.target.name.value;
-        createTask(name_board, activeList, board_id, name)
+        let task_id = uuid();
+        createTask(task_id, name_board, activeList, board_id, name)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_task = {
+            task_id:task_id,
             board_id:board_id,
             list_id:activeList,
             name_task:name
@@ -91,7 +93,7 @@ export const KanbanBoard = () =>{
         return(
                 <Card border="primary" className="item-board">
                     <Card.Body>
-                        <Form onSubmit={createListCard}>
+                        <Form onSubmit={onCreateListCard}>
                             <Form.Group className="mb-3">
                                 <Form.Control className="form-task-list" name="name"
                                               type="text" placeholder="" value={nameList}
@@ -112,7 +114,7 @@ export const KanbanBoard = () =>{
             <div className="card-add-task">
                 <Card border="primary" className="item-board">
                     <Card.Body>
-                        <Form onSubmit={createTaskCard}>
+                        <Form onSubmit={onCreateTaskCard}>
                             <Form.Group className="mb-3" >
                                 <Form.Control className="form-board" name="name"
                                               type="text" placeholder="" value={nameTask}
@@ -150,8 +152,6 @@ export const KanbanBoard = () =>{
         setOnClickCreateTask(true)
         setActiveList(list_id)
     }
-
-
 
     return(
         <div className="f-container">
@@ -224,12 +224,9 @@ export const KanbanBoard = () =>{
                                             {/*    <i className="bi bi-plus"></i>*/}
                                             {/*</Button>*/}
                                         </div>
-
                                     )
-
                                 )
                                 }
-
                             <div className="create-list">
                                 <div className="add-list">
                                     {

@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import Popup from "reactjs-popup";
 import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
-import {addAssignmentTask, saveTask} from "../scripts/backend/taskManager";
+import {onAddAssignmentTask, saveTask} from "../scripts/backend/taskManager";
 import 'react-calendar/dist/Calendar.css'
 import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {ru} from 'date-fns/locale/ru';
@@ -29,15 +29,16 @@ function ModalAddAssignments(props){
 export function ModalCreateTask(props){
 
     const {members, data_task, lists, assignments, name_board} = props;
-    console.log(data_task.name_task)
-    const [nameTask,setNameTask] = useState("data_task.name_task")
-    const [descriptionTask,setDescriptionTask] = useState(data_task.description);
-    const [list, setList] = useState(data_task.list_id);
-    console.log(data_task.list_id)
-    const [nameList, setNameList] = useState(data_task.List?.name_list)
-    const [value, onChange] = useState("");
-    const [importance, setImportance] = useState("");
-    const [status, setStatus] = useState(props.data_task.status);
+    console.log(data_task.task_id + "при модалке")
+    const [nameTask,setNameTask] = useState('');
+    const [descriptionTask,setDescriptionTask] = useState('');
+    const [list, setList] = useState('');
+    const [nameList, setNameList] = useState('')
+    const [value, onChange] = useState('');
+    const [importance, setImportance] = useState('');
+    const [status, setStatus] = useState(false);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     //даты пока null
 
     useEffect(()=>{
@@ -46,22 +47,25 @@ export function ModalCreateTask(props){
         setList(data_task.list_id);
         setNameList(data_task.List?.name_list);
         setDescriptionTask(data_task.description);
-    },[])
+        setImportance(data_task.importance);
+        setStatus(data_task.status);
+        setStartDate(data_task.date_start);
+        setEndDate(data_task.date_end);
+    },[data_task])
 
 
-    const saveTaskState = async () => {
+    const onSaveTaskState = async () => {
         console.log(data_task.task_id, nameTask, descriptionTask,
             props.data_task.date_start, props.data_task.date_end,
             list, importance, status, name_board)
         saveTask(data_task.task_id, nameTask, descriptionTask,
-            props.data_task.date_start, props.data_task.date_end,
+            startDate, endDate,
             list, importance, status, name_board)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         setList(null);
         setNameTask(null);
         setDescriptionTask(null);
-
     };
 
 
@@ -77,13 +81,12 @@ export function ModalCreateTask(props){
                     <input type="text" placeholder="Название задачи" defaultValue={data_task.name_task} onChange={(e)=>setNameTask(e.target.value)}/>
                 </Modal.Title>
                 <select onChange={(e)=>setList(e.target.value)} defaultValue={data_task.list_id}>
-                    {console.log(data_task.List?.name_list)}
-                    <option value={data_task.list_id}>{data_task.List?.name_list}</option>
                     {lists.map((list)=>(
                         <option value={list.list_id} key={list.list_id}
-                                onClick={()=>{
+                                onChange={()=>{
                                     setNameList(list.name_list);
-                                    setList(list.list_id);}}>
+                                    setList(list.list_id);
+                                }}>
                             {list.name_list}
                         </option>
                     ))}
@@ -97,13 +100,14 @@ export function ModalCreateTask(props){
                                       defaultValue={data_task.description}
                                       onChange={(e)=>setDescriptionTask(e.target.value)}
                         />
-                        <p>Пока без календаря, ничего не получается</p>
                         <p>Срок</p>
-                        <Form.Control type="text" placeholder="Название задачи" defaultValue={props.data_task.date_start} onChange={(e)=>setStartDate(e.target.value)}/>
-                        <Form.Control type="text" placeholder="Название задачи" defaultValue={props.data_task.date_end} onChange={(e)=>setEndDate(e.target.value)}/>
+                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
+                        {/*<Form.Control type="text" placeholder="Название задачи" defaultValue={props.data_task.date_start} onChange={(e)=>setStartDate(e.target.value)}/>*/}
+                        {/*<Form.Control type="text" placeholder="Название задачи" defaultValue={props.data_task.date_end} onChange={(e)=>setEndDate(e.target.value)}/>*/}
                     </Form.Group>
                     <Form.Group>
-                        <Form.Select value={importance}
+                        <Form.Select defaultValue={importance}
                                      onChange={(e)=>setImportance(e.target.value)}>
                             <option value=""></option>
                             <option value="Низкая">Низкая</option>
@@ -111,7 +115,7 @@ export function ModalCreateTask(props){
                             <option value="Высокая">Высокая</option>
                         </Form.Select>
                         <div>
-                            <Form.Check checked={status} onChange={()=>setStatus(!status)}>
+                            <Form.Check type={'checkbox'} defaultChecked={status} onChange={()=>setStatus(!status)}>
                             </Form.Check>
                             <p>{status ? "Задача выполнена" : "Задача не выполнена" }</p>
                         </div>
@@ -143,7 +147,7 @@ export function ModalCreateTask(props){
                                         <div className="member-info">
                                             <p className="name-member">{member.User.username}</p>
                                             <button className="add-button-member" variant="secondary"
-                                                    type="button" onClick={() => addAssignmentTask(name_board, member.User.user_id, data_task.task_id)}>
+                                                    type="button" onClick={() => onAddAssignmentTask(name_board, member.User.user_id, data_task.task_id)}>
                                                 <i className="bi bi-plus"></i>
                                             </button>
                                         </div>
@@ -168,7 +172,7 @@ export function ModalCreateTask(props){
 
                     }}>
                     Close</Button>
-                <Button onClick={saveTaskState}>
+                <Button onClick={onSaveTaskState}>
                     Сохранить
                 </Button>
             </Modal.Footer>
@@ -176,7 +180,6 @@ export function ModalCreateTask(props){
     )
 
 }
-
 
 
 
