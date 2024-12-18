@@ -4,37 +4,19 @@ import {useState} from "react";
 import {HeaderMenu, Menu} from "../components/HeaderMenu.jsx";
 import Button from "react-bootstrap/Button";
 import {createList, fetchDataBoard, createTask} from "../scripts/backend/taskManager.jsx";
-import {createBoard, getAllBoards} from "../scripts/backend/boardsActions.jsx";
 import Form from "react-bootstrap/Form";
 import uuid from "react-uuid";
 import {RenderTaskList} from "../components/Tasks.jsx";
 import Card from "react-bootstrap/Card";
-import Popup from "reactjs-popup";
-import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
-import * as PropTypes from "prop-types";
-import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css'
 import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
-import {ModalCreateTask} from "../modals/createTask"
+import {ModalEditTask} from "../modals/task/editTask.jsx"
+import {ModalAddMembers} from "../modals/members/membersView.jsx";
 
-import "react-datepicker/dist/react-datepicker.css";
-
-function DropdownType(props) {
-    return null;
-}
-
-DropdownType.propTypes = {
-    as: PropTypes.any,
-    size: PropTypes.string,
-    id: PropTypes.string,
-    title: PropTypes.string,
-    children: PropTypes.node
-};
 export const KanbanBoard = () =>{
-    const {name} = useParams()
     const location = useLocation()
     const {board_id, name_board} = location.state;
     const [nameList, setNameList] = useState("")
@@ -45,16 +27,17 @@ export const KanbanBoard = () =>{
     const [tasks, setTasks] = useState([])
     const [members, setMembers] = useState([])
     const [assignments, setAssignments] = useState([])
-    console.log(assignments)
+    const [users, setUsers] = useState([])
     const [onClickCreateList, setOnClickCreateList] = useState(false)
     const [onClickCreateTask, setOnClickCreateTask] = useState(false)
+    const [modalEditIsOpen, setModalEditIsOpen] = useState(false)
+    const [modalMembersIsOpen, setModalMembersIsOpen] = useState(false)
     const ref = useRef(null);
 
     useEffect( () => {
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers)
             .catch(err => console.log(err));
     }, []);
-
 
     const onCreateListCard = async (event) => {
         event.preventDefault();
@@ -88,6 +71,35 @@ export const KanbanBoard = () =>{
         setNameTask("");
         setOnClickCreateTask(false)
     };
+
+    ///
+    const openModalEdit = (task) => {
+        setModalEditIsOpen(true);
+        setActiveTask(task);
+    };
+
+    const closeModalEdit = () => {
+        setModalEditIsOpen(false);
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers)
+            .catch(err => console.log(err));
+    };
+
+    const closeModalMembers = () => {
+        setModalMembersIsOpen(false);
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers)
+            .catch(err => console.log(err));
+    };
+
+    const handleClickCreateList=()=> {
+        setOnClickCreateList(true)
+    }
+    const handleClickCreateTask=(list_id)=> {
+        setOnClickCreateTask(true)
+        setActiveList(list_id)
+    }
+
+    ///
+
 
     const CardCreateList = () =>{
         return(
@@ -131,28 +143,6 @@ export const KanbanBoard = () =>{
         )
     }
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [d, setD] = useState('')
-    const openModal = (task) => {
-        setModalIsOpen(true);
-        setActiveTask(task);
-        setD(task.description)
-    };
-
-    const closeModal = () => {
-        setModalIsOpen(false);
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments)
-            .catch(err => console.log(err));
-    };
-
-    const handleClickCreateList=()=> {
-        setOnClickCreateList(true)
-    }
-    const handleClickCreateTask=(list_id)=> {
-        setOnClickCreateTask(true)
-        setActiveList(list_id)
-    }
-
     return(
         <div className="f-container">
             <HeaderMenu></HeaderMenu>
@@ -182,7 +172,7 @@ export const KanbanBoard = () =>{
                                     </Dropdown.Item>
                                 ))}
                                 <Dropdown.Divider></Dropdown.Divider>
-                                <Dropdown.Item>
+                                <Dropdown.Item onClick={()=>setModalMembersIsOpen(true)}>
                                     <div className="add-button-member">
                                         <i className="bi bi-plus"></i>
                                         <p className="name-member">Добавить участника</p>
@@ -201,7 +191,7 @@ export const KanbanBoard = () =>{
                                             <ul className="list-tasks">
                                                 {tasks.map((task, index) => (
                                                     list.list_id === task.list_id) &&(
-                                                        <li className="task" key={index}  onClick={()=>openModal(task)}>
+                                                        <li className="task" key={index}  onClick={()=>openModalEdit(task)}>
                                                             <RenderTaskList   task ={task} list={list}></RenderTaskList>
                                                         </li>
                                                     )
@@ -219,10 +209,6 @@ export const KanbanBoard = () =>{
                                                 }
 
                                             </ul>
-
-                                            {/*<Button className="add-button" variant="secondary" type="button" onClick={openModal}>*/}
-                                            {/*    <i className="bi bi-plus"></i>*/}
-                                            {/*</Button>*/}
                                         </div>
                                     )
                                 )
@@ -240,17 +226,25 @@ export const KanbanBoard = () =>{
                                     }
                                 </div>
                             </div>
-                            <ModalCreateTask
-                                show={modalIsOpen}
-                                onHide={()=>closeModal()}
+                            <ModalEditTask
+                                show={modalEditIsOpen}
+                                onHide={closeModalEdit}
                                 members={members}
                                 data_task={activeTask}
                                 lists={lists}
                                 assignments={assignments}
                                 name_board={name_board}
                             />
+                            <ModalAddMembers
+                                show={modalMembersIsOpen}
+                                onHide={closeModalMembers}
+                                members={members}
+                                users={users}
+                                name_board={name_board}
+                                board_id={board_id}
+                            />
                             <div>
-                                <button onClick={openModal}>Открыть модальное окно</button>
+                                {console.log(users)} {console.log(members)}
                             </div>
 
                         </div>

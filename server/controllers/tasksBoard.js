@@ -8,18 +8,6 @@ const {values} = require("pg/lib/native/query");
 const { v4: uuidv4 } = require("uuid");
 const date = require('date-and-time');
 
-async function createTask(req, res) {
-    const {board_id, date_end, date_start,
-        description, importance, list_id,
-        name_task, owner_id, status} = req.body;
-    await Task.create({
-        task_id: uuidv4(), board_id, date_end, date_start,
-        description, importance, list_id,
-        name_task, owner_id, status
-    }).then(
-        res.status(200).send({message: 'New task created'})
-    ).catch((err) => {console.log(err)})
-}
 
 async function createList(req, res) {
     const {board_id, nameList} = req.body;
@@ -44,6 +32,13 @@ async function addAssignments(req, res){
         .catch((err) => {console.log(err)})
 }
 
+async function addMembersBoard(req, res){
+    const {user_id, board_id} = req.body;
+    await BoardMembers.create({user_id, board_id})
+        .then(res.status(200).send({message: 'New member created'}))
+        .catch((err) => {console.log(err)})
+}
+
 module.exports = {
     createListTask:async (req, res) => {
         const {formName} = req.body;
@@ -57,13 +52,16 @@ module.exports = {
             case "form-add-assignments":
                 await addAssignments(req, res);
                 break;
+            case "form-add-members":
+                await addMembersBoard(req, res);
+                break;
         }
     },
 
     tasksView:async (req, res)=>{
         const board_id = req.query.id;
         try{
-            let list = await List.findAll({
+            let lists = await List.findAll({
                 attributes: ['list_id', 'name_list'],
                 where: {id_board: board_id},
             })
@@ -92,7 +90,12 @@ module.exports = {
                          }
                 ]
             })
-            await res.status(200).json({lists:list, tasks:tasks, members:members, assignments:assignments})
+
+            let users = await User.findAll({
+                attributes: ['user_id', 'username'],
+            })
+
+            await res.status(200).json({lists:lists, tasks:tasks, members:members, assignments:assignments, users:users})
         } catch (err){
             console.log(err)
         }

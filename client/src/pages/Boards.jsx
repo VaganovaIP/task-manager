@@ -1,6 +1,6 @@
 import React from 'react';
 import {useEffect, useState} from "react";
-import {createBoard, getAllBoards} from "../scripts/backend/boardsActions.jsx";
+import {createBoard, fetchAllBoards} from "../scripts/backend/boardsManager.jsx";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -27,11 +27,10 @@ export default function Boards() {
 
 
     useEffect( () => {
-        getAllBoards(boards, setBoards)
+        fetchAllBoards(boards, setBoards)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     }, []);
-
 
     const renderListBoards = (item) => {
         const Redirect = <Navigate to="/board" replace={false} state={{id: 'board_id'}} />
@@ -49,7 +48,8 @@ export default function Boards() {
     const handleSubmitCardTask = async (event) => {
         event.preventDefault();
         let board_id = uuid();
-        createBoard(name, board_id)
+        const email = "user1@.ru";
+        createBoard(name, board_id, email)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_board = {
@@ -62,7 +62,7 @@ export default function Boards() {
 
     };
 
-    const addCardBoard=()=>{
+    const addCardBoard=(name, setName)=>{
        return(
            <Card border="primary" className="item-board">
                <Card.Body>
@@ -81,7 +81,6 @@ export default function Boards() {
            </Card>
        )
     }
-
 
     const onChangeBoardSearch= (event) =>{
         const {value} = event.target;
@@ -106,7 +105,6 @@ export default function Boards() {
                 <div className="content">
                     <div className="action-page">
                         <div className="name-page">Доски
-
                         </div>
                         <Form className="d-flex">
                         <Form.Control
@@ -120,7 +118,7 @@ export default function Boards() {
                     </div>
 
                     <ul className="list-boards">
-                        {addCardBoard()}
+                        {addCardBoard(name, setName)}
                         {
                             onSearch ? (
                                 searchResults.map((board) =>

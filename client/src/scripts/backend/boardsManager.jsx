@@ -3,7 +3,7 @@ import {redirect, Navigate} from "react-router-dom";
 import axios from "axios";
 import {BASE_API_URL} from "../../utils/api";
 
-export async function getAllBoards(boards, setBoards) {
+export async function fetchAllBoards(boards, setBoards) {
     await axios
         .get(`${BASE_API_URL}/boards`)
         .then(data => {
@@ -15,8 +15,7 @@ export async function getAllBoards(boards, setBoards) {
         })
 };
 
-export const createBoard = async (name_board, board_id) => {
-    const email = "user1@.ru";
+export const createBoard = async (name_board, board_id, email) => {
     await axios
         .post(`${BASE_API_URL}/boards`, {
         board_id: board_id,
@@ -30,3 +29,18 @@ export const createBoard = async (name_board, board_id) => {
             console.log(error);
         });
 };
+
+export const addMembersBoard=async (name_board, user_id, board_id) => {
+    await axios
+        .post(`${BASE_API_URL}/board/${name_board}`, {
+            formName: "form-add-members",
+            user_id: user_id,
+            board_id: board_id
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}

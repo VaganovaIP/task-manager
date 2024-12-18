@@ -2,7 +2,7 @@ import axios  from "axios";
 import {BASE_API_URL} from "../../utils/api.js";
 
 
-export async function fetchDataBoard(board_id, name, setLists, setTasks, setMembers, setAssignments) {
+export async function fetchDataBoard(board_id, name, setLists, setTasks, setMembers, setAssignments, setUsers) {
     await axios
         .get(`${BASE_API_URL}/board/${name}`, {
             params: {
@@ -14,21 +14,9 @@ export async function fetchDataBoard(board_id, name, setLists, setTasks, setMemb
             setLists(res.data.lists);
             setMembers(res.data.members);
             setAssignments(res.data.assignments);
-            console.log(res.data.assignments)
+            setUsers(res.data.users);
         })
 }
-
-export async function viewBoards(boards, setBoards) {
-    await axios
-        .get(`${BASE_API_URL}/boards`)
-        .then(data => {
-            setBoards(data.data)
-            console.log(data.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-};
 
 export const createList = async (name_board, name_list, board_id) => {
     await axios
@@ -63,7 +51,6 @@ export const createTask = async (task_id, name_board, list_id, board_id, name_ta
         });
 };
 
-
 export const saveTask = async (task_id, name, description, dateStart, dateEnd, list_id, importance, status, name_board)=>{
     await axios
         .put(`${BASE_API_URL}/board/${name_board}`, {
@@ -83,7 +70,6 @@ export const saveTask = async (task_id, name, description, dateStart, dateEnd, l
             console.log(error);
         });
 }
-
 
 export const onAddAssignmentTask = async (name_board, user_id, task_id)=>{
     await axios
