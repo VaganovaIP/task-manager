@@ -22,9 +22,9 @@ export function ModalAddMembers(props){
         }
         const results = fuse.search(value);
         const items = results.map((result) => result.item);
-        setSearchResults(items);
+        const filterItems = items.filter((item) => !members.some((item2)=>item.user_id === item2.user_id))
+        setSearchResults(filterItems);
         setOnSearch(true);
-
     }
 
     return(
@@ -58,7 +58,7 @@ export function ModalAddMembers(props){
                         <li key={user.user_id}>
                             <div className="member-info">
                                 <p className="name-member">{user.username}</p>
-                                <button className="add-button-member" variant="secondary"
+                                <button className="add-button-member"
                                         type="button" onClick={() => addMembersBoard(name_board, user.user_id, board_id)}>
                                     <i className="bi bi-plus"></i>
                                 </button>
