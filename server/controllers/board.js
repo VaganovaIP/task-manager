@@ -30,6 +30,7 @@ module.exports = {
     addBoard: async (req, res) => {
         const { board_id, name_board, email } = req.body;
         const user = await User.findOne({
+            attributes:['user_id', 'username','email'],
             where:{
                 email:email
             }

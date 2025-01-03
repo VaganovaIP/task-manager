@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
 import {addMembersBoard} from "../../scripts/backend/boardsManager"
 import Fuse from "fuse.js";
-
+import "./index.css"
 
 
 export function ModalAddMembers(props){
@@ -33,13 +33,16 @@ export function ModalAddMembers(props){
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            className="modal-window"
         >
             <Modal.Header closeButton>
+                <div className="header-user-modal">
+                    <Modal.Title id="contained-modal-title-vcenter" className="label-modal">
+                        Добавить участника
+                    </Modal.Title>
+                </div>
             </Modal.Header>
             <Modal.Body>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    Добавить участника доски
-                </Modal.Title>
                 <Form.Control
                     type="search"
                     placeholder="Поиск"
@@ -49,10 +52,6 @@ export function ModalAddMembers(props){
                     name=""
                 />
                 {
-
-                }
-                {
-                    //добавить проверку на участие
                     onSearch &&
                     searchResults.map((user) =>(
                         <li key={user.user_id}>

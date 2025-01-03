@@ -52,6 +52,8 @@ export const KanbanBoard = () =>{
         setLists([...lists, new_list])
         setNameList("");
         setOnClickCreateList(false)
+        // fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers)
+        //     .catch(err => console.log(err));
     };
 
     const onCreateTaskCard = async (event) => {
@@ -154,27 +156,25 @@ export const KanbanBoard = () =>{
                     <div className="action-page">
                         <p className="name-page">{name_board}</p>
                         <Dropdown
-                            className="list-members"
-                            size="lg"
-                            >
-                            <Dropdown.Toggle variant="success" id="dropdown-basic" className="list-members">
-                                Участники доски
+                            className="list-members">
+                            <Dropdown.Toggle variant="success" id="dropdown-basic" className="list-members" >
+                                Участники
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {members.map((member) =>(
                                     <Dropdown.Item key={member.members_id}>
                                         <div className="member-info">
                                             <p className="name-member">{member.User.username}</p>
-                                            <Button className="delete-members-btn" variant="secondary" type="submit">
-                                                <i className="bi bi-trash"></i>
+                                            <Button className="members-btn" type="submit">
+                                                Исключить
                                             </Button>
                                         </div>
                                     </Dropdown.Item>
                                 ))}
-                                <Dropdown.Divider></Dropdown.Divider>
+                                <hr/>
                                 <Dropdown.Item onClick={()=>setModalMembersIsOpen(true)}>
-                                    <div className="add-button-member">
-                                        <i className="bi bi-plus"></i>
+                                    <div className="add-button-task-members">
+                                        <i className="fa fa-user-plus" aria-hidden="true"></i>
                                         <p className="name-member">Добавить участника</p>
                                     </div>
                                 </Dropdown.Item>
@@ -183,8 +183,8 @@ export const KanbanBoard = () =>{
                     </div>
                     <div className="kanban-board">
                         <div className="kanban-columns">
-                                {lists.map((list) => (
-                                        <div key={list.list_id}>
+                                {lists.map((list, index) => (
+                                        <div key={index}>
                                             <div className="column">
                                                 <div className="head-column">{list.name_list}</div>
                                             </div>
@@ -200,7 +200,7 @@ export const KanbanBoard = () =>{
                                                     onClickCreateTask && list.list_id === activeList ?(
                                                         CardCreateTask()
                                                     ):
-                                                        <Button className="add-button-task"
+                                                        <Button className="add-button-task-members"
                                                                 variant="secondary" type="button"
                                                                 onClick={() => handleClickCreateTask(list.list_id)}>
                                                             <i className="bi bi-plus"></i>

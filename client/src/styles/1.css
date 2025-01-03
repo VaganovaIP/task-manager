@@ -32,6 +32,16 @@ ul li{
     color: var(--font-main);
 }
 
+a{
+    color:#FFFFFF;
+}
+
+.user-info{
+    display: flex;
+    color: #383b80;
+    justify-content: center;
+    font-size: 30px;
+}
 
 .f-container{
     height: 100vh;
@@ -42,25 +52,21 @@ ul li{
 
 .main{
     display: flex;
-    /*background-color: #d3d3d3;*/
-    /*background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
-    /*background: -moz-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
-    /*background: linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
     background: -webkit-linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* Chrome 10-25, Safari 5.1-6 */                          background: linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     overflow: hidden;
+    scrollbar-color: #455AA0 #F2F5FF;
     height: calc(100% - 68px);
     width: 100%;
+    background-color: rgba(0, 0, 0, 0.03);
 }
 
 main-menu-content{
     flex:1;
 }
 
-
 a:active, a:hover, a{
     text-decoration: none;
 }
-
 
 .header{
     position: relative;
@@ -127,10 +133,12 @@ a:active, a:hover, a{
 
 .card-body{
     padding: 5px;
+    align-items: center;
+    vertical-align: center;
 }
 
 .card-title{
-    color: #960E0E;
+    color: #1E2B32;
 }
 
 .container{
@@ -138,7 +146,6 @@ a:active, a:hover, a{
     margin: 5px;
     padding: 5px;
 }
-
 
 .main-menu-content{
     display: flex;
@@ -156,6 +163,8 @@ a:active, a:hover, a{
     margin: 0;
     height: 100%;
     flex-grow: 1;
+    /*background-color: rgba(0, 0, 0, 0.03);*/
+    border-radius: 10px;
 }
 
 .name-page{
@@ -178,24 +187,26 @@ a:active, a:hover, a{
     row-gap: 10px;
     align-content: flex-start;
     overflow: auto;
+    scrollbar-color: #455AA0 #F2F5FF;
     width: 100%;
     height: 100vh;
     padding: 8px;
 }
 
-.item-board{
+.item-board {
     margin:0;
     padding: 10px;
     width: 200px;
     max-height: 150px;
     min-height: 100px;
     box-shadow: 1px 1px 5px var(--shadow);
+    color: #1E2B32;
 }
+
 
 .name-board{
     font-size: 15px;
 }
-
 
 
 /*MENU*/
@@ -204,8 +215,11 @@ a:active, a:hover, a{
 }
 
 .menu-item{
-    height: 40px;
-    color: var(--font-main);
+    align-content: center;
+    text-align: center;
+    min-height: 40px;
+    font-size: 20px;
+    color: #FFFFFF;
 }
 
 .my-case{
@@ -242,21 +256,37 @@ li:hover{
 
 
 .navigation{
+    width: 70px;
     flex-grow: 1;
-    margin: 3px;
-    height: 60%;
+    margin: 10px;
+    height: 90%;
     display: flex;
-    box-shadow: 1px 1px 5px var(--shadow);
+    flex-direction: column;
+    box-shadow: 1px 1px 2px var(--shadow);
     border-radius: 20px 20px;
-    /*background: -webkit-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
-    /*background: -moz-linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
-    /*background: linear-gradient(315deg, rgb(227, 224, 242) 1%, rgb(224, 224, 240), rgb(242, 247, 247));*/
+    background-color: #465AA0;
+}
 
+.header-menu{
+    height: 40px;
+    width: 100%;
+}
+
+.footer-menu{
+    height: 40px;
+    width: 100%;
+}
+
+.hr-line{
+    color:#FFFFFF;
 }
 
 .box-menu{
-    border-radius: 30px;
-    background-color: rgba(0, 0, 0, 0.05);
+    margin: 0;
+    height: 100%;
+    padding:3px;
+    border-radius: 10px;
+    color: rgba(0, 0, 0, 0.08);
 }
 
 .menu-name{
@@ -276,6 +306,7 @@ li:hover{
     margin: 10px 10px 0px 10px;
     padding: 0px 10px 0px 0px;
     overflow-x: auto;
+    scrollbar-color: #455AA0 #F2F5FF;
     position: relative;
 }
 
@@ -316,23 +347,29 @@ li:hover{
     margin-top: 2%;
     box-shadow: 2px 1px 5px var(--shadow);
     overflow-y:scroll;
+    gap: 5px;
 }
 
 .create-list-button{
     height: 40px;
     min-width: 200px;
+    background-color: #455AA0;
+}
+
+.create-list-button:hover{
+    background-color: #383b80;
 }
 
 .create-list{
     padding-right: 20px;
 }
 
-.task{
-    padding: 3px;
-    margin-bottom: 5px;
-    border-radius: 32px;
-    height: 100px;
-}
+/*.task{*/
+/*    padding: 3px;*/
+/*    margin-bottom: 5px;*/
+/*    border-radius: 32px;*/
+/*    height: 100px;*/
+/*}*/
 
 .task-card{
     min-height: 70px;
@@ -378,16 +415,13 @@ li:hover{
 .action-page{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     grid-gap:20px;
     height: 50px;
+    justify-content: space-between;
     margin: 0px;
     padding: 10px;
-    background-color: rgba(0, 0, 0, 0.05);
-    /*border: solid 0.1rem #FFFFFF;*/
     box-shadow: 2px 1px 5px var(--shadow);
-    /*background-color: #455AA0;*/
-    /*opacity: 65%;*/
 }
 
 .name-page{
@@ -398,11 +432,35 @@ li:hover{
     vertical-align: bottom;
 }
 
-.add-members {
-    padding-left: 2px;
-    outline: none;
-    border: 0;
-    height: 30px;
+.member-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: center;
+    height: 25px;
+    margin-top: 5px;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    clear: both;
+    font-weight: 400;
+    background-color: transparent;
+    margin: 0px;
+    font-size: 15px;
+    height: 20px;
+}
+
+.members-btn{
+    padding: 6px;
+    height: 20px;
+    --bs-btn-padding-x: 0rem;
+    --bs-btn-padding-y: 0rem;
+    --bs-btn-active-bg:none;
+    --bs-btn-hover-bg:none;
+    color: #1E2B32;
+    background-color: transparent;
 }
 
 .list-members{
@@ -411,56 +469,39 @@ li:hover{
     border: 0;
     height: 30px;
     font-size: 13px;
-    width: 10rem;
+    width: 12rem;
     justify-content: space-between;
 }
 
-.member-info{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    vertical-align: center;
-    height: 30px;
+.dropdown-menu {
+    --bs-dropdown-min-width: 12rem;
+    --bs-dropdown-link-active-bg: #FFFF;
 }
 
-.name-member{
-    margin: 0;
-}
-
-.delete-members-btn{
-    height: 20px;
-    --bs-btn-padding-x: 0rem;
-    --bs-btn-padding-y: 0rem;
-    --bs-btn-bg: #FFFF;
-    --bs-btn-hover-color:var(--action-delete);
-    color:var(--font-main);
-    outline: none;
-    border: none;
-    --bs-btn-active-bg:none;
-    --bs-btn-hover-bg:none;
-}
-
-.add-button-member{
+.add-button-task-members{
     display: flex;
     justify-content: left;
     align-items: center;
     vertical-align: center;
     height: 30px;
     font-size: 13px;
-    color: #2f89fc;
-
+    background-color: transparent;
+    outline: none;
+    gap: 5px;
+    color: #1E2B32;
+    padding: 5px;
+    border-radius: 4px;
 }
 
-.add-button-task{
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    vertical-align: center;
-    height: 30px;
-    font-size: 13px;
-    color: #2f89fc;
-    background-color: #FFFFFF;
-    outline: none;
+
+.kanban-columns .add-button-task-members:hover{
+    background-color: #9ba3c4;
+    color: #1E2B32;
+}
+
+hr{
+    color: rgba(0, 0, 0, 0.45);
+    margin: 5px;
 }
 
 .dropdown-item {

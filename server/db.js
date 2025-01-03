@@ -1,7 +1,7 @@
 const {Sequelize} = require('sequelize');
 
 module.exports = new Sequelize(
-    'ProjectManagement', 'postgres', '',
+    'pm', 'postgres', 'passwd',
     {
         dialect: "postgres",
     });

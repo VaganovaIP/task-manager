@@ -12,7 +12,7 @@ import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
 import "react-datepicker/dist/react-datepicker.css";
-
+import "./index.css"
 
 export function ModalEditTask(props){
     const {members, data_task, lists, assignments, name_board} = props;
@@ -51,6 +51,14 @@ export function ModalEditTask(props){
         setList(null);
         setNameTask(null);
         setDescriptionTask(null);
+        setNameTask(null);
+        setList(null);
+        setNameList(null);
+        setEndDate(null);
+        setStartDate(null);
+        setImportance(null)
+        setStatus(null);
+        props.onHide();
     };
 
     const onAddAssignment=(name_board, user_id, task_id, username)=>{
@@ -72,102 +80,124 @@ export function ModalEditTask(props){
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            className="modal-window"
         >
             <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    <input type="text" placeholder="Название задачи" defaultValue={data_task.name_task} onChange={(e)=>setNameTask(e.target.value)}/>
-                </Modal.Title>
-                <select onChange={(e)=>setList(e.target.value)} defaultValue={data_task.list_id}>
-                    {lists.map((list)=>(
-                        <option value={list.list_id} key={list.list_id}
-                                onChange={()=>{
-                                    setNameList(list.name_list);
-                                    setList(list.list_id);
-                                }}>
-                            {list.name_list}
-                        </option>
-                    ))}
-                </select>
+                <div className="modal-header-task">
+                    <Modal.Title id="contained-modal-title-vcenter" >
+                        <input type="text" className="name-task-modal" placeholder="Название задачи"
+                               defaultValue={data_task.name_task}
+                               onChange={(e)=>setNameTask(e.target.value)}/>
+                    </Modal.Title>
+                    <select className="list-task-label"
+                            onChange={(e)=> setList(e.target.value)}
+                            defaultValue={data_task.list_id}>
+                        {lists.map((list, index)=>(
+                            <option value={list.list_id} key={index}
+                                    onChange={()=>{
+                                        setNameList(list.name_list);
+                                        setList(list.list_id);
+                                    }}>
+                                {list.name_list}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" >
+                <Form className="form-data-task">
+                    <Form.Group className="form-task">
                         <Form.Label>Описание</Form.Label>
-                        <Form.Control as="textarea" rows={6}
+                        <Form.Control as="textarea" rows={4} className="textarea-task"
                                       defaultValue={data_task.description}
-                                      onChange={(e)=>setDescriptionTask(e.target.value)}
+                                      onChange={(e) => setDescriptionTask(e.target.value)}
                         />
-                        <p>Срок</p>
-                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-                        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
+                        <hr/>
+                        <div className="date-form">
+                            <Form.Label>Срок</Form.Label>
+                            <DatePicker className="form-input" selected={startDate}
+                                        onChange={(date) => setStartDate(date)}/>
+                            <DatePicker className="form-input" selected={endDate}
+                                        onChange={(date) => setEndDate(date)}/>
+                        </div>
+                        <hr/>
+                        <Form.Label>Вложения</Form.Label>
                     </Form.Group>
-                    <Form.Group>
-                        <Form.Select value={importance || ""}
-                                     onChange={(e)=>setImportance(e.target.value)}>
+                    <Form.Group className="form-data-task2">
+                        <Form.Label>Важность</Form.Label>
+                        <Form.Select value={importance || ""} className="form-input"
+                                     onChange={(e) => setImportance(e.target.value)}
+                                     title="Важность">
                             <option value=""></option>
                             <option value="Низкая">Низкая</option>
                             <option value="Средняя">Средняя</option>
                             <option value="Высокая">Высокая</option>
                         </Form.Select>
-                        <div>
-                            <Form.Check type={'checkbox'} defaultChecked={status} onChange={()=>setStatus(!status)}>
-                            </Form.Check>
-                            <p>{status ? "Задача выполнена" : "Задача не выполнена" }</p>
-                        </div>
+
 
                         <Dropdown
-                            className="list-members"
+                            className="list-members-button"
                             size="lg"
                         >
-                            <Dropdown.Toggle variant="success" id="dropdown-basic" className="list-members">
+                            <Dropdown.Toggle className="list-members-button">
                                 Ответственные
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                {assignment.map((item, key)=> (
-                                    item.task_id === data_task.task_id) &&(
-                                    <Dropdown.Item key={key}>
-                                        <div className="member-info">
-                                            <p className="name-member">{item.User.username}</p>
-                                            <Button className="delete-members-btn" variant="secondary" type="submit">
-                                                <i className="bi bi-trash"></i>
-                                            </Button>
-                                        </div>
-                                    </Dropdown.Item>
+                                {assignment.map((item, key) => (
+                                        item.task_id === data_task.task_id) && (
+                                        <Dropdown.Item key={key}>
+                                            <div className="member-info">
+                                                <p className="name-member">{item.User.username}</p>
+                                                <Button className="members-btn" type="submit">
+                                                    Исключить
+                                                </Button>
+                                            </div>
+                                        </Dropdown.Item>
                                     )
                                 )}
                                 <Dropdown.Divider></Dropdown.Divider>
-                                <p className="name-member">Участники</p>
-                                {members.map((member) =>(
-
+                                <p className="label-member">Участники доски</p>
+                                {members.map((member) => (
                                     <Dropdown.Item key={member.members_id}>
                                         <div className="member-info">
                                             <p className="name-member">{member.User.username}</p>
-                                            <button className="add-button-member" variant="secondary"
-                                                    type="button" onClick={() => onAddAssignment(name_board, member.User.user_id, data_task.task_id, member.User.username)}>
-                                                <i className="bi bi-plus"></i>
-                                            </button>
+                                            <Button className="members-btn"
+                                                    type="button"
+                                                    onClick={() => onAddAssignment(name_board, member.User.user_id, data_task.task_id, member.User.username)}>
+                                                Добавить
+                                            </Button>
                                         </div>
                                     </Dropdown.Item>
                                 ))}
                             </Dropdown.Menu>
                         </Dropdown>
+                        <Form.Group className="form-file-upload">
+                            <i className="fa fa-paperclip" aria-hidden="true"></i>
+                            <Form.Control type="file" className="file-upload" title="Прикрепить файл"/>
+                        </Form.Group>
+                        <div className="status">
+                            <Form.Check type={'checkbox'} checked={status || false} onChange={() => setStatus(!status)}>
+                            </Form.Check>
+                            <p className="label-status">{status ? "Выполнено" : "Не выполнено"}</p>
+                        </div>
                     </Form.Group>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={
-                    ()=> {
-                        setNameTask(null);
-                        setList(null);
-                        setNameList(null);
-                        setEndDate(null);
-                        setStartDate(null);
-                        setImportance(null)
-                        props.onHide();
+                {/*<Button onClick={*/}
+                {/*    () => {*/}
+                {/*        setNameTask(null);*/}
+                {/*        setList(null);*/}
+                {/*        setNameList(null);*/}
+                {/*        setEndDate(null);*/}
+                {/*        setStartDate(null);*/}
+                {/*        setImportance(null)*/}
+                {/*        props.onHide();*/}
 
-                    }}>
-                    Close</Button>
-                <Button onClick={onSaveTaskState}>
+                {/*    }}>*/}
+                {/*    Close</Button>*/}
+                <Button onClick={onSaveTaskState} className="button-save">
                     Сохранить
                 </Button>
             </Modal.Footer>

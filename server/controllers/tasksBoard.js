@@ -43,7 +43,7 @@ module.exports = {
     createListTask:async (req, res) => {
         const {formName} = req.body;
         switch (formName){
-            case "form-add-lis":
+            case "form-add-list":
                 await createList(req, res);
                 break;
             case "form-add-task":
@@ -71,22 +71,22 @@ module.exports = {
                      'importance', 'owner_id', 'status', 'list_id'],
                 include:[
                         {model: List},
-                        {model: User},
+                        {model: User , attributes:['user_id', 'username']},
                         {model: Board},
                 ],
                 where:{board_id:board_id},
             })
 
             let members = await BoardMembers.findAll({
-                include:[{model: User}],
+                include:[{model: User, attributes:['user_id', 'username']}],
                 where:{board_id:board_id}
             })
 
             let assignments = await TaskAssignment.findAll({
-                include:[{model: User},
+                include:[{model: User, attributes:['user_id', 'username']},
                          {model:Task,
                              where:{board_id:board_id},
-                          include:[{model: User},]
+                          include:[{model: User , attributes:['user_id', 'username']},]
                          }
                 ]
             })

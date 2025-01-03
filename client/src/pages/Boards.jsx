@@ -35,13 +35,16 @@ export default function Boards() {
     const renderListBoards = (item) => {
         const Redirect = <Navigate to="/board" replace={false} state={{id: 'board_id'}} />
         return(
+            <Link to={`/board/${item.name_board}`} state = {{board_id:item.board_id, name_board:item.name_board}}>
             <Card key={item.board_id} className="item-board">
                 <Card.Body>
                     <Card.Title>
-                        <Link to={`/board/${item.name_board}`} state = {{board_id:item.board_id, name_board:item.name_board}}>{item.name_board}</Link>
+                        {item.name_board}
                     </Card.Title>
                 </Card.Body>
             </Card>
+            </Link>
+
         )
     }
 
