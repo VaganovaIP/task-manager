@@ -1,5 +1,3 @@
-import {useCallback, useState} from "react";
-import {redirect, Navigate} from "react-router-dom";
 import axios from "axios";
 import {BASE_API_URL} from "../../utils/api";
 

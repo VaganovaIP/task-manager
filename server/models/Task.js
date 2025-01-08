@@ -24,7 +24,7 @@ const Task = sequelize.define(
         date_end:{
             type: DataTypes.DATE,
         },
-        created_at:{
+        createdAt:{
             type: DataTypes.DATE,
         },
         status:{

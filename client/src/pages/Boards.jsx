@@ -4,7 +4,6 @@ import {createBoard, fetchAllBoards} from "../scripts/backend/boardsManager.jsx"
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import axios from "axios";
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {HeaderMenu, Menu} from '../components/HeaderMenu.jsx'
 import uuid from 'react-uuid';
@@ -14,15 +13,10 @@ import Fuse from "fuse.js";
 
 export default function Boards() {
     const [boards, setBoards] = useState([]);
-    const [searchBoards, setSearchBoards] = useState("");
     const [name, setName] = useState("")
-    const [searchName, setSearchName] = useState("");
     const [searchResults, setSearchResults] = useState(boards);
     const options = {keys:["name_board"]};
     const fuse = new Fuse(boards, options);
-
-    const navigate = useNavigate();
-    const location = useLocation();
     const [onSearch, setOnSearch] = useState(false);
 
 

@@ -4,17 +4,12 @@ const Task = require("../models/Task");
 const User = require("../models/User");
 const BoardMembers = require("../models/BoardMember");
 const TaskAssignment = require("../models/TaskAssignment");
-const {values} = require("pg/lib/native/query");
 const { v4: uuidv4 } = require("uuid");
 const date = require('date-and-time');
+const {createList} = require("./ListController");
+const {addAssignments} = require("./AssignmentController");
+const {addMemberBoard} = require("./MemberContoller");
 
-
-async function createList(req, res) {
-    const {board_id, nameList} = req.body;
-    await List.create({name_list:nameList, id_board:board_id})
-        .then(res.status(200).send({message: 'New list created'}))
-        .catch((err) => {console.log(err)})
-}
 
 async function createTask(req, res) {
     const {board_id, name_task, list_id, task_id} = req.body;
@@ -25,22 +20,8 @@ async function createTask(req, res) {
         .catch((err) => {console.log(err)})
 }
 
-async function addAssignments(req, res){
-    const {user_id, task_id} = req.body;
-    await TaskAssignment.create({user_id, task_id})
-        .then(res.status(200).send({message: 'New assignment created'}))
-        .catch((err) => {console.log(err)})
-}
-
-async function addMembersBoard(req, res){
-    const {user_id, board_id} = req.body;
-    await BoardMembers.create({user_id, board_id})
-        .then(res.status(200).send({message: 'New member created'}))
-        .catch((err) => {console.log(err)})
-}
-
 module.exports = {
-    createListTask:async (req, res) => {
+    actionsTask:async (req, res) => {
         const {formName} = req.body;
         switch (formName){
             case "form-add-list":
@@ -53,12 +34,12 @@ module.exports = {
                 await addAssignments(req, res);
                 break;
             case "form-add-members":
-                await addMembersBoard(req, res);
+                await addMemberBoard(req, res);
                 break;
         }
     },
 
-    tasksView:async (req, res)=>{
+    fetchDataTasks:async (req, res)=>{
         const board_id = req.query.id;
         try{
             let lists = await List.findAll({
@@ -99,19 +80,6 @@ module.exports = {
         } catch (err){
             console.log(err)
         }
-    },
-
-    listsViewAll:async (req, res)=>{
-        const {board_id} = req.body.board_id;
-        await Board.findAll({
-            attributes:['board_id', 'name_board'],
-            where:{owner:"306dcf05-d3d6-4b43-8e06-6b6ffe2331f2"},
-            order:[['createdAt', 'DESC']],
-        }, {raw:true})
-            .then(board=>{
-            res.status(200).json(board);
-            console.log(board)
-        }).catch(err=>console.log(err));
     },
 
     saveTask:async (req, res)=>{

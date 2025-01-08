@@ -1,6 +1,6 @@
 
 const { v4: uuidv4 } = require('uuid');
-const Board = require('../models/Board');
+const BoardController = require('../models/Board');
 const User = require('../models/User');
 const BoardMember = require('../models/BoardMember');
 
@@ -15,9 +15,9 @@ const findUserById = async function (email){
 
 module.exports = {
     //получение всех досок пользователя
-    boardsView: async (req, res)=>{
+    fetchDataBoards: async (req, res)=>{
         const user_id = req.params.user_id;
-        await Board.findAll({
+        await BoardController.findAll({
             attributes:['board_id', 'name_board'],
             where:{owner:"306dcf05-d3d6-4b43-8e06-6b6ffe2331f2"},
             order:[['createdAt', 'DESC']],
@@ -35,7 +35,7 @@ module.exports = {
                 email:email
             }
         })
-        await Board.create({board_id, name_board, owner: user.user_id})
+        await BoardController.create({board_id, name_board, owner: user.user_id})
         await BoardMember.create({
             user_id:user.user_id,
             board_id

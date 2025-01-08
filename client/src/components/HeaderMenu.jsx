@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import '../styles/1.css'
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
-import {CDBLink, CDBSidebar, CDBSidebarFooter, CDBSidebarHeader, CDBSidebarMenu, CDBSidebarMenuItem} from "cdbreact";
+import {CDBIcon} from "cdbreact";
 import {Link} from "react-router-dom";
 
 

@@ -1,16 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { renderToString } from 'react-dom/server';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Popup from "reactjs-popup";
 import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
+import {CDBIcon} from "cdbreact";
 import {onAddAssignmentTask, saveTask} from "../../scripts/backend/taskManager.jsx";
 import 'react-calendar/dist/Calendar.css'
-import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
-import {ru} from 'date-fns/locale/ru';
-registerLocale('ru', ru)
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./index.css"
 
@@ -20,7 +16,6 @@ export function ModalEditTask(props){
     const [descriptionTask,setDescriptionTask] = useState('');
     const [list, setList] = useState('');
     const [nameList, setNameList] = useState('')
-    const [value, onChange] = useState('');
     const [importance, setImportance] = useState('');
     const [status, setStatus] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
@@ -40,9 +35,6 @@ export function ModalEditTask(props){
     },[data_task])
 
     const onSaveTaskState = async () => {
-        console.log(data_task.task_id, nameTask, descriptionTask,
-            startDate, endDate,
-            list, importance, status, name_board)
         saveTask(data_task.task_id, nameTask, descriptionTask,
             startDate, endDate,
             list, importance, status, name_board)
@@ -116,9 +108,9 @@ export function ModalEditTask(props){
                         <hr/>
                         <div className="date-form">
                             <Form.Label>Срок</Form.Label>
-                            <DatePicker className="form-input" selected={startDate}
+                            <DatePicker className="form-input" selected={startDate} locale={'ru'}
                                         onChange={(date) => setStartDate(date)}/>
-                            <DatePicker className="form-input" selected={endDate}
+                            <DatePicker className="form-input" selected={endDate} locale={'ru'}
                                         onChange={(date) => setEndDate(date)}/>
                         </div>
                         <hr/>
