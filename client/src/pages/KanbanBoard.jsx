@@ -3,7 +3,7 @@ import {useLocation, useParams} from "react-router-dom";
 import {useState} from "react";
 import {HeaderMenu, Menu} from "../components/HeaderMenu.jsx";
 import Button from "react-bootstrap/Button";
-import {createList, fetchDataBoard, createTask} from "../scripts/backend/taskManager.jsx";
+import {createList, fetchDataBoard, createTask, updateNameList} from "../scripts/backend/taskManager.jsx";
 import Form from "react-bootstrap/Form";
 import uuid from "react-uuid";
 import {RenderTaskList} from "../components/Tasks.jsx";
@@ -35,6 +35,8 @@ export const KanbanBoard = () =>{
     const [modalMembersIsOpen, setModalMembersIsOpen] = useState(false)
 
     const [updateName, setUpdateName] = useState("")
+    const [saveList, setUpdateNameList] = useState("")
+
     const [boardName, setBoardName] = useState("")
 
     useEffect( () => {
@@ -145,8 +147,8 @@ export const KanbanBoard = () =>{
         )
     }
 
-    const handleKeyPressNameTask=(event)=>{
-
+    const onKeyDownNameList=(list_id)=>{
+        updateNameList(saveList, list_id, name_board).then(r => console.log(r));
     }
 
     return(
@@ -159,7 +161,7 @@ export const KanbanBoard = () =>{
                 <div className="content" >
                     <div className="action-page">
                         <div className="update-name-task">
-                                <input type="text" className="input-name-task" defaultValue={boardName.name_board}
+                                <input type="text" className="input-name" defaultValue={boardName.name_board}
                                        onChange={(e) => setUpdateName(e.target.value)}
                                        onKeyDown={(e)=>updateNameBoard(updateName, board_id, name_board)}
                                 />
@@ -195,7 +197,10 @@ export const KanbanBoard = () =>{
                                 {lists.map((list, index) => (
                                         <div key={index}>
                                             <div className="column">
-                                                <div className="head-column">{list.name_list}</div>
+                                                    <input type="text" className="input-name" defaultValue={list.name_list}
+                                                           onChange={(e) => setUpdateNameList(e.target.value)}
+                                                           onKeyDown={()=>onKeyDownNameList(list.list_id)}
+                                                    />
                                             </div>
                                             <ul className="list-tasks">
                                                 {tasks.map((task, index) => (

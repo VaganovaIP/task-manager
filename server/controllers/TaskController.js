@@ -6,7 +6,7 @@ const BoardMembers = require("../models/BoardMember");
 const TaskAssignment = require("../models/TaskAssignment");
 const { v4: uuidv4 } = require("uuid");
 const date = require('date-and-time');
-const {createList} = require("./ListController");
+const {createList, updateNameList} = require("./ListController");
 const {addAssignments} = require("./AssignmentController");
 const {addMemberBoard} = require("./MemberContoller");
 const {updateNameBoard} = require("./BoardController");
@@ -60,6 +60,9 @@ module.exports = {
             case "form-update-board":
                 await updateNameBoard(req, res);
                 break;
+            case "form-update-list":
+                await updateNameList(req, res);
+                break;
             case "form-save-task":
                 await saveTask(req, res);
 
@@ -79,6 +82,7 @@ module.exports = {
             let lists = await List.findAll({
                 attributes: ['list_id', 'name_list'],
                 where: {id_board: board_id},
+                order:[['createdAt', 'DESC']],
             })
 
             let tasks = await Task.findAll({
@@ -90,6 +94,7 @@ module.exports = {
                         {model: Board},
                 ],
                 where:{board_id:board_id},
+                order:[['createdAt', 'DESC']],
             })
 
             let members = await BoardMembers.findAll({

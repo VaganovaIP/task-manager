@@ -89,3 +89,19 @@ export const onAddAssignmentTask = async (name_board, user_id, task_id)=>{
         });
 }
 
+export const updateNameList = async (updateName, list_id, name_board) => {
+    console.log(updateName);
+    await axios
+        .put(`${BASE_API_URL}/board/${name_board}`, {
+            formName: "form-update-list",
+            list_id: list_id,
+            name_list: updateName,
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+
