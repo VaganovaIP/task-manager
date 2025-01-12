@@ -27,36 +27,12 @@ export const Menu = () => {
             <div className="header-menu"></div>
             <hr className="hr-line"/>
             <ul className="box-menu">
-
                 <li className="menu-item" title="Список досок"><Link to={"/boards"}> <i className="fa fa-th-large"> </i></Link></li>
                 <li className="menu-item" title="Список задач"><Link to={"/boards"}> <i className="fa fa-th-list"> </i></Link></li>
-
-
             </ul>
             <hr className="hr-line"/>
             <div className="footer-menu">
-
             </div>
-            {/*<CDBSidebar textColor="#212529" backgroundColor="#465AA0" maxWidth="160px" className="box-menu">*/}
-            {/*    <CDBSidebarHeader className="menu-name" prefix={<i className="fa fa-bars"/> }>*/}
-            {/*    </CDBSidebarHeader>*/}
-            {/*    <CDBSidebarMenu>*/}
-            {/*        <i className="th th-list"/>*/}
-            {/*        <CDBSidebarMenuItem className="menu-item">*/}
-            {/*            <Link to={"/boards"}>Список досок</Link>*/}
-            {/*        </CDBSidebarMenuItem>*/}
-            {/*        /!*<CDBSidebarMenuItem className="menu-item" icon="th-list">Список задач</CDBSidebarMenuItem>*!/*/}
-            {/*    </CDBSidebarMenu>*/}
-
-            {/*    <CDBSidebarFooter style={{ textAlign: 'center' }}>*/}
-            {/*        <div*/}
-            {/*            className="sidebar-btn-wrapper"*/}
-            {/*            style={{padding: '10px 5px'}}*/}
-            {/*        >*/}
-
-            {/*        </div>*/}
-            {/*    </CDBSidebarFooter>*/}
-            {/*</CDBSidebar>*/}
         </div>
     )
 }

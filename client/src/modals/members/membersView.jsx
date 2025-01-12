@@ -59,7 +59,7 @@ export function ModalAddMembers(props){
                                 <p className="name-member">{user.username}</p>
                                 <button className="add-button-member"
                                         type="button" onClick={() => addMembersBoard(name_board, user.user_id, board_id)}>
-                                    <i className="bi bi-plus"></i>
+                                    Добавить
                                 </button>
                             </div>
                         </li>

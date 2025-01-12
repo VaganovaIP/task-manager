@@ -18,10 +18,11 @@ export async function fetchDataBoard(board_id, name, setLists, setTasks, setMemb
         })
 }
 
-export const createList = async (name_board, name_list, board_id) => {
+export const createList = async (list_id, name_board, name_list, board_id) => {
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`, {
         formName:"form-add-list",
+        list_id:list_id,
         board_id: board_id,
         nameList: name_list,
     })
@@ -34,7 +35,6 @@ export const createList = async (name_board, name_list, board_id) => {
 };
 
 export const createTask = async (task_id, name_board, list_id, board_id, name_task, owner_id) => {
-    console.log(name_board, "create task")
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`, {
         formName:"form-add-task",

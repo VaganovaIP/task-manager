@@ -42,10 +42,12 @@ export const KanbanBoard = () =>{
     const onCreateListCard = async (event) => {
         event.preventDefault();
         const name = event.target.name.value;
-        createList(name_board, name, board_id)
+        let list_id = uuid();
+        createList(list_id, name_board, name, board_id)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_list = {
+            list_id:list_id,
             board_id:board_id,
             name_list:name
         }

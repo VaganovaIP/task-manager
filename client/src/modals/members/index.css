@@ -21,3 +21,16 @@
     font-size: 18px;
 
 }
+
+li{
+    list-style: none;
+}
+
+.add-button-member{
+    background-color: #455AA0;
+    border: none;
+    color: #FFFFFF;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 3px;
+}

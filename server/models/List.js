@@ -5,8 +5,7 @@ const Board = require('../models/Board');
 const List = sequelize.define(
     'Lists', {
         list_id:{
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
+            type: DataTypes.UUID,
             primaryKey: true,
         },
         name_list:{
@@ -25,5 +24,6 @@ Board.hasMany(List,{
 });
 
 List.belongsTo(Board, {foreignKey:"id_board"})
+
 
 module.exports = List;
