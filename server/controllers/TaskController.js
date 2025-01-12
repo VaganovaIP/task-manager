@@ -9,6 +9,7 @@ const date = require('date-and-time');
 const {createList} = require("./ListController");
 const {addAssignments} = require("./AssignmentController");
 const {addMemberBoard} = require("./MemberContoller");
+const {updateNameBoard} = require("./BoardController");
 
 
 async function createTask(req, res) {
@@ -20,8 +21,22 @@ async function createTask(req, res) {
         .catch((err) => {console.log(err)})
 }
 
+async function saveTask (req, res){
+    const {task_id, name_task,description,date_start,date_end,list_id,importance,status} = req.body;
+    await Task.update({name_task:name_task, description:description, date_start:date_start,
+            date_end:date_end, list_id:list_id, importance:importance, status:status },
+        {
+            where: {
+                task_id:task_id,
+            },
+        })
+        .then(res.status(200).send({message: `Task ${name_task} updated`}))
+        .catch((err) => {console.log(err)})
+}
+
+
 module.exports = {
-    actionsTask:async (req, res) => {
+    postActions:async (req, res) => {
         const {formName} = req.body;
         switch (formName){
             case "form-add-list":
@@ -39,9 +54,28 @@ module.exports = {
         }
     },
 
+    putActions:async (req, res) =>{
+        const {formName} = req.body;
+        switch (formName) {
+            case "form-update-board":
+                await updateNameBoard(req, res);
+                break;
+            case "form-save-task":
+                await saveTask(req, res);
+
+        }
+    },
+
+
+    //get
     fetchDataTasks:async (req, res)=>{
         const board_id = req.query.id;
         try{
+            let board = await Board.findOne({
+                attributes:['name_board'],
+                where: {board_id: board_id},
+            })
+
             let lists = await List.findAll({
                 attributes: ['list_id', 'name_list'],
                 where: {id_board: board_id},
@@ -76,23 +110,13 @@ module.exports = {
                 attributes: ['user_id', 'username'],
             })
 
-            await res.status(200).json({lists:lists, tasks:tasks, members:members, assignments:assignments, users:users})
+            console.log(board.name_board)
+            await res.status(200).json({lists:lists, tasks:tasks, members:members,
+                                        assignments:assignments, users:users, board:board})
         } catch (err){
             console.log(err)
         }
     },
 
-    saveTask:async (req, res)=>{
-        const {task_id, name_task,description,date_start,date_end,list_id,importance,status} = req.body;
-        await Task.update({name_task:name_task, description:description, date_start:date_start,
-                          date_end:date_end, list_id:list_id, importance:importance, status:status },
-            {
-            where: {
-                task_id:task_id,
-            },
-        })
-            .then(res.status(200).send({message: `Task ${name_task} updated`}))
-            .catch((err) => {console.log(err)})
-    }
 }
 

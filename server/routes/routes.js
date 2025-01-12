@@ -7,9 +7,9 @@ const router = express.Router();
 router.get('/boards', boardController.fetchDataBoards);
 router.get('/board/:name_board', boardTasksController.fetchDataTasks);
 
-router.post('/board/:name_board', boardTasksController.actionsTask);
+router.post('/board/:name_board', boardTasksController.postActions);
 router.post('/boards', boardController.addBoard);
 
-router.put('/board/:name_board', boardTasksController.saveTask);
+router.put('/board/:name_board', boardTasksController.putActions);
 
 module.exports = router;

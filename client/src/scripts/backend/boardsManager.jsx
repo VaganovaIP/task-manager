@@ -28,6 +28,24 @@ export const createBoard = async (name_board, board_id, email) => {
         });
 };
 
+export const updateNameBoard = async (updateName, board_id, name_board) => {
+    console.log(updateName);
+    await axios
+        .put(`${BASE_API_URL}/board/${name_board}`, {
+            formName: "form-update-board",
+            board_id: board_id,
+            name_board: updateName,
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+
+
+
 export const addMembersBoard=async (name_board, user_id, board_id) => {
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`, {

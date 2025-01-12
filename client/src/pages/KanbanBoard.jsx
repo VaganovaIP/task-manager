@@ -15,6 +15,7 @@ import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
 import {ModalEditTask} from "../modals/task/editTask.jsx"
 import {ModalAddMembers} from "../modals/members/membersView.jsx";
+import {updateNameBoard} from "../scripts/backend/boardsManager.jsx";
 
 export const KanbanBoard = () =>{
     const location = useLocation()
@@ -32,11 +33,14 @@ export const KanbanBoard = () =>{
     const [onClickCreateTask, setOnClickCreateTask] = useState(false)
     const [modalEditIsOpen, setModalEditIsOpen] = useState(false)
     const [modalMembersIsOpen, setModalMembersIsOpen] = useState(false)
-    const ref = useRef(null);
+
+    const [updateName, setUpdateName] = useState("")
+    const [boardName, setBoardName] = useState("")
 
     useEffect( () => {
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName)
             .catch(err => console.log(err));
+        setUpdateName(boardName.name_board);
     }, []);
 
     const onCreateListCard = async (event) => {
@@ -54,8 +58,6 @@ export const KanbanBoard = () =>{
         setLists([...lists, new_list])
         setNameList("");
         setOnClickCreateList(false)
-        // fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers)
-        //     .catch(err => console.log(err));
     };
 
     const onCreateTaskCard = async (event) => {
@@ -102,9 +104,6 @@ export const KanbanBoard = () =>{
         setActiveList(list_id)
     }
 
-    ///
-
-
     const CardCreateList = () =>{
         return(
                 <Card border="primary" className="item-board">
@@ -114,7 +113,6 @@ export const KanbanBoard = () =>{
                                 <Form.Control className="form-task-list" name="name"
                                               type="text" placeholder="" value={nameList}
                                               onChange={(e) => setNameList(e.target.value)}/>
-
                             </Form.Group>
                             <Button className="add-button" variant="secondary" type="submit">
                                 <i className="bi bi-plus"></i>
@@ -147,6 +145,10 @@ export const KanbanBoard = () =>{
         )
     }
 
+    const handleKeyPressNameTask=(event)=>{
+
+    }
+
     return(
         <div className="f-container">
             <HeaderMenu></HeaderMenu>
@@ -156,7 +158,12 @@ export const KanbanBoard = () =>{
                 </div>
                 <div className="content" >
                     <div className="action-page">
-                        <p className="name-page">{name_board}</p>
+                        <div className="update-name-task">
+                                <input type="text" className="input-name-task" defaultValue={boardName.name_board}
+                                       onChange={(e) => setUpdateName(e.target.value)}
+                                       onKeyDown={(e)=>updateNameBoard(updateName, board_id, name_board)}
+                                />
+                        </div>
                         <Dropdown
                             className="list-members">
                             <Dropdown.Toggle variant="success" id="dropdown-basic" className="list-members" >

@@ -1,6 +1,6 @@
 
 const { v4: uuidv4 } = require('uuid');
-const BoardController = require('../models/Board');
+const Board = require('../models/Board');
 const User = require('../models/User');
 const BoardMember = require('../models/BoardMember');
 
@@ -17,7 +17,7 @@ module.exports = {
     //получение всех досок пользователя
     fetchDataBoards: async (req, res)=>{
         const user_id = req.params.user_id;
-        await BoardController.findAll({
+        await Board.findAll({
             attributes:['board_id', 'name_board'],
             where:{owner:"306dcf05-d3d6-4b43-8e06-6b6ffe2331f2"},
             order:[['createdAt', 'DESC']],
@@ -35,11 +35,26 @@ module.exports = {
                 email:email
             }
         })
-        await BoardController.create({board_id, name_board, owner: user.user_id})
+        await Board.create({board_id, name_board, owner: user.user_id})
         await BoardMember.create({
             user_id:user.user_id,
             board_id
         })
-        res.status(200).send({ message: 'New list created'});
+            .then(res.status(200).send({ message: 'New list created'}))
+            .catch((err) => {console.log(err)})
     },
+
+    updateNameBoard:async (req, res)=>{
+        const {name_board, board_id} = req.body;
+        console.log(name_board)
+        await Board.update({name_board: name_board},
+            {
+                where:{
+                  board_id:board_id
+                },
+            })
+            .then(res.status(200).send({message: `Board ${name_board} updated`}))
+            .catch((err) => {console.log(err)})
+    }
+
 }
