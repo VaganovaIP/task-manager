@@ -6,10 +6,10 @@ const BoardMembers = require("../models/BoardMember");
 const TaskAssignment = require("../models/TaskAssignment");
 const { v4: uuidv4 } = require("uuid");
 const date = require('date-and-time');
-const {createList, updateNameList} = require("./ListController");
+const ListController = require("./ListController");
 const {addAssignments} = require("./AssignmentController");
-const {addMemberBoard} = require("./MemberContoller");
-const {updateNameBoard} = require("./BoardController");
+const MemberController = require("./MemberController");
+const BoardController = require("./BoardController");
 
 
 async function createTask(req, res) {
@@ -34,13 +34,24 @@ async function saveTask (req, res){
         .catch((err) => {console.log(err)})
 }
 
+async function deleteTask(req, res){
+    const {task_id} = req.body;
+    await Task.destroy({
+        where:{
+            task_id:task_id,
+        }
+    })
+        .then(res.status(200).send({message: 'Delete task'}))
+        .catch((err) => {console.log(err)})
+}
 
-module.exports = {
-    postActions:async (req, res) => {
+
+class TaskController {
+    static async postActions(req, res){
         const {formName} = req.body;
         switch (formName){
             case "form-add-list":
-                await createList(req, res);
+                await ListController.createList(req, res);
                 break;
             case "form-add-task":
                 await createTask(req, res);
@@ -49,31 +60,28 @@ module.exports = {
                 await addAssignments(req, res);
                 break;
             case "form-add-members":
-                await addMemberBoard(req, res);
+                await MemberController.addMemberBoard(req, res);
                 break;
         }
-    },
+    }
 
-    putActions:async (req, res) =>{
+    static async putActions(req, res){
         const {formName} = req.body;
         switch (formName) {
             case "form-update-board":
-                await updateNameBoard(req, res);
+                await BoardController.updateNameBoard(req, res);
                 break;
             case "form-update-list":
-                await updateNameList(req, res);
+                await ListController.updateNameList(req, res);
                 break;
             case "form-save-task":
                 await saveTask(req, res);
 
         }
-    },
-
-
-    //get
-    fetchDataTasks:async (req, res)=>{
+    }
+    static async fetchDataTasks(req, res){
         const board_id = req.query.id;
-        try{
+        try {
             let board = await Board.findOne({
                 attributes:['name_board'],
                 where: {board_id: board_id},
@@ -87,11 +95,11 @@ module.exports = {
 
             let tasks = await Task.findAll({
                 attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
-                     'importance', 'owner_id', 'status', 'list_id'],
+                    'importance', 'owner_id', 'status', 'list_id'],
                 include:[
-                        {model: List},
-                        {model: User , attributes:['user_id', 'username']},
-                        {model: Board},
+                    {model: List},
+                    {model: User , attributes:['user_id', 'username']},
+                    {model: Board},
                 ],
                 where:{board_id:board_id},
                 order:[['createdAt', 'DESC']],
@@ -104,10 +112,10 @@ module.exports = {
 
             let assignments = await TaskAssignment.findAll({
                 include:[{model: User, attributes:['user_id', 'username']},
-                         {model:Task,
-                             where:{board_id:board_id},
-                          include:[{model: User , attributes:['user_id', 'username']},]
-                         }
+                    {model:Task,
+                        where:{board_id:board_id},
+                        include:[{model: User , attributes:['user_id', 'username']},]
+                    }
                 ]
             })
 
@@ -117,11 +125,20 @@ module.exports = {
 
             console.log(board.name_board)
             await res.status(200).json({lists:lists, tasks:tasks, members:members,
-                                        assignments:assignments, users:users, board:board})
+                                           assignments:assignments, users:users, board:board})
         } catch (err){
             console.log(err)
         }
-    },
+    }
+
+    static async deleteActions(req, res){
+        const {formName} = req.body;
+        switch (formName){
+
+        }
+    }
 
 }
+
+module.exports = TaskController;
 

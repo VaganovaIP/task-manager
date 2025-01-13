@@ -9,7 +9,7 @@ import uuid from "react-uuid";
 import {RenderTaskList} from "../components/Tasks.jsx";
 import Card from "react-bootstrap/Card";
 import Dropdown from 'react-bootstrap/Dropdown';
-import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
+import DatePicker, {registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
@@ -88,13 +88,13 @@ export const KanbanBoard = () =>{
 
     const closeModalEdit = () => {
         setModalEditIsOpen(false);
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName)
             .catch(err => console.log(err));
     };
 
     const closeModalMembers = () => {
         setModalMembersIsOpen(false);
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName)
             .catch(err => console.log(err));
     };
 
@@ -221,7 +221,6 @@ export const KanbanBoard = () =>{
                                                             <p className="name-member">Добавить задачу</p>
                                                         </Button>
                                                 }
-
                                             </ul>
                                         </div>
                                     )
