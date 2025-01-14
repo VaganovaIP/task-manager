@@ -39,7 +39,11 @@ export default function ListBoards() {
                         </Card.Body>
                         <div className="delete-board">
                             <Button className="delete-board-btn" variant="secondary"
-                                onClick={()=>deleteBoard(item.board_id)}>
+                                onClick={()=>
+                                {
+                                    deleteBoard(item.board_id);
+                                    onDeleteBoard(item.board_id);
+                                }}>
                                 <i className="bi bi-trash"></i> Удалить доску
                             </Button>
                         </div>
@@ -100,6 +104,11 @@ export default function ListBoards() {
         setOnSearch(true)
     }
 
+    const onDeleteBoard = (id)=>{
+        const newList = boards.filter(item => item.board_id !== id);
+        setBoards(newList);
+    }
+
     return (
         <div className="f-container">
                 <HeaderMenu></HeaderMenu>
@@ -133,14 +142,16 @@ export default function ListBoards() {
                                         </li>
                                         <div className="delete-board">
                                             <Button className="delete-board-btn" variant="secondary" type="submit"
-                                                onClick={()=>deleteBoard(board.board_id)}>
+                                                onClick={()=>
+                                                    {
+                                                        deleteBoard(board.board_id);
+                                                        onDeleteBoard(board.board_id);
+                                                    }}>
                                                 <i className="bi bi-trash"></i> Удалить доску
                                             </Button>
                                         </div>
                                     </div>
-
                                     )
-
                             ) : (
                                 boards.map((board) => (
                                         <li key={board.board_id}>

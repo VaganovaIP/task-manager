@@ -62,9 +62,13 @@ export function ModalEditTask(props){
             task_id:task_id,
             User:{username:username}
         }
-        return setAssignments([...assignment, new_assignment]);
+        setAssignments([...assignment, new_assignment]);
     }
 
+    const onDeleteAssignment = (id)=>{
+        const newList = assignment.filter(item => item.members_id !== id);
+        setAssignments(newList);
+    }
 
     return(
         <Modal
@@ -127,7 +131,6 @@ export function ModalEditTask(props){
                             <option value="Высокая">Высокая</option>
                         </Form.Select>
 
-
                         <Dropdown
                             className="list-members-button"
                             size="lg"
@@ -136,19 +139,22 @@ export function ModalEditTask(props){
                                 Ответственные
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                {assignments.map((item, key) => (
+                                {assignment.map((item, key) => (
                                     item.task_id === data_task.task_id) && (
                                         <Dropdown.Item key={key}>
                                             <div className="member-info">
                                                 <p className="name-member">{item.User.username}</p>
                                                 <Button className="members-btn"
-                                                    onClick={()=>deleteAssignment(item.members_id, name_board)}>
+                                                    onClick={()=>
+                                                        {
+                                                            deleteAssignment(item.members_id, name_board);
+                                                            onDeleteAssignment(item.members_id);
+                                                        }}>
                                                     Исключить
                                                 </Button>
                                             </div>
                                         </Dropdown.Item>
                                     )
-
                                 )}
                                 <Dropdown.Divider></Dropdown.Divider>
                                 <p className="label-member">Участники доски</p>

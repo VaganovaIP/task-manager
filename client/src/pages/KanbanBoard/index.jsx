@@ -21,7 +21,7 @@ import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
 import {ModalEditTask} from "../../modals/task/editTask.jsx"
 import {ModalAddMembers} from "../../modals/members/membersView.jsx";
-import {updateNameBoard} from "../../scripts/backend/boardsManager.jsx";
+import {deleteMemberBoard, updateNameBoard} from "../../scripts/backend/boardsManager.jsx";
 import ("./kanbanBoard.css")
 
 export const KanbanBoard = () =>{
@@ -158,6 +158,20 @@ export const KanbanBoard = () =>{
         updateNameList(saveList, list_id, name_board).then(r => console.log(r));
     }
 
+    const onDeleteMember = (id)=>{
+        const newList = members.filter(item => item.members_id !== id);
+        setMembers(newList);
+    }
+    const onDeleteList = (id)=>{
+        const newList = lists.filter(item => item.list_id !== id);
+        setLists(newList);
+    }
+    const onDeleteTask = (id)=>{
+        const newList = tasks.filter(item => item.task_id !== id);
+        setTasks(newList);
+    }
+
+
     return(
         <div className="f-container">
             <HeaderMenu></HeaderMenu>
@@ -182,7 +196,12 @@ export const KanbanBoard = () =>{
                                     <Dropdown.Item key={member.members_id}>
                                         <div className="member-info">
                                             <p className="name-member">{member.User.username}</p>
-                                            <Button className="members-btn" type="submit">
+                                            <Button className="members-btn"
+                                                onClick={()=>{
+                                                    deleteMemberBoard(member.members_id, name_board);
+                                                    onDeleteMember(member.members_id);
+                                                }
+                                                }>
                                                 Исключить
                                             </Button>
                                         </div>
@@ -208,7 +227,11 @@ export const KanbanBoard = () =>{
                                                            onKeyDown={()=>onKeyDownNameList(list.list_id)}
                                                     />
                                                 <button className="delete-list"  type="submit"
-                                                    onClick={()=>deleteList(list.list_id, name_board)}>
+                                                    onClick={()=>
+                                                        {
+                                                            deleteList(list.list_id, name_board);
+                                                            onDeleteList(list.list_id);
+                                                        }}>
                                                     <i className="bi bi-x"></i>
                                                 </button>
                                             </div>
@@ -221,7 +244,11 @@ export const KanbanBoard = () =>{
                                                             </li>
                                                             <div className="delete-board">
                                                                 <Button className="delete-task-btn" variant="secondary"
-                                                                    onClick={()=>deleteTask(task.task_id, name_board)}>
+                                                                    onClick={()=>
+                                                                        {
+                                                                            deleteTask(task.task_id, name_board);
+                                                                            onDeleteTask(task.task_id);
+                                                                        }}>
                                                                     <i className="bi bi-trash"></i> Удалить задачу
                                                                 </Button>
                                                             </div>

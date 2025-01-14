@@ -27,6 +27,10 @@ export function ModalAddMembers(props){
         setOnSearch(true);
     }
 
+    const deleteAssignments = (id)=>{
+
+    }
+
     return(
         <Modal
             {...props}
