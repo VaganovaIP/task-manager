@@ -1,17 +1,17 @@
 import React from 'react';
 import {useEffect, useState} from "react";
-import {createBoard, fetchAllBoards} from "../scripts/backend/boardsManager.jsx";
+import {createBoard, deleteBoard, fetchAllBoards} from "../../scripts/backend/boardsManager.jsx";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
-import {HeaderMenu, Menu} from '../components/HeaderMenu.jsx'
+import {HeaderMenu, Menu} from '../../components/HeaderMenu.jsx'
 import uuid from 'react-uuid';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Fuse from "fuse.js";
+import "./listBoards.css"
 
-
-export default function Boards() {
+export default function ListBoards() {
     const [boards, setBoards] = useState([]);
     const [name, setName] = useState("")
     const [searchResults, setSearchResults] = useState(boards);
@@ -27,17 +27,26 @@ export default function Boards() {
     }, []);
 
     const renderListBoards = (item) => {
-        const Redirect = <Navigate to="/board" replace={false} state={{id: 'board_id'}} />
         return(
-            <Link to={`/board/${item.name_board}`} state = {{board_id:item.board_id, name_board:item.name_board}}>
-            <Card key={item.board_id} className="item-board">
-                <Card.Body>
-                    <Card.Title>
-                        {item.name_board}
-                    </Card.Title>
-                </Card.Body>
-            </Card>
-            </Link>
+            <div>
+                    <Card key={item.board_id} >
+                        <Card.Body className="item-board">
+                            <Link to={`/board/${item.name_board}`} state = {{board_id:item.board_id, name_board:item.name_board}}>
+                                <Card.Title>
+                                    {item.name_board}
+                                </Card.Title>
+                            </Link>
+                        </Card.Body>
+                        <div className="delete-board">
+                            <Button className="delete-board-btn" variant="secondary"
+                                onClick={()=>deleteBoard(item.board_id)}>
+                                <i className="bi bi-trash"></i> Удалить доску
+                            </Button>
+                        </div>
+                    </Card>
+            </div>
+
+
 
         )
     }
@@ -68,7 +77,6 @@ export default function Boards() {
                            <Form.Control className="form-board"
                                type="text" placeholder="" value={name}
                                onChange={(e) => setName(e.target.value)}/>
-
                        </Form.Group>
                        <Button className="add-button" variant="secondary" type="submit">
                            <i className="bi bi-plus"></i>
@@ -119,16 +127,25 @@ export default function Boards() {
                         {
                             onSearch ? (
                                 searchResults.map((board) =>
+                                    <div>
                                         <li key={board.board_id}>
                                             {renderListBoards(board)}
                                         </li>
+                                        <div className="delete-board">
+                                            <Button className="delete-board-btn" variant="secondary" type="submit"
+                                                onClick={()=>deleteBoard(board.board_id)}>
+                                                <i className="bi bi-trash"></i> Удалить доску
+                                            </Button>
+                                        </div>
+                                    </div>
+
                                     )
 
                             ) : (
-                                boards.map((item) => (
-                                    <li key={item.board_id}>
-                                        {renderListBoards(item)}
-                                    </li>
+                                boards.map((board) => (
+                                        <li key={board.board_id}>
+                                            {renderListBoards(board)}
+                                        </li>
                                 ))
                             )
                         }

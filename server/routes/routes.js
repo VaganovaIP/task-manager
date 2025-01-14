@@ -12,4 +12,8 @@ router.post('/boards', boardController.addBoard);
 
 router.put('/board/:name_board', TaskController.putActions);
 
+router.delete('/board/:name_board',TaskController.deleteActions);
+router.delete('/boards', boardController.deleteBoard);
+
+
 module.exports = router;

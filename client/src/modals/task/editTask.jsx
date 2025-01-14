@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
 import {CDBIcon} from "cdbreact";
-import {onAddAssignmentTask, saveTask} from "../../scripts/backend/taskManager.jsx";
+import {deleteAssignment, onAddAssignmentTask, saveTask} from "../../scripts/backend/taskManager.jsx";
 import 'react-calendar/dist/Calendar.css'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -136,17 +136,19 @@ export function ModalEditTask(props){
                                 Ответственные
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                {assignment.map((item, key) => (
-                                        item.task_id === data_task.task_id) && (
+                                {assignments.map((item, key) => (
+                                    item.task_id === data_task.task_id) && (
                                         <Dropdown.Item key={key}>
                                             <div className="member-info">
                                                 <p className="name-member">{item.User.username}</p>
-                                                <Button className="members-btn" type="submit">
+                                                <Button className="members-btn"
+                                                    onClick={()=>deleteAssignment(item.members_id, name_board)}>
                                                     Исключить
                                                 </Button>
                                             </div>
                                         </Dropdown.Item>
                                     )
+
                                 )}
                                 <Dropdown.Divider></Dropdown.Divider>
                                 <p className="label-member">Участники доски</p>

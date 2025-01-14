@@ -1,5 +1,5 @@
 :root{
-    --main-color:#FFFFFF; 
+    --main-color:#FFFFFF;
     --action:#455AA0;
     --action-delete:#960E0E;
     --action-add:#000000;
@@ -13,4 +13,4 @@
     --head-done:#B0DF95;
     --shadow:#cfcccc;
     --head-chat:#DFDFFC;
- }
+}

@@ -1,7 +1,7 @@
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
-import {addMembersBoard} from "../../scripts/backend/boardsManager"
+import {addMemberBoard} from "../../scripts/backend/boardsManager"
 import Fuse from "fuse.js";
 import "./index.css"
 
@@ -58,7 +58,7 @@ export function ModalAddMembers(props){
                             <div className="member-info">
                                 <p className="name-member">{user.username}</p>
                                 <button className="add-button-member"
-                                        type="button" onClick={() => addMembersBoard(name_board, user.user_id, board_id)}>
+                                        type="button" onClick={() => addMemberBoard(name_board, user.user_id, board_id)}>
                                     Добавить
                                 </button>
                             </div>

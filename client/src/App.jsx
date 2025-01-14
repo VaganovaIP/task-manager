@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
-import './styles/1.css'
+import './components/index.css'
 
 import {useEffect, useState} from "react";
 import RoutesApp from "./routes/routes";

@@ -9,10 +9,10 @@ class AssignmentController{
     }
 
     static async deleteAssignmentTask(req, res){
-        const {members_id} = req.body;
+        const {assignment_id} = req.body;
         await TaskAssignment.destroy({
             where:{
-                members_id:members_id
+                members_id:assignment_id
             }
         })
             .then(res.status(200).send({message: 'Delete assignment task'}))

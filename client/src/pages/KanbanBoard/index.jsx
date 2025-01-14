@@ -1,21 +1,28 @@
 import React, {useEffect, useRef} from 'react';
 import {useLocation, useParams} from "react-router-dom";
 import {useState} from "react";
-import {HeaderMenu, Menu} from "../components/HeaderMenu.jsx";
+import {HeaderMenu, Menu} from "../../components/HeaderMenu.jsx";
 import Button from "react-bootstrap/Button";
-import {createList, fetchDataBoard, createTask, updateNameList} from "../scripts/backend/taskManager.jsx";
+import {
+    createList,
+    fetchDataBoard,
+    createTask,
+    updateNameList,
+    deleteList, deleteTask
+} from "../../scripts/backend/taskManager.jsx";
 import Form from "react-bootstrap/Form";
 import uuid from "react-uuid";
-import {RenderTaskList} from "../components/Tasks.jsx";
+import {RenderTaskList} from "../../components/Tasks.jsx";
 import Card from "react-bootstrap/Card";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DatePicker, {registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
-import {ModalEditTask} from "../modals/task/editTask.jsx"
-import {ModalAddMembers} from "../modals/members/membersView.jsx";
-import {updateNameBoard} from "../scripts/backend/boardsManager.jsx";
+import {ModalEditTask} from "../../modals/task/editTask.jsx"
+import {ModalAddMembers} from "../../modals/members/membersView.jsx";
+import {updateNameBoard} from "../../scripts/backend/boardsManager.jsx";
+import ("./kanbanBoard.css")
 
 export const KanbanBoard = () =>{
     const location = useLocation()
@@ -166,9 +173,8 @@ export const KanbanBoard = () =>{
                                        onKeyDown={(e)=>updateNameBoard(updateName, board_id, name_board)}
                                 />
                         </div>
-                        <Dropdown
-                            className="list-members">
-                            <Dropdown.Toggle variant="success" id="dropdown-basic" className="list-members" >
+                        <Dropdown>
+                            <Dropdown.Toggle className="list-members">
                                 Участники
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
@@ -201,13 +207,26 @@ export const KanbanBoard = () =>{
                                                            onChange={(e) => setUpdateNameList(e.target.value)}
                                                            onKeyDown={()=>onKeyDownNameList(list.list_id)}
                                                     />
+                                                <button className="delete-list"  type="submit"
+                                                    onClick={()=>deleteList(list.list_id, name_board)}>
+                                                    <i className="bi bi-x"></i>
+                                                </button>
                                             </div>
                                             <ul className="list-tasks">
                                                 {tasks.map((task, index) => (
                                                     list.list_id === task.list_id) &&(
-                                                        <li className="task" key={index}  onClick={()=>openModalEdit(task)}>
-                                                            <RenderTaskList   task ={task} list={list}></RenderTaskList>
-                                                        </li>
+                                                        <div key={index}>
+                                                            <li className="task" key={index}  onClick={()=>openModalEdit(task)}>
+                                                                <RenderTaskList   task ={task} list={list}></RenderTaskList>
+                                                            </li>
+                                                            <div className="delete-board">
+                                                                <Button className="delete-task-btn" variant="secondary"
+                                                                    onClick={()=>deleteTask(task.task_id, name_board)}>
+                                                                    <i className="bi bi-trash"></i> Удалить задачу
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+
                                                     )
                                                 )}
                                                 {
@@ -258,6 +277,7 @@ export const KanbanBoard = () =>{
                             />
                             <div>
                                 {console.log(users)} {console.log(members)}
+                                {console.log(assignments)}
                             </div>
 
                         </div>

@@ -105,3 +105,52 @@ export const updateNameList = async (updateName, list_id, name_board) => {
         });
 };
 
+export const deleteList = async ( list_id, name_board) => {
+    await axios
+        .delete(`${BASE_API_URL}/board/${name_board}`, {
+            data:{
+                formName: "form-delete-list",
+                list_id: list_id
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+
+export const deleteTask = async (task_id, name_board) => {
+    await axios
+        .delete(`${BASE_API_URL}/board/${name_board}`, {
+            data:{
+                formName: "form-delete-task",
+                task_id: task_id
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+
+
+export const deleteAssignment = async (assignment_id, name_board) => {
+    await axios
+        .delete(`${BASE_API_URL}/board/${name_board}`, {
+            data:{
+                formName: "form-delete-assignment",
+                assignment_id: assignment_id
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+

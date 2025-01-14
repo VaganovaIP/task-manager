@@ -45,8 +45,7 @@ export const updateNameBoard = async (updateName, board_id, name_board) => {
 };
 
 
-
-export const addMembersBoard=async (name_board, user_id, board_id) => {
+export const addMemberBoard=async (name_board, user_id, board_id) => {
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`, {
             formName: "form-add-members",
@@ -60,3 +59,35 @@ export const addMembersBoard=async (name_board, user_id, board_id) => {
             console.log(error);
         });
 }
+
+export const deleteMemberBoard = async (member_id, name_board) => {
+    await axios
+        .delete(`${BASE_API_URL}/board/${name_board}`, {
+            data:{
+                formName: "form-delete-member",
+                member_id: member_id
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+
+export const deleteBoard = async (board_id) => {
+    await axios
+        .delete(`${BASE_API_URL}/boards`, {
+            data:{
+                formName: "form-delete-assignment",
+                board_id: board_id
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};

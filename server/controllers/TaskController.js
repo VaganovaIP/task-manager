@@ -10,6 +10,7 @@ const ListController = require("./ListController");
 const {addAssignments} = require("./AssignmentController");
 const MemberController = require("./MemberController");
 const BoardController = require("./BoardController");
+const AssignmentController = require("./AssignmentController");
 
 
 async function createTask(req, res) {
@@ -111,6 +112,7 @@ class TaskController {
             })
 
             let assignments = await TaskAssignment.findAll({
+                attributes:['members_id', 'task_id'],
                 include:[{model: User, attributes:['user_id', 'username']},
                     {model:Task,
                         where:{board_id:board_id},
@@ -131,13 +133,23 @@ class TaskController {
         }
     }
 
-    static async deleteActions(req, res){
+    static async deleteActions(req, res) {
         const {formName} = req.body;
-        switch (formName){
-
+        switch (formName) {
+            case "form-delete-assignment":
+                await AssignmentController.deleteAssignmentTask(req, res);
+                break;
+            case "form-delete-member":
+                await MemberController.deleteMemberBoard(req, res);
+                break;
+            case "form-delete-task":
+                await deleteTask(req, res);
+                break;
+            case "form-delete-list":
+                await ListController.deleteListBoard(req, res);
+                break;
         }
     }
-
 }
 
 module.exports = TaskController;
