@@ -11,6 +11,8 @@ const {addAssignments} = require("./AssignmentController");
 const MemberController = require("./MemberController");
 const BoardController = require("./BoardController");
 const AssignmentController = require("./AssignmentController");
+const FilesTaskController = require("./FilesTaskController");
+const path = require("path");
 
 
 async function createTask(req, res) {
@@ -50,6 +52,7 @@ async function deleteTask(req, res){
 class TaskController {
     static async postActions(req, res){
         const {formName} = req.body;
+        console.log(formName)
         switch (formName){
             case "form-add-list":
                 await ListController.createList(req, res);
@@ -62,6 +65,9 @@ class TaskController {
                 break;
             case "form-add-members":
                 await MemberController.addMemberBoard(req, res);
+                break;
+            case "form-upload-file":
+                await FilesTaskController.uploadFile(req, res);
                 break;
         }
     }
@@ -78,6 +84,24 @@ class TaskController {
             case "form-save-task":
                 await saveTask(req, res);
 
+        }
+    }
+
+    static async deleteActions(req, res) {
+        const {formName} = req.body;
+        switch (formName) {
+            case "form-delete-assignment":
+                await AssignmentController.deleteAssignmentTask(req, res);
+                break;
+            case "form-delete-member":
+                await MemberController.deleteMemberBoard(req, res);
+                break;
+            case "form-delete-task":
+                await deleteTask(req, res);
+                break;
+            case "form-delete-list":
+                await ListController.deleteListBoard(req, res);
+                break;
         }
     }
     static async fetchDataTasks(req, res){
@@ -125,7 +149,11 @@ class TaskController {
                 attributes: ['user_id', 'username'],
             })
 
-            console.log(board.name_board)
+            // const fileP = path.join(__dirname, '../uploads', 'giphy.gif');
+            // res.download(fileP, 'giphy.gif',(err)=>{
+            //     console.log(err)
+            // })
+            // console.log(fileP)
             await res.status(200).json({lists:lists, tasks:tasks, members:members,
                                            assignments:assignments, users:users, board:board})
         } catch (err){
@@ -133,23 +161,7 @@ class TaskController {
         }
     }
 
-    static async deleteActions(req, res) {
-        const {formName} = req.body;
-        switch (formName) {
-            case "form-delete-assignment":
-                await AssignmentController.deleteAssignmentTask(req, res);
-                break;
-            case "form-delete-member":
-                await MemberController.deleteMemberBoard(req, res);
-                break;
-            case "form-delete-task":
-                await deleteTask(req, res);
-                break;
-            case "form-delete-list":
-                await ListController.deleteListBoard(req, res);
-                break;
-        }
-    }
+
 }
 
 module.exports = TaskController;

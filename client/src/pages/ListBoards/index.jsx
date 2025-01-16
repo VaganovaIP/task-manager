@@ -69,7 +69,6 @@ export default function ListBoards() {
         setBoards([new_board, ...boards])
         setName("");
         //navigate(`/board/${name}`,{replace: false, state: {id: board_id}})
-
     };
 
     const addCardBoard=(name, setName)=>{

@@ -1,9 +1,10 @@
 .modal{
     min-height: 400px;
+    min-width: 500px;
 }
 
 
-@media (min-width: 450px) {
+@media (min-width: 550px) {
     .modal {
         --bs-modal-margin: 1.75rem;
         --bs-modal-box-shadow: var(--bs-box-shadow);
@@ -33,6 +34,8 @@
     resize: none;
     overflow-y: auto;
     scrollbar-color: #455AA0 #F2F5FF;
+    border-radius: 4px;
+    box-shadow: 2px 1px 5px #DBD8F6FF;
 }
 
 .form-data-task{
@@ -55,10 +58,11 @@
 }
 
 .list-task-label{
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(187, 202, 234, 0.66);
     border-radius: 4px;
-    border:none;
     font-size: 13px;
+    border: solid 0.02rem rgba(214, 220, 241, 0.86);
+    box-shadow: 2px 1px 5px #DBD8F6FF;
 }
 
 .form-task{
@@ -72,6 +76,7 @@
     padding: 2px 2px 2px 5px;
     border: solid 0.02rem rgba(0, 0, 0, 0.15);
     border-radius: 4px;
+    box-shadow: 2px 1px 5px #DBD8F6FF;
 }
 
 .date-form{
@@ -118,6 +123,7 @@
     width: 100%;
     color: #1E2B32;
     align-content: flex-end;
+    box-shadow: 2px 1px 5px #DBD8F6FF;
 }
 
 .list-members-button .btn {
@@ -173,14 +179,48 @@
 .form-file-upload{
     display: flex;
     align-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
+
 .file-upload {
-    background-color: transparent;
-    border: none;
-    font-size: 14px;
-    padding-left: 4px;
+    color: transparent;
+    font-size: 12px;
+}
+.file-upload::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.file-upload::before {
+    content: 'Прикрепить файл';
+    align-items: center;
+    color: #ffffff;
+    background-color: #4459a0;
+}
+
+.file-upload:hover::before {
+    border-color: black;
+}
+.file-upload:active {
+    outline: 0;
+}
+.file-upload:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.form-control.file-upload {
+    display: block;
+    padding: 2px 5px 2px 5px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 112px;
+    align-items: center;
+    background-color: #4358a0;
+    border-radius: 4px;
 }
 
 .button-save{
@@ -201,4 +241,9 @@
 .btn-primary {
     --bs-btn-bg: #b2c7ef;
 
+}
+
+.form-input-date{
+    background-color: transparent;
+    color: #960E0E;
 }

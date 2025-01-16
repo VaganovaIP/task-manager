@@ -9,6 +9,9 @@ import 'react-calendar/dist/Calendar.css'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./index.css"
+import {BASE_API_URL} from "../../utils/api.js";
+import axios from "axios";
+import uuid from "react-uuid";
 
 export function ModalEditTask(props){
     const {members, data_task, lists, assignments, name_board} = props;
@@ -70,6 +73,34 @@ export function ModalEditTask(props){
         setAssignments(newList);
     }
 
+    const [data, getFile] = useState({ name: "", path: "" });
+    const [file, setFile] = useState('');
+
+    const handleChangeFile = (e) => {
+        const file = e.target.files[0]; // доступ к файлу
+        console.log(file);
+        setFile(file); // сохранение файла
+        const formData = new FormData();
+        const id = uuid();
+        formData.append('file', file); // добавление файла
+        formData.append('formName', "form-upload-file");
+        formData.append('id', id);
+        formData.append('id_task', data_task.task_id);
+        axios
+            .post(`${BASE_API_URL}/board/${name_board}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data; charset=UTF-8',
+                }
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+
     return(
         <Modal
             {...props}
@@ -118,7 +149,13 @@ export function ModalEditTask(props){
                                         onChange={(date) => setEndDate(date)}/>
                         </div>
                         <hr/>
-                        <Form.Label>Вложения</Form.Label>
+
+                        <Form.Group className="form-file-upload">
+                            <Form.Label><i className="fa fa-paperclip" aria-hidden="true"></i> Вложения </Form.Label>
+                            <Form.Control type="file" className="file-upload" title={"Прикрепить"}
+                                onChange={handleChangeFile}
+                            />
+                        </Form.Group>
                     </Form.Group>
                     <Form.Group className="form-data-task2">
                         <Form.Label>Важность</Form.Label>
@@ -172,10 +209,6 @@ export function ModalEditTask(props){
                                 ))}
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Form.Group className="form-file-upload">
-                            <i className="fa fa-paperclip" aria-hidden="true"></i>
-                            <Form.Control type="file" className="file-upload" title="Прикрепить файл"/>
-                        </Form.Group>
                         <div className="status">
                             <Form.Check type={'checkbox'} checked={status || false} onChange={() => setStatus(!status)}>
                             </Form.Check>
