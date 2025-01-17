@@ -1,5 +1,5 @@
 :root{
-    --main-color:#FFFFFF;
+    --main-color: #4358a0;
     --action:#455AA0;
     --back-color:#E0E7FE;
     --font-header:var(--main-color);
@@ -50,6 +50,10 @@ a{
     padding: 5px;
 }
 
+.custom-hr{
+    color: #383b80;
+    margin: 0;
+}
 
 
 .main{
@@ -221,6 +225,8 @@ a:active, a:hover, a{
     min-height: 40px;
     font-size: 20px;
     color: #FFFFFF;
+    margin: 0px;
+    padding: 0px;
 }
 
 .my-case{

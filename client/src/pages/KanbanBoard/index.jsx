@@ -22,9 +22,9 @@ registerLocale('ru', ru)
 import {ModalEditTask} from "../../modals/task/editTask.jsx"
 import {ModalAddMembers} from "../../modals/members/membersView.jsx";
 import {deleteMemberBoard, updateNameBoard} from "../../scripts/backend/boardsManager.jsx";
-import ("./kanbanBoard.css")
+import ("./kanbanBoard.css");
 
-export const KanbanBoard = () =>{
+const KanbanBoard = () =>{
     const location = useLocation()
     const {board_id, name_board} = location.state;
     const [nameList, setNameList] = useState("")
@@ -302,11 +302,6 @@ export const KanbanBoard = () =>{
                                 name_board={name_board}
                                 board_id={board_id}
                             />
-                            <div>
-                                {console.log(users)} {console.log(members)}
-                                {console.log(assignments)}
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -314,3 +309,5 @@ export const KanbanBoard = () =>{
         </div>
     )
 }
+
+export default KanbanBoard

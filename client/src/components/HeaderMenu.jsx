@@ -26,7 +26,7 @@ export const Menu = () => {
             <hr className="hr-line"/>
             <ul className="box-menu">
                 <li className="menu-item" title="Список досок"><Link to={"/boards"}> <i className="fa fa-th-large"> </i></Link></li>
-                {/*<li className="menu-item" title="Список задач"><Link to={"/ListBoards"}> <i className="fa fa-th-list"> </i></Link></li>*/}
+                <li className="menu-item" title="Список задач"><Link to={"/all-tasks"}> <i className="fa fa-th-list"> </i></Link></li>
             </ul>
             <hr className="hr-line"/>
             <div className="footer-menu">
