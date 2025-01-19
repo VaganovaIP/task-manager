@@ -53,14 +53,14 @@ ul li{
 
 .tasks-list{
     flex: 2;
-    min-width: 500px;
+    min-width: 550px;
     height:calc(100% - 75px);
     overflow-y: scroll;
 }
 
 .tasks-list-header{
     flex: 2;
-    min-width: 500px;
+    min-width: 545px;
 
 }
 
@@ -77,6 +77,8 @@ ul li{
 }
 
 .task-header .name-task{
+    flex:1;
+    width: 120px;
     font-size: 12px;
     align-items: center;
     align-content: center;
@@ -88,12 +90,13 @@ ul li{
 }
 
 .info-header{
-    padding-right: 5px;
+    flex:2;
+    padding-right: 47px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-start;
-    gap:30.5%;
+    gap:7.5%;
 }
 
 
@@ -103,11 +106,15 @@ ul li{
     flex-direction: row;
     background-color: transparent;
     padding: 15px;
+    width: 100%;
 }
 
 .name-task-list{
-    margin: 0;
-    width: 195px;
+    flex: 1;
+    min-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .accordion {
@@ -124,9 +131,14 @@ ul li{
     background-color: #FFFF;
 }
 
+.accordion-button{
+    padding: 0px;
+}
+
 .info{
+    flex: 2;
     display: flex;
-    gap:25%;
+    gap:9.5%;
     flex-direction: row;
     justify-content: flex-end;
 }

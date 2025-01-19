@@ -45,9 +45,8 @@ const ListTasks=()=>{
                                 <Accordion >
                                     <Accordion.Item eventKey="0" >
                                         <Accordion.Header>
-
                                             <li className="task-item">
-                                                <div className="name-task-list">First</div>
+                                                <div className="name-task-list">FirstFirstFirstFirstFirstFirst</div>
                                                 <div className="info">
                                                     <p className="status">
                                                         Низкая
