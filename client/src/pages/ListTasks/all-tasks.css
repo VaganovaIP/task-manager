@@ -34,7 +34,8 @@ ul li{
     display: flex;
     flex-grow: 1;
     gap:20px;
-    padding: 10px;
+    margin: 10px;
+    height: calc(100% - 40px);;
 }
 
 .filters{
@@ -53,10 +54,17 @@ ul li{
 .tasks-list{
     flex: 2;
     min-width: 500px;
+    height:calc(100% - 75px);
+    overflow-y: scroll;
+}
+
+.tasks-list-header{
+    flex: 2;
+    min-width: 500px;
+
 }
 
 .task-header{
-    margin: 0;
     padding-left: 5px;
     display: flex;
     font-size: 12px;
@@ -65,6 +73,7 @@ ul li{
     align-items: flex-start;
     background-color: rgba(239, 241, 250, 0.88);
     opacity: 60%;
+    margin-bottom: 3px;
 }
 
 .task-header .name-task{
@@ -84,21 +93,35 @@ ul li{
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-start;
-    gap:23.5%;
+    gap:30.5%;
 }
-
 
 
 .task-item{
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    flex-direction: row;
+    background-color: transparent;
+    padding: 15px;
+}
+
+.name-task-list{
+    margin: 0;
+    width: 195px;
+}
+
+.accordion {
+    --bs-accordion-color: var(--bs-body-color);
+    --bs-accordion-bg: #FFFF;
+}
+
+.accordion-item{
     border-radius: 5px;
     margin-bottom: 5px;
-    background-color: rgba(239, 241, 250, 0.88);
-    padding: 10px; 
+    padding: 10px;
     box-shadow: 2px 1px 5px var(--shadow);
     font-size: 14px;
+    background-color: #FFFF;
 }
 
 .info{
@@ -110,8 +133,8 @@ ul li{
 
 .importance{
     padding: 2px;
-    outline: none;  
-    border: 1px solid transparent;  
+    outline: none;
+    border: 1px solid transparent;
     font-size: 14px;
 }
 
@@ -123,11 +146,11 @@ p{
     padding: 2px;
     border-radius: 2px;
     margin-bottom: 3%;
-    box-shadow: 2px 1px 5px var(--shadow); 
-    outline: none;  
-    border: 1px solid transparent;  
+    box-shadow: 2px 1px 5px var(--shadow);
+    outline: none;
+    border: 1px solid transparent;
     font-size: 14px;
-    color:var(--font-main); 
+    color:var(--font-main);
 }
 
 .form-input{
@@ -147,7 +170,7 @@ p{
 }
 
 .filter-status{
-    font-size: 14px;
+font-size: 14px;
 }
 
 .action-filter{
@@ -156,58 +179,58 @@ p{
 }
 
 .button-filter{
-    background-color: #455AA0;
-    border: none;
+background-color: #455AA0;
+border: none;
 }
 
 .button-filter:hover{
-    background-color: #383b80;
-    border: none;
+background-color: #383b80;
+border: none;
 }
 
 
 .button-filter:active{
-    background-color: #383b80;
+background-color: #383b80;
 }
 
 
 .button-filter-no{
-    background-color: transparent;
-    color: #383b80;
-    border: none;
+background-color: transparent;
+color: #383b80;
+border: none;
 }
 
 .button-filter-no:hover{
-    background-color: transparent;
-    color: #32347a;
-    border: none;
+background-color: transparent;
+color: #32347a;
+border: none;
 }
 
 
 .button-filter-no:active{
-    background-color: transparent;
-    color: #595c8d;
+background-color: transparent;
+color: #595c8d;
 }
 
 .button-filter-no:before{
-    background-color: transparent;
-    color: #383b80;
-    border: none;
+background-color: transparent;
+color: #383b80;
+border: none;
 }
 
 .btn-primary {
-    --bs-btn-color: #fff;
-    --bs-btn-bg: rgba(69, 90, 160, 0.86);
-    --bs-btn-border-color: #3b52a4;
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #4358a0;
-    --bs-btn-hover-border-color: #4459a0;
-    --bs-btn-focus-shadow-rgb: 49, 132, 253;
-    --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #4358a0;
-    --bs-btn-active-border-color: rgba(69, 90, 160, 0.86);
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #fff;
-    --bs-btn-disabled-bg: #32347a;
-    --bs-btn-disabled-border-color: rgba(69, 90, 160, 0.86);
+--bs-btn-color: #fff;
+--bs-btn-bg: rgba(69, 90, 160, 0.86);
+--bs-btn-border-color: #3b52a4;
+--bs-btn-hover-color: #fff;
+--bs-btn-hover-bg: #4358a0;
+--bs-btn-hover-border-color: #4459a0;
+--bs-btn-focus-shadow-rgb: 49, 132, 253;
+--bs-btn-active-color: #fff;
+--bs-btn-active-bg: #4358a0;
+--bs-btn-active-border-color: rgba(69, 90, 160, 0.86);
+--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+--bs-btn-disabled-color: #fff;
+--bs-btn-disabled-bg: #32347a;
+--bs-btn-disabled-border-color: rgba(69, 90, 160, 0.86);
 }

@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import "./all-tasks.css"
 import DatePicker from "react-datepicker";
 import Button from "react-bootstrap/Button";
+import {Accordion} from "react-bootstrap";
 
 const ListTasks=()=>{
 
@@ -30,30 +31,384 @@ const ListTasks=()=>{
                         </Form>
                     </div>
                     <div className="tasks-content">
-                        <div className="tasks-list">
+                        <div className="tasks-list-header">
                             <div className="task-header">
                                 <p className="name-task-header">Название задачи</p>
                                 <div className="info-header">
-                                    <p className="status">Важность</p>
+                                    <p className="status">Приоритет</p>
                                     <p className="date-start">Дата начала</p>
                                     <p className="date-last">Дата конца</p>
                                     <p className="status">Статус</p>
                                 </div>
                             </div>
-                            <ul className="task-item">
-                                <li className="name-task"> <hr className="custom-hr"/>First</li>
-                                <div className="info">
-                                    <p className="status">
-                                        Низкая
-                                    </p>
-                                    <p className="date-start">
-                                        <hr className="custom-hr"/>
-                                        21.06.24</p>
-                                    <p className="date-last"><hr className="custom-hr"/>
-                                        21.06.24</p>
-                                    <p className="status">CC</p>
-                                </div>
-                            </ul>
+                            <div className="tasks-list">
+                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>                                <Accordion >
+                                    <Accordion.Item eventKey="0" >
+                                        <Accordion.Header>
+
+                                            <li className="task-item">
+                                                <div className="name-task-list">First</div>
+                                                <div className="info">
+                                                    <p className="status">
+                                                        Низкая
+                                                    </p>
+                                                    <p className="date-start">
+                                                        <hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="date-last"><hr className="custom-hr"/>
+                                                        21.06.24</p>
+                                                    <p className="status">CC</p>
+                                                </div>
+                                            </li>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="info">
+                                                <p className="status">
+                                                    Низкая
+                                                </p>
+                                                <p className="date-start">
+                                                    <hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="date-last"><hr className="custom-hr"/>
+                                                    21.06.24</p>
+                                                <p className="status">CC</p>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+                            </div>
 
                         </div>
                         <div className="filters">
@@ -87,7 +442,6 @@ const ListTasks=()=>{
                                         <p className="label-status">{status ? "Выполнена" : "Не выполнена"}</p>
                                     </div>
                                 </div>
-                                <hr className="custom-hr"/>
                                 <div className="action-filter">
                                     <Button  className="button-filter">
                                         Показать

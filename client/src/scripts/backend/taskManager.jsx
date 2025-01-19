@@ -122,11 +122,13 @@ export const deleteList = async ( list_id, name_board) => {
 };
 
 export const deleteTask = async (task_id, name_board) => {
+    const email = "user1@.ru";
     await axios
         .delete(`${BASE_API_URL}/board/${name_board}`, {
             data:{
                 formName: "form-delete-task",
-                task_id: task_id
+                task_id: task_id,
+                email:email
             }
         })
         .then(function (response) {

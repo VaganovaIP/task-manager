@@ -21,6 +21,7 @@ const upload = multer({storage:storageConfig}).single("file");
 
 router.get('/boards', boardController.fetchDataBoards);
 router.get('/board/:name_board', TaskController.fetchDataTasks);
+router.get('/all-tasks', TaskController.fetchDataTasks);
 
 router.post('/board/:name_board', upload, TaskController.postActions);
 router.post('/boards', boardController.addBoard);

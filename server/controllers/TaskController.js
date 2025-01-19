@@ -38,9 +38,22 @@ async function saveTask (req, res){
 }
 
 async function deleteTask(req, res){
-    const {task_id} = req.body;
+    const {task_id, email} = req.body;
     await Task.destroy({
         where:{
+            task_id:task_id,
+        }
+    })
+    const user = await User.findOne({
+        attributes:['user_id'],
+        where:{
+            email:email
+        }
+    })
+
+    await TaskAssignment.destroy({
+        where:{
+            user_id:user.user_id,
             task_id:task_id,
         }
     })
@@ -156,6 +169,54 @@ class TaskController {
             // console.log(fileP)
             await res.status(200).json({lists:lists, tasks:tasks, members:members,
                                            assignments:assignments, users:users, board:board})
+        } catch (err){
+            console.log(err)
+        }
+    }
+
+    static async fetchDataTasksAll(req, res){
+        const user_id = req.query.id;
+        try {
+
+            //вывод задач из таблицы Assignments, где есть user
+            let tasks = await TaskAssignment.findAll({
+                attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
+                    'importance', 'owner_id', 'status', 'list_id'],
+                include:[
+                    {model:Task, attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
+                            'importance', 'owner_id', 'status', 'list_id'],
+                        include:[
+                            {model: List},
+                            {model: User , attributes:['user_id', 'username']},
+                        ]
+                    },
+                ],
+                where:{user_id:user_id},
+                order:[['createdAt', 'DESC']],
+            })
+
+
+            let assignments = await TaskAssignment.findAll({
+                attributes:['members_id', 'task_id'],
+                include:[{model: User, attributes:['user_id', 'username']},
+                    {model:Task,
+                        where:{board_id:board_id},
+                        include:[{model: User , attributes:['user_id', 'username']},]
+                    }
+                ]
+            })
+
+            let users = await User.findAll({
+                attributes: ['user_id', 'username'],
+            })
+
+            // const fileP = path.join(__dirname, '../uploads', 'giphy.gif');
+            // res.download(fileP, 'giphy.gif',(err)=>{
+            //     console.log(err)
+            // })
+            // console.log(fileP)
+            await res.status(200).json({lists:lists, tasks:tasks, members:members,
+                assignments:assignments, users:users, board:board})
         } catch (err){
             console.log(err)
         }
