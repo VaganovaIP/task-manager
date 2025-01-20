@@ -143,9 +143,9 @@ export function ModalEditTask(props){
                         <hr/>
                         <div className="date-form">
                             <Form.Label>Срок</Form.Label>
-                            <DatePicker className="form-input" selected={startDate} locale={'ru'}
+                            <DatePicker className="form-input" selected={startDate} locale={'ru'} dateFormat={'DD/MM/YYYY'}
                                         onChange={(date) => setStartDate(date)}/>
-                            <DatePicker className="form-input" selected={endDate} locale={'ru'}
+                            <DatePicker className="form-input" selected={endDate} locale={'ru'} dateFormat={'DD/MM/YYYY'}
                                         onChange={(date) => setEndDate(date)}/>
                         </div>
                         <hr/>

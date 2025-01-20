@@ -16,10 +16,16 @@ const path = require("path");
 
 
 async function createTask(req, res) {
-    const {board_id, name_task, list_id, task_id} = req.body;
+    const {board_id, name_task, list_id, task_id, email} = req.body;
     const value = date.format((new Date()),
         'YYYY/MM/DD HH:mm:ss');
-    await Task.create({task_id, name_task, list_id, board_id, created_at:new Date()})
+    const user = await User.findOne({
+        attributes:['user_id'],
+        where:{
+            email:email
+        }
+    })
+    await Task.create({task_id, name_task, list_id, board_id, created_at:new Date(), owner_id:user.user_id})
         .then(res.status(200).send({message: 'New task created'}))
         .catch((err) => {console.log(err)})
 }
@@ -118,7 +124,8 @@ class TaskController {
         }
     }
     static async fetchDataTasks(req, res){
-        const board_id = req.query.id;
+        const board_id = req.query.board_id;
+
         try {
             let board = await Board.findOne({
                 attributes:['name_board'],
@@ -175,48 +182,34 @@ class TaskController {
     }
 
     static async fetchDataTasksAll(req, res){
-        const user_id = req.query.id;
-        try {
+        const email = req.query.email;
 
+        try {
+            const user = await User.findOne({
+                attributes:['user_id', 'username','email'],
+                where:{
+                    email:email
+                }
+            })
             //вывод задач из таблицы Assignments, где есть user
             let tasks = await TaskAssignment.findAll({
-                attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
-                    'importance', 'owner_id', 'status', 'list_id'],
                 include:[
                     {model:Task, attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
                             'importance', 'owner_id', 'status', 'list_id'],
                         include:[
                             {model: List},
                             {model: User , attributes:['user_id', 'username']},
+                            {model: Board},
                         ]
                     },
                 ],
-                where:{user_id:user_id},
-                order:[['createdAt', 'DESC']],
+                where:{user_id:user.user_id},
             })
-
-
-            let assignments = await TaskAssignment.findAll({
-                attributes:['members_id', 'task_id'],
-                include:[{model: User, attributes:['user_id', 'username']},
-                    {model:Task,
-                        where:{board_id:board_id},
-                        include:[{model: User , attributes:['user_id', 'username']},]
-                    }
-                ]
-            })
-
-            let users = await User.findAll({
-                attributes: ['user_id', 'username'],
-            })
-
             // const fileP = path.join(__dirname, '../uploads', 'giphy.gif');
             // res.download(fileP, 'giphy.gif',(err)=>{
             //     console.log(err)
             // })
-            // console.log(fileP)
-            await res.status(200).json({lists:lists, tasks:tasks, members:members,
-                assignments:assignments, users:users, board:board})
+            await res.status(200).json({tasks:tasks,})
         } catch (err){
             console.log(err)
         }

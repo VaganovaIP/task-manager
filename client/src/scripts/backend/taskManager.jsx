@@ -6,7 +6,7 @@ export async function fetchDataBoard(board_id, name, setLists, setTasks, setMemb
     await axios
         .get(`${BASE_API_URL}/board/${name}`, {
             params: {
-                id: board_id
+                board_id: board_id
             }
         })
         .then(res => {
@@ -17,6 +17,18 @@ export async function fetchDataBoard(board_id, name, setLists, setTasks, setMemb
             setUsers(res.data.users);
             setBoardName(res.data.board);
             console.log(res.data.board)
+        })
+}
+
+export async function fetchDataTasks(email, setTasks) {
+    await axios
+        .get(`${BASE_API_URL}/all-tasks`, {
+            params: {
+                email: email
+            }
+        })
+        .then(res => {
+            setTasks(res.data.tasks);
         })
 }
 
@@ -36,14 +48,15 @@ export const createList = async (list_id, name_board, name_list, board_id) => {
         });
 };
 
-export const createTask = async (task_id, name_board, list_id, board_id, name_task, owner_id) => {
+export const createTask = async (task_id, name_board, list_id, board_id, name_task, email) => {
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`, {
-        formName:"form-add-task",
-        task_id:task_id,
-        board_id: board_id,
-        name_task: name_task,
-        list_id:list_id,
+            formName:"form-add-task",
+            task_id:task_id,
+            board_id: board_id,
+            name_task: name_task,
+            list_id:list_id,
+            email:email,
     })
         .then(function (response) {
             console.log(response);

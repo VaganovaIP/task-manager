@@ -72,8 +72,9 @@ const KanbanBoard = () =>{
     const onCreateTaskCard = async (event) => {
         event.preventDefault();
         const name = event.target.name.value;
+        let email = "user1@.ru";
         let task_id = uuid();
-        createTask(task_id, name_board, activeList, board_id, name)
+        createTask(task_id, name_board, activeList, board_id, name, email)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_task = {
