@@ -12,7 +12,7 @@ const renderListTasks=(task)=>{
                     <li className="task-item">
                         <div className="name-task-list">{task.Task.name_task}</div>
                         <div className="info">
-                            <p className="title-info">{task.Task.importance || "---"}</p>
+                            <p className="title-info">{task.Task.importance}</p>
                             <p className="title-info">
                                 {convertDate(task.Task.date_start)}</p>
                             <p className="title-info">
@@ -28,15 +28,13 @@ const renderListTasks=(task)=>{
                             <p className="title">
                                 Описание
                             </p>
-                            <p>{task.Task.description}</p>
                         </div>
                         <div className="column2">
                             <p className="title">
                                 Автор
                             </p>
-                            {console.log(task)}
                             <p>{task.Task.User.username}</p>
-                            <p>{task.Task.User.first_name}</p> <p>{task.Task.User.last_name}</p>
+                            <p className="name-author">({task.Task.User.first_name} {task.Task.User.last_name})</p>
                             <p className="title">
                                 Доска
                             </p>

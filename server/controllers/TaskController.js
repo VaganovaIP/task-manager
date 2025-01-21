@@ -198,7 +198,7 @@ class TaskController {
                             'importance', 'owner_id', 'status', 'list_id'],
                         include:[
                             {model: List},
-                            {model: User , attributes:['user_id', 'username']},
+                            {model: User , attributes:['user_id', 'username', 'first_name', 'last_name']},
                             {model: Board},
                         ]
                     },

@@ -55,27 +55,52 @@ const ListTasks=()=>{
     }
 
     const onTaskFilter= () =>{
-        // if (value.length === 0){
-        //     setSearchResults(tasks);
-        //     setOnSearch(false);
-        //     return;
-        // }
-
-        let importanceFilter, statusFilter, dateFilterStart, dateFilterEnd;
-
-
+        let importanceFilter, statusFilter, dateFilter;
         const filterData = tasks.filter((task)=>{
+            if (dateStart && dateEnd) {
+                if (task.Task.date_start) {
+                    const itemDate = task.Task.date_start;
+                    dateFilter = isWithinInterval(itemDate,
+                        {
+                        start: dateStart,
+                        end: dateEnd,
+                    });
+                } else {
+                    dateFilter = true;
+                }
+            }
+
+            if (!dateStart && !dateEnd) dateFilter = true;
+
+            if (!dateStart && dateEnd) {
+                if (task.Task.date_end) {
+                    const itemDate = task.Task.date_end;
+                    dateFilter = isWithinInterval(itemDate,
+                        {
+                            start: new Date(),
+                            end: dateEnd,
+                        });
+                } else {
+                    dateFilter = true;
+                }
+            }
+
+            if (dateStart && !dateEnd) {
+                if (task.Task.date_start) {
+                    const itemDate = task.Task.date_start;
+                    if (convertDate(itemDate) >= convertDate(dateStart)) dateFilter = itemDate;
+                } else {
+                    dateFilter = true;
+                }
+            }
+
             importanceFilter = importance ? (task.Task.importance === importance) : true;
-            statusFilter = statusTask ? task.Task.status === statusTask : true;
 
-            dateFilterStart = isWithinInterval(task.Task.date_start,
-                { start:dateStart, end: dateEnd})
-            console.log(convertDate(dateStart))
-            // dateFilterEnd = isWithinInterval(task.Task.date_end,
-            //     { start: new Date(), end: parseISO(dateEnd)})
+            statusFilter = statusTask ? (task.Task.status === statusTask) : true;
 
-            return  dateFilterStart;
+            return dateFilter && statusFilter && importanceFilter;
         });
+
         setFiltersResults(filterData);
         setOnFilter(true);
     }
@@ -83,7 +108,6 @@ const ListTasks=()=>{
     return(
         <div className="f-container">
             <HeaderMenu></HeaderMenu>
-            {console.log(filtersResults)}
             <div className="main">
                 <div className="main-menu-content">
                     <Menu></Menu>
@@ -103,6 +127,60 @@ const ListTasks=()=>{
                         </Form>
                     </div>
                     <div className="tasks-content">
+                        <div className="filters">
+                            <Form.Group className="filter">
+                                <div className="date">
+                                    <i className="fa fa-calendar"/>
+                                    <DatePicker className="form-input"  locale={'ru'} placeholderText="Дата начала" dateFormat={'DD/MM/YYYY'}
+                                        selected={dateStart} onChange={(date)=>setDateStart(date)}
+                                    />
+                                </div>
+                                <div className="date">
+                                    <i className="fa fa-calendar"/>
+                                    <DatePicker className="form-input"  locale={'ru'} placeholderText="Дата конца" dateFormat={'DD/MM/YYYY'}
+                                                selected={dateEnd} onChange={(date)=>setDateEnd(date)}
+                                    />
+                                </div>
+                                <div className="importance">
+                                    <Form.Select className="form-input" value={importance}
+                                                 onChange={(e)=>setImportance(e.target.value)}>
+                                        <option value=""></option>
+                                        <option value="Низкая">Низкая</option>
+                                        <option value="Средняя">Средняя</option>
+                                        <option value="Высокая">Высокая</option>
+                                    </Form.Select>
+                                </div>
+
+                                <div className="filter-status">
+                                    {/*<p>Статус задачи</p>*/}
+                                    <div className="status">
+                                        <Form.Check type={'checkbox'} checked={statusTask || false}
+                                                    onChange={() => setStatusTask(!statusTask)}>
+                                        </Form.Check>
+                                        <p className="label-status">{statusTask ? "Выполнена" : "Не выполнена"}</p>
+                                    </div>
+                                </div>
+                                <div className="action-filter">
+                                    <Button  className="button-filter" onClick={()=>onTaskFilter()}>
+                                        Показать
+                                    </Button>
+                                    <Button  className="button-filter-no" hidden={!onFilter}
+                                        onClick={()=>{
+                                            setOnFilter(false);
+                                            setImportance('');
+                                            setStatusTask(false);
+                                            setDateStart(null);
+                                            setDateEnd(null);
+                                        }
+                                        }
+                                    >
+                                        Сбросить
+                                    </Button>
+                                </div>
+
+                            </Form.Group>
+
+                        </div>
                         <div className="tasks-list-header">
                             <div className="task-header">
                                 <p className="name-task-header">Название задачи</p>
@@ -124,66 +202,10 @@ const ListTasks=()=>{
                                         ))):
                                         (tasks.map((task)=>(
                                             renderListTasks(task)
-                                    ))))
+                                        ))))
 
-                                    }
+                                }
                             </div>
-                        </div>
-                        <div className="filters">
-                            <Form.Group className="filter">
-                                <div className="date">
-                                    <i className="fa fa-calendar"/>
-                                    <DatePicker className="form-input"  locale={'ru'} placeholderText="Дата начала"
-                                        selected={dateStart} onChange={(date)=>setDateStart(date)}
-                                    />
-                                </div>
-                                <div className="date">
-                                    <i className="fa fa-calendar"/>
-                                    <DatePicker className="form-input"  locale={'ru'} placeholderText="Дата конца"
-                                                selected={dateEnd} onChange={(date)=>setDateEnd(date)}
-                                    />
-                                </div>
-                                <div className="importance">
-                                    <p>Важность</p>
-                                    <Form.Select className="form-input" value={importance}
-                                                 onChange={(e)=>setImportance(e.target.value)}
-                                                 title="Важность" >
-                                        <option value=""></option>
-                                        <option value="Низкая">Низкая</option>
-                                        <option value="Средняя">Средняя</option>
-                                        <option value="Высокая">Высокая</option>
-                                    </Form.Select>
-                                </div>
-
-                                <div className="filter-status">
-                                    <p>Статус задачи</p>
-                                    <div className="status">
-                                        <Form.Check type={'checkbox'} checked={statusTask || false}
-                                                    onChange={() => setStatusTask(!statusTask)}>
-                                        </Form.Check>
-                                        <p className="label-status">{statusTask ? "Выполнена" : "Не выполнена"}</p>
-                                    </div>
-                                </div>
-                                <div className="action-filter">
-                                    <Button  className="button-filter" onClick={()=>onTaskFilter()}>
-                                        Показать
-                                    </Button>
-                                    <Button  className="button-filter-no" hidden={!onFilter ? true : false}
-                                        onClick={()=>{
-                                            setOnFilter(false);
-                                            setImportance('');
-                                            setStatusTask(false);
-                                            setDateStart(null);
-                                            setDateEnd(null);
-                                        }
-                                        }
-                                    >
-                                        Сбросить
-                                    </Button>
-                                </div>
-
-                            </Form.Group>
-
                         </div>
                     </div>
 
