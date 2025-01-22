@@ -64,7 +64,7 @@ color:#FFFFFF;
 .column{
     display:flex;
     flex-direction: row;
-    max-width: 250px;
+    max-width: 220px;
     min-width: 180px;
     background-color: #FFFFFF;
 
@@ -74,8 +74,7 @@ color:#FFFFFF;
     background-color: transparent;
     border: none;
     padding: 5px;
-    width: 100%;
-    min-width: 250px;
+    font-size: 16px;
 }
 
 .delete-list{
@@ -102,7 +101,7 @@ color:#FFFFFF;
 .list-tasks{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    max-width:220px;
     max-height: calc(100% - 75px);
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(60px);
@@ -110,7 +109,7 @@ color:#FFFFFF;
     padding: 5px;
     margin-top: 2%;
     box-shadow: 2px 1px 5px var(--shadow);
-    overflow-y:scroll;
+    overflow-y:auto;
     gap: 5px;
 }
 
@@ -136,12 +135,12 @@ color:#FFFFFF;
 }
 
 .p{
-    font-size: 17px;
+    font-size: 16px;
     padding: 2px;
 }
 
 .name-task{
-    font-size: 17px;
+    font-size: 14px;
     padding: 2px;
     margin-bottom: 7px;
     color: var(--font-main);

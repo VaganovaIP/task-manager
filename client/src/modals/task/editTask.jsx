@@ -4,14 +4,15 @@ import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
 import {CDBIcon} from "cdbreact";
-import {deleteAssignment, onAddAssignmentTask, saveTask} from "../../scripts/backend/taskManager.jsx";
+import {deleteAssignment, onAddAssignmentTask} from "../../services/assignment.jsx";
+import {saveTask} from "../../services/task.jsx";
 import 'react-calendar/dist/Calendar.css'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./index.css"
 import {BASE_API_URL} from "../../utils/api.js";
 import axios from "axios";
 import uuid from "react-uuid";
+import "./index.css"
 
 export function ModalEditTask(props){
     const {members, data_task, lists, assignments, name_board} = props;

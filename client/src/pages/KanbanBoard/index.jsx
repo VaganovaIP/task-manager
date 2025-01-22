@@ -3,13 +3,6 @@ import {useLocation, useParams} from "react-router-dom";
 import {useState} from "react";
 import {HeaderMenu, Menu} from "../../components/HeaderMenu.jsx";
 import Button from "react-bootstrap/Button";
-import {
-    createList,
-    fetchDataBoard,
-    createTask,
-    updateNameList,
-    deleteList, deleteTask
-} from "../../scripts/backend/taskManager.jsx";
 import Form from "react-bootstrap/Form";
 import uuid from "react-uuid";
 import {RenderTaskList} from "../../components/Tasks.jsx";
@@ -21,7 +14,10 @@ import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
 import {ModalEditTask} from "../../modals/task/editTask.jsx"
 import {ModalAddMembers} from "../../modals/members/membersView.jsx";
-import {deleteMemberBoard, updateNameBoard} from "../../scripts/backend/boardsManager.jsx";
+import {updateNameBoard} from "../../services/board.jsx";
+import {createTask, deleteTask, fetchDataBoard} from "../../services/task.jsx";
+import {createList, deleteList, updateNameList} from "../../services/list.jsx";
+import {deleteMemberBoard} from "../../services/member.jsx";
 import ("./kanbanBoard.css");
 
 const KanbanBoard = () =>{

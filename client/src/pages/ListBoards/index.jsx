@@ -1,10 +1,10 @@
 import React from 'react';
 import {useEffect, useState} from "react";
-import {createBoard, deleteBoard, fetchAllBoards} from "../../scripts/backend/boardsManager.jsx";
+import {createBoard, deleteBoard, fetchAllBoards} from "../../services/board.jsx";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {HeaderMenu, Menu} from '../../components/HeaderMenu.jsx'
 import uuid from 'react-uuid';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -49,9 +49,6 @@ export default function ListBoards() {
                         </div>
                     </Card>
             </div>
-
-
-
         )
     }
 

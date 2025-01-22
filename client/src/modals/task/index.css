@@ -55,6 +55,7 @@
 .modal-header-task{
     display: inline-block;
     flex-direction: column;
+    width: 100%;
 }
 
 .list-task-label{
@@ -91,7 +92,8 @@
 .name-task-modal{
     background-color: transparent;
     border: none;
-    font-size: 16px;
+    font-size: 14px;
+    width: 100%;
 }
 
 .name-task-modal:hover:checked{
@@ -99,7 +101,7 @@
  }
 
 .form-label{
-    font-size: 15px;
+    font-size: 14px;
     margin: 0px;
     align-content: center;
     padding: 0px;

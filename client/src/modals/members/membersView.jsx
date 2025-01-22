@@ -1,7 +1,7 @@
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
-import {addMemberBoard} from "../../scripts/backend/boardsManager"
+import {addMemberBoard} from "../../services/board.jsx"
 import Fuse from "fuse.js";
 import "./index.css"
 
@@ -27,9 +27,6 @@ export function ModalAddMembers(props){
         setOnSearch(true);
     }
 
-    const deleteAssignments = (id)=>{
-
-    }
 
     return(
         <Modal

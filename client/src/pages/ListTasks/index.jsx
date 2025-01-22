@@ -4,15 +4,11 @@ import Form from "react-bootstrap/Form";
 import "./all-tasks.css"
 import DatePicker from "react-datepicker";
 import Button from "react-bootstrap/Button";
-import {Accordion} from "react-bootstrap";
-import {fetchDataTasks} from "../../scripts/backend/taskManager.jsx";
-import moment from "moment";
-import {Link} from "react-router-dom";
 import Fuse from "fuse.js";
-import renderListTAsks from "../../components/TaskListAll.jsx";
 import renderListTasks from "../../components/TaskListAll.jsx";
-import {isWithinInterval, parseISO} from "date-fns";
+import {isWithinInterval} from "date-fns";
 import convertDate from "../../utils/helpers.jsx";
+import {fetchDataTasks} from "../../services/task.jsx";
 
 const ListTasks=()=>{
     const [tasks, setTasks] = useState([]);
@@ -21,12 +17,8 @@ const ListTasks=()=>{
     const [importance, setImportance] = useState('');
     const [statusTask, setStatusTask] = useState(false);
     const [onFilter, setOnFilter] = useState(false);
-
     const [searchResults, setSearchResults] = useState(tasks);
     const [filtersResults, setFiltersResults] = useState(tasks);
-    const [filterImportance, setFilterImportance] = useState('');
-    const [filterStatus, setFilterStatus] = useState('');
-    const [filterDate, setFilterDate] = useState('');
 
     const options = {keys:['name_task', 'Task.name_task']};
     const fuse = new Fuse(tasks, options);
@@ -100,7 +92,6 @@ const ListTasks=()=>{
 
             return dateFilter && statusFilter && importanceFilter;
         });
-
         setFiltersResults(filterData);
         setOnFilter(true);
     }
@@ -157,7 +148,7 @@ const ListTasks=()=>{
                                         <Form.Check type={'checkbox'} checked={statusTask || false}
                                                     onChange={() => setStatusTask(!statusTask)}>
                                         </Form.Check>
-                                        <p className="label-status">{statusTask ? "Выполнена" : "Не выполнена"}</p>
+                                        <p className="label-status">{statusTask ? "Выполненные задачи" : "Все задачи"}</p>
                                     </div>
                                 </div>
                                 <div className="action-filter">
