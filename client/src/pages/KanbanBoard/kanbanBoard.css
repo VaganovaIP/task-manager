@@ -17,27 +17,28 @@
 }
 
 *{
-margin: 0;
-padding: 0;
-font-family: "Lato", sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: "PT Sans", Calibri, Tahoma, inherit;
+    font-variant: normal;
 }
 
 body{
-color:var(--font-main);
-display:flex;
-flex-direction: column;
-min-height: 100%;
-position: relative;
+    color:var(--font-main);
+    display:flex;
+    flex-direction: column;
+    min-height: 100%;
+    position: relative;
 }
 
 ul li{
-list-style: none;
-text-decoration: none;
-color: var(--font-main);
+    list-style: none;
+    text-decoration: none;
+    color: var(--font-main);
 }
 
 a{
-color:#FFFFFF;
+    color:#FFFFFF;
 }
 
 
@@ -66,20 +67,28 @@ color:#FFFFFF;
     flex-direction: row;
     max-width: 220px;
     min-width: 180px;
-    background-color: #FFFFFF;
-
+    background-color: rgba(59, 82, 164, 0.73);
+    padding: 2px;
+    border-radius: 5px;
 }
 
 .input-name{
     background-color: transparent;
     border: none;
-    padding: 5px;
-    font-size: 16px;
+    padding: 0px 5px 0px 5px;
+    font-size: 18px;
+    font-family: "PT Sans", Calibri, Tahoma, sans-serif;
+    width: 100%;
+}
+
+.column .input-name{
+    font-size: 15px;
+    color: #FFFFFF;
 }
 
 .delete-list{
     width: 20px;
-    padding-right: 3px;
+    padding-right: 2px;
     color:var(--font-main);
     outline: none;
     border: none;
@@ -93,9 +102,10 @@ color:#FFFFFF;
 
 .head-column{
     width: 100%;
-    background-color: var(--bs-emphasis-color-rgb);
+    background-color: #3b52a4;
     padding: 3px 3px 3px 5px;
     box-shadow: 2px 1px 5px var(--shadow);
+
 }
 
 .list-tasks{
@@ -111,12 +121,14 @@ color:#FFFFFF;
     box-shadow: 2px 1px 5px var(--shadow);
     overflow-y:auto;
     gap: 5px;
+    border-radius: 3px;
 }
 
 .create-list-button{
-    height: 40px;
+    height: 30px;
     min-width: 200px;
     background-color: #455AA0;
+    padding: 0px;
 }
 
 .create-list-button:hover{

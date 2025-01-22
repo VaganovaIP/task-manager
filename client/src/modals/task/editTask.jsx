@@ -3,7 +3,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
-import {CDBIcon} from "cdbreact";
 import {deleteAssignment, onAddAssignmentTask} from "../../services/assignment.jsx";
 import {saveTask} from "../../services/task.jsx";
 import 'react-calendar/dist/Calendar.css'
@@ -152,7 +151,7 @@ export function ModalEditTask(props){
                         <hr/>
 
                         <Form.Group className="form-file-upload">
-                            <Form.Label><i className="fa fa-paperclip" aria-hidden="true"></i> Вложения </Form.Label>
+                            <Form.Label><i className="bi bi-paperclip" aria-hidden="true"></i> Вложения </Form.Label>
                             <Form.Control type="file" className="file-upload" title={"Прикрепить"}
                                 onChange={handleChangeFile}
                             />

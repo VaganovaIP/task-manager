@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {useState} from "react";
 import {HeaderMenu, Menu} from "../../components/HeaderMenu.jsx";
 import Button from "react-bootstrap/Button";
@@ -8,7 +8,7 @@ import uuid from "react-uuid";
 import {RenderTaskList} from "../../components/Tasks.jsx";
 import Card from "react-bootstrap/Card";
 import Dropdown from 'react-bootstrap/Dropdown';
-import DatePicker, {registerLocale} from "react-datepicker";
+import {registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {ru} from 'date-fns/locale/ru';
 registerLocale('ru', ru)
@@ -207,7 +207,7 @@ const KanbanBoard = () =>{
                                 <hr/>
                                 <Dropdown.Item onClick={()=>setModalMembersIsOpen(true)}>
                                     <div className="add-button-task-members">
-                                        <i className="fa fa-user-plus" aria-hidden="true"></i>
+                                        <i className="bi bi-person-plus-fill" aria-hidden="true"></i>
                                         <p className="name-member">Добавить участника</p>
                                     </div>
                                 </Dropdown.Item>

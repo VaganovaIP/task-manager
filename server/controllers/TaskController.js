@@ -135,7 +135,7 @@ class TaskController {
             let lists = await List.findAll({
                 attributes: ['list_id', 'name_list'],
                 where: {id_board: board_id},
-                order:[['createdAt', 'DESC']],
+                order:[['createdAt', 'ASC']],
             })
 
             let tasks = await Task.findAll({

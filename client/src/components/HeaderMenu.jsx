@@ -2,8 +2,8 @@ import React from 'react';
 import './index.css'
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-import {CDBIcon} from "cdbreact";
 import {Link} from "react-router-dom";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 export const HeaderMenu=()=>{
     return (
@@ -11,7 +11,7 @@ export const HeaderMenu=()=>{
                 <Container fluid>
                     <Navbar.Brand href="#">Taskania</Navbar.Brand>
                     <div className="user-info">
-                        <i className="fa fa-user-circle" aria-hidden="true"></i>
+                        <i className="bi bi-person-circle" aria-hidden="true"></i>
                     </div>
                 </Container>
             </Navbar>
@@ -25,8 +25,8 @@ export const Menu = () => {
             <div className="header-menu"></div>
             <hr className="hr-line"/>
             <ul className="box-menu">
-                <li className="menu-item" title="Список досок"><Link to={"/boards"}> <i className="fa fa-th-large"> </i></Link></li>
-                <li className="menu-item" title="Список задач"><Link to={"/all-tasks"}> <i className="fa fa-th-list"> </i></Link></li>
+                <li className="menu-item" title="Список досок"><Link to={"/boards"}> <i className="bi bi-grid-fill"> </i></Link></li>
+                <li className="menu-item" title="Список задач"><Link to={"/all-tasks"}> <i className="bi bi-list-task"> </i></Link></li>
             </ul>
             <hr className="hr-line"/>
             <div className="footer-menu">
