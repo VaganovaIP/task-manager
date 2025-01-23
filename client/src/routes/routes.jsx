@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {ListBoards, MainPage, Login, KanbanBoard, ListTasks} from "../pages/index"
+import {ListBoards, MainPage, Login, KanbanBoard, ListTasks, Register} from "../pages/index"
 import {Suspense} from "react";
 
 export default function RoutesApp(){
@@ -10,6 +10,7 @@ export default function RoutesApp(){
             <Routes>
                 <Route path="/" element={<MainPage/>}></Route>
                 <Route path="/login" element={<Login/>}></Route>
+                <Route path="/register" element={<Register/>}></Route>
                 <Route path="/boards" element={<ListBoards/>}></Route>
                 <Route path="/board/:name_board" element={<KanbanBoard/>}></Route>
                 <Route path="/all-tasks" element={<ListTasks/>}></Route>

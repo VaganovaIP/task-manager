@@ -192,6 +192,10 @@ ul li{
     opacity: 70%;
 }
 
+.form-select{
+    padding: 2px;
+}
+
 p{
     margin: 0px;
 }
@@ -207,6 +211,7 @@ p{
     border: solid 0.002rem rgba(0, 0, 0, 0.15);
     border-radius: 4px;
     box-shadow: 2px 1px 5px #DBD8F6FF;
+    padding-left: 3px;
 }
 
 .title-info{
@@ -219,6 +224,7 @@ p{
     gap:5px;
     align-items: center;
     width: 150px;
+
 }
 
 .status{

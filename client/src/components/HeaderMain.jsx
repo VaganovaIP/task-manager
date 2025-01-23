@@ -16,7 +16,7 @@ export const HeaderMain=()=>{
                         <Link to={"/login"} className="main-menu-item">Вход</Link>
                     </li>
                     <li>
-                        <a href="registration.html" className="main-menu-item">Регистрация</a>
+                        <Link to={"/register"} className="main-menu-item">Регистрация</Link>
                     </li>
                 </ul>
             </nav>
