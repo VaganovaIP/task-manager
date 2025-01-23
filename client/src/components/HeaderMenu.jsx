@@ -1,21 +1,20 @@
 import React from 'react';
 import './index.css'
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
 import {Link} from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 export const HeaderMenu=()=>{
     return (
-            <Navbar expand="lg" className="bg-body-tertiary" >
-                <Container fluid>
-                    <Navbar.Brand href="#">Taskania</Navbar.Brand>
-                    <div className="user-info">
-                        <i className="bi bi-person-circle" aria-hidden="true"></i>
-                    </div>
-                </Container>
-            </Navbar>
-
+        <header className="main-header">
+            <div className="logo">
+                <a href="main.html" className="logo-name">Taskania</a>
+            </div>
+            <nav className="main-menu">
+                <div className="user-info">
+                    <i className="bi bi-person-circle" aria-hidden="true"></i>
+                </div>
+            </nav>
+        </header>
     );
 }
 

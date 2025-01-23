@@ -58,7 +58,8 @@ a{
 
 .main{
     display: flex;
-    background: -webkit-linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* Chrome 10-25, Safari 5.1-6 */                          background: linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: -webkit-linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     overflow: hidden;
     scrollbar-color: #455AA0 #F2F5FF;
     height: calc(100% - 68px);
@@ -87,7 +88,7 @@ a:active, a:hover, a{
 }
 
 .navbar-brand{
-    font-size: 28px;
+    font-size: 25px;
     color: var(--font-main);
     font-family: "Lato", sans-serif;
     font-stretch: semi-expanded;
@@ -304,3 +305,54 @@ li:hover{
     padding: 0;
 }
 
+
+/*Header main page*/
+
+/*header*/
+
+.main-header{
+    display: flex;
+    background-color: #f6f7f9;
+    color: #1E2B32;
+    padding: 20px 0;
+    height: 68px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    display: flex;
+    margin-left: 20px;
+    color: #1E2B32;
+}
+
+.logo-name{
+    font-size: 28px;
+    color: #1E2B32;
+    font-stretch: semi-expanded;
+}
+
+.main-menu{
+    box-sizing: border-box;
+}
+
+.main-menu{
+    margin-right: 20px;
+    align-content: center;
+    align-items: center;
+}
+
+.main-menu-list{
+    display:flex;
+    list-style: none;
+    margin-left: auto;
+    margin-bottom: 0px;
+    padding: 0px;
+    color: #1E2B32;
+}
+
+.main-menu-item{
+    color: #1E2B32;
+    text-transform: uppercase;
+    font-size: 12px;
+}

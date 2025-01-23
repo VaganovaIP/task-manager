@@ -1,0 +1,161 @@
+:root{
+   --main-color: #b2c7ef;
+   --action:#455AA0;
+   --back-color:#E0E7FE;
+   --font-header:var(--main-color);
+   --font-main:#000000;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: var(--main-color);
+    color:var(--font-main);
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a:active, a:hover, a{
+    text-decoration: none;
+}
+
+ul li{
+    padding-right: 5px;
+    margin-right: 5px;
+}
+
+.main-menu ul li:not(:last-of-type){
+    border-right: 1px solid  #1E2B32;
+}
+
+
+.main-page-content{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: -webkit-linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.container{
+    margin: 0;
+    height: 100%;
+}
+
+
+
+.main-content-main{
+    display: flex;
+    flex:1;
+    justify-content: center;
+    align-items: center;
+}
+
+/*footer*/
+
+.main-footer{
+    padding: 30px;
+    background-color: transparent;
+}
+
+.footer .container{
+    flex-shrink:0;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/*Авторизация и Регистрация*/
+
+.auth-reg{
+    display: flex;
+    padding: 20px;
+    width: 300px;
+    background-color: var(--back-color);
+    backdrop-filter: blur(90%);
+    border: solid 2px transparent;
+    border-radius: 8px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title-auth-reg{
+    display: flex;
+    font-size: 18px;
+    padding-bottom: 10px;
+    color: #1E2B32;
+    font-stretch: semi-expanded;
+    align-content: center;
+    justify-content: center;
+}
+
+.form-auth-reg{
+    width: 100%;
+    border:2px;
+
+}
+
+.form-input-login{
+    display: block;
+    width: 100%;
+    height: calc(2.05rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    transition: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-bottom: 5px;
+}
+
+.form-input-login::placeholder {
+    color: #212529;
+    opacity: 0.4;
+}
+
+.form-input-login:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #bbcaea;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(83, 107, 208, 0.42);
+}
+
+
+.form-button{
+    width: auto;
+    font-size: 12px;
+    padding: 3px 15px;
+    border-radius: 15px;
+    outline: none;
+    border:none;
+    background: var(--action);
+    color:var(--main-color);
+}
+
+.form-button:hover{
+    background-color: #3b52a4;
+}
+.form-button:active{
+    background-color: rgb(187, 202, 234);
+    color: #1E2B32;
+}
+
+.auth-text{
+    margin-top: 2%;
+    font-size: 12px;
+    gap: 5px;
+    text-wrap: none;
+}
+
+.reg-link{
+    color:#3b52a4;
+}

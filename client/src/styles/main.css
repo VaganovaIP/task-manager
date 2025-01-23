@@ -69,20 +69,18 @@ ul li:not(:last-of-type){
 
 .main-menu{
     box-sizing: border-box;
-}
-
-.menu{
     margin-right: 20px;
     align-items: flex-end;
 }
 
-.menu-list{
+
+.main-menu-list{
     display:flex;
     list-style: none;
     margin-left: auto;
 }
 
-.menu-item{
+.main-menu-item{
     color:var(--font-header);
     text-transform: uppercase;
     font-size: 12px;
