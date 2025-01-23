@@ -230,6 +230,9 @@ a:active, a:hover, a{
     padding: 0px;
 }
 
+.menu-item a{
+    color:#FFFFFF;
+}
 .my-case{
     padding: 0px;
     font-family: "Arial Rounded MT Bold";

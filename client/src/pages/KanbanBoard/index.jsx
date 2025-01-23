@@ -20,6 +20,7 @@ import {createList, deleteList, updateNameList} from "../../services/list.jsx";
 import {deleteMemberBoard} from "../../services/member.jsx";
 import ("./kanbanBoard.css");
 
+
 const KanbanBoard = () =>{
     const location = useLocation()
     const {board_id, name_board} = location.state;

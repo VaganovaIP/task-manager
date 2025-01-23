@@ -41,6 +41,7 @@ ul li{
     height: calc(100% - 40px);;
 }
 
+
 .filters{
     display: flex;
     flex-direction: row;
@@ -220,11 +221,29 @@ p{
     width: 150px;
 }
 
-.filter-status{
-    font-size: 14px;
-    width: 160px;
+.status{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: flex-end;
+    align-content: flex-end;
 }
 
+.form-check-input{
+    display: flex;
+    margin-bottom: 5px;
+    align-items: flex-end;
+}
+
+.filter-status{
+    font-size: 14px;
+    width: 180px;
+    align-content: flex-end;
+}
+
+.label-status{
+    align-content: flex-start;
+}
 
 .action-filter{
     display: flex;

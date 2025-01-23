@@ -211,6 +211,11 @@ a:active, a:hover, a{
     letter-spacing:.05rem;
 }
 
+.action-page{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .item-board {
     margin:0;

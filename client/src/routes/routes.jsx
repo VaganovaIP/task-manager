@@ -1,10 +1,12 @@
 import * as React from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {ListBoards, KanbanBoard, ListTasks, MainPage, Login} from "../pages/index"
+import {ListBoards, MainPage, Login, KanbanBoard, ListTasks} from "../pages/index"
+import {Suspense} from "react";
 
 export default function RoutesApp(){
     return(
-        <BrowserRouter>
+        <Suspense fallback={<div>Загрузка...</div>}>
+            <BrowserRouter>
             <Routes>
                 <Route path="/" element={<MainPage/>}></Route>
                 <Route path="/login" element={<Login/>}></Route>
@@ -13,6 +15,9 @@ export default function RoutesApp(){
                 <Route path="/all-tasks" element={<ListTasks/>}></Route>
             </Routes>
         </BrowserRouter>
+        </Suspense>
+
+
 
     )
 }

@@ -13,7 +13,7 @@ import axios from "axios";
 import uuid from "react-uuid";
 import "./index.css"
 
-export function ModalEditTask(props){
+export function ModalEditTask (props){
     const {members, data_task, lists, assignments, name_board} = props;
     const [nameTask,setNameTask] = useState('');
     const [descriptionTask,setDescriptionTask] = useState('');

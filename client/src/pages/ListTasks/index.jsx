@@ -148,7 +148,7 @@ const ListTasks=()=>{
                                         <Form.Check type={'checkbox'} checked={statusTask || false}
                                                     onChange={() => setStatusTask(!statusTask)}>
                                         </Form.Check>
-                                        <p className="label-status">{statusTask ? "Выполненные задачи" : "Все задачи"}</p>
+                                        <p className="label-status">{statusTask ? "Выполненные задачи" : "Выполненные задачи"}</p>
                                     </div>
                                 </div>
                                 <div className="action-filter">

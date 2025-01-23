@@ -11,6 +11,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Fuse from "fuse.js";
 import "./listBoards.css"
 
+
+
 export default function ListBoards() {
     const [boards, setBoards] = useState([]);
     const [name, setName] = useState("")
