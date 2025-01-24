@@ -1,5 +1,6 @@
 const {Sequelize, DataTypes} = require('sequelize');
-const sequelize = require("../db.js");
+const sequelize = require("../config/db.js");
+const Role = require("./Role");
 
 
 const User = sequelize.define(
@@ -25,6 +26,10 @@ const User = sequelize.define(
         password_user:{
             type: DataTypes.STRING,
         },
+        roleId: {
+            type: DataTypes.UUID,
+            allowNull: false,
+        },
     },
     {
         timestamps: true,
@@ -32,5 +37,17 @@ const User = sequelize.define(
         updatedAt: false,
     }
 )
+
+User.belongsTo(Role, { foreignKey: 'roleId' });
+Role.hasMany(User, { foreignKey: 'roleId' });
+
+User.beforeCreate(async (user, options) => {
+    const defaultRole = await Role.findOne({ where: { name: 'User' } });
+    if (!defaultRole) {
+        throw new Error('Роль "User" не найдена в базе данных');
+    }
+    user.roleId = defaultRole.id;
+});
+
 
 module.exports = User;

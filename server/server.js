@@ -1,10 +1,10 @@
 const express = require("express");
-const db = require('./db.js');
+require('dotenv').config();
+const db = require('./config/db.js');
 const router = require('./routes/index')
 const cors = require('cors');
 const bodyParser = require("express");
-const multer  = require("multer");
-const port = 5000;
+const port = process.env.PORT;
 
 const app = express();
 

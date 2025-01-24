@@ -1,9 +1,9 @@
 const {DataTypes} = require('sequelize');
-const sequelize = require('../db');
+const sequelize = require('../config/db');
 const User = require('../models/User');
 const Board = require('../models/Board');
 const List = require('../models/List');
-const db = require("../db");
+const db = require("../config/db");
 
 
 const Task = sequelize.define(

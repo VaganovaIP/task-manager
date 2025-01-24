@@ -1,5 +1,5 @@
 const {DataTypes} = require('sequelize');
-const sequelize = require('../db');
+const sequelize = require('../config/db');
 
 const Role = sequelize.define(
     'Roles', {
@@ -8,10 +8,13 @@ const Role = sequelize.define(
             primaryKey:true,
         },
         name_role:{
-            type:DataTypes.STRING,
+                type: DataTypes.STRING,
+                allowNull: false,
+                unique: true,
         },
     },
 )
+
 
 
 module.exports = Role;
