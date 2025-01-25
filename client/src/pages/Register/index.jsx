@@ -2,6 +2,7 @@ import "./register.css"
 import {Link} from "react-router-dom";
 import React from "react";
 import {HeaderMain} from "../../components/HeaderMain.jsx";
+import Form from "react-bootstrap/Form";
 
 const Register = () =>{
     return(
@@ -16,7 +17,8 @@ const Register = () =>{
                         <input type="text" className="form-input-login" placeholder="Имя пользователя"/>
                         <input type="text" className="form-input-login" placeholder="Имя"/>
                         <input type="text" className="form-input-login" placeholder="Фамилия"/>
-                        <input type="text" className="form-input-login" placeholder="Email"/>
+                        <Form.Control type="email" className="form-input-login" placeholder="Email"
+                        />
                         <input type="text" className="form-input-login" placeholder="Пароль"/>
                         <button className="form-button" type="submit" name="form-auth-button">Создать</button>
                         {/*<p className="auth-text">*/}

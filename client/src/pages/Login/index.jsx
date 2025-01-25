@@ -2,6 +2,7 @@ import "./login.css"
 import {Link} from "react-router-dom";
 import React from "react";
 import {HeaderMain} from "../../components/HeaderMain.jsx";
+import Form from "react-bootstrap/Form";
 
 const Login = () =>{
     return(
@@ -15,13 +16,14 @@ const Login = () =>{
                     </div>
 
                     <form classs="form-auth-reg" action="/boards" method="post">
-                        <input type="text" className="form-input-login" placeholder="Email"/>
-                            <input type="text" className="form-input-login" placeholder="Пароль"/>
-                                <button className="form-button" type="submit" name="form-auth-button">Войти</button>
-                                <p className="auth-text">
-                                    Не зарегистрирован?
-                                    <Link to={"/boards"} className="reg-link"> Зарегистрироваться!</Link>
-                                </p>
+                        <Form.Control type="email" className="form-input-login" placeholder="Email"
+                        />
+                        <input type="text" className="form-input-login" placeholder="Пароль"/>
+                        <button className="form-button" type="submit" name="form-auth-button">Войти</button>
+                        <p className="auth-text">
+                            Не зарегистрирован?
+                            <Link to={"/boards"} className="reg-link"> Зарегистрироваться!</Link>
+                        </p>
                     </form>
                 </div>
             </section>
