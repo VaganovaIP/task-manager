@@ -1,6 +1,6 @@
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
-import passport from "passport";
-import User from "../models/User";
+const passport = require("passport");
+const User = require('../models/User');
 
 
 const opts = {

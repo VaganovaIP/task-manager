@@ -28,7 +28,6 @@ const User = sequelize.define(
         },
         roleId: {
             type: DataTypes.UUID,
-            allowNull: false,
         },
     },
     {
@@ -42,11 +41,11 @@ User.belongsTo(Role, { foreignKey: 'roleId' });
 Role.hasMany(User, { foreignKey: 'roleId' });
 
 User.beforeCreate(async (user, options) => {
-    const defaultRole = await Role.findOne({ where: { name: 'User' } });
+    const defaultRole = await Role.findOne({ where: { name_role: 'User' } });
     if (!defaultRole) {
         throw new Error('Роль "User" не найдена в базе данных');
     }
-    user.roleId = defaultRole.id;
+    user.roleId = defaultRole.role_id;
 });
 
 

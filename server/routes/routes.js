@@ -1,7 +1,9 @@
 const express = require('express');
 const boardController = require('../controllers/BoardController');
 const TaskController = require('../controllers/TaskController');
+const AuthController = require('../controllers/AuthController');
 const multer = require("multer");
+const passport = require("passport");
 
 const router = express.Router();
 const storageConfig = multer.diskStorage({
@@ -18,8 +20,9 @@ const storageConfig = multer.diskStorage({
 
 const upload = multer({storage:storageConfig}).single("file");
 
+//passport.authenticate("jwt", { session: false })
 
-router.get('/boards', boardController.fetchDataBoards);
+router.get('/boards', passport.authenticate('jwt', { session: false }), boardController.fetchDataBoards);
 router.get('/board/:name_board', TaskController.fetchDataTasks);
 router.get('/all-tasks', TaskController.fetchDataTasksAll);
 
@@ -30,6 +33,9 @@ router.put('/board/:name_board', TaskController.putActions);
 
 router.delete('/board/:name_board',TaskController.deleteActions);
 router.delete('/boards', boardController.deleteBoard);
+
+router.post('/register', AuthController.registerUser);
+router.post('/login', AuthController.loginUser);
 
 
 module.exports = router;
