@@ -6,7 +6,6 @@ const cors = require('cors');
 const bodyParser = require("express");
 const passport = require("passport");
 require('./config/passport');
-
 const port = process.env.PORT;
 
 const app = express();
@@ -16,9 +15,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-
 app.use('/', router);
-
 
 db.sync({force:false})
     .then(()=>{

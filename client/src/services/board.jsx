@@ -1,9 +1,15 @@
 import axios from "axios";
 import {BASE_API_URL} from "../utils/api.js";
+import {useState} from "react";
 
-export async function fetchAllBoards(boards, setBoards) {
+
+export async function fetchAllBoards(boards, setBoards, token) {
     await axios
-        .get(`${BASE_API_URL}/boards`)
+        .get(`${BASE_API_URL}/boards`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
         .then(data => {
             setBoards(data.data)
             console.log(data.data);
@@ -19,8 +25,12 @@ export const createBoard = async (name_board, board_id, email) => {
         board_id: board_id,
         name_board: name_board,
         email: email,
-    })
-        .then(function (response) {
+        },
+            {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }}
+        ).then(function (response) {
             console.log(response);
         })
         .catch(function (error) {

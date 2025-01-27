@@ -13,7 +13,7 @@ import "./listBoards.css"
 
 
 
-export default function ListBoards() {
+export default function ListBoards({token}) {
     const [boards, setBoards] = useState([]);
     const [name, setName] = useState("")
     const [searchResults, setSearchResults] = useState(boards);
@@ -23,7 +23,7 @@ export default function ListBoards() {
 
 
     useEffect( () => {
-        fetchAllBoards(boards, setBoards)
+        fetchAllBoards(boards, setBoards, token)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     }, []);
@@ -67,7 +67,7 @@ export default function ListBoards() {
         }
         setBoards([new_board, ...boards])
         setName("");
-        //navigate(`/board/${name}`,{replace: false, state: {id: board_id}})
+
     };
 
     const addCardBoard=(name, setName)=>{

@@ -13,7 +13,7 @@ class AuthController{
             }
 
             if(await User.findOne({where: {email}})) {
-                return res.status(400).json({ message: 'Пользователь существует' });
+                return res.status(401).json({ message: 'Пользователь существует' });
             }
 
             await User.create({user_id: uuid.v4(), username, first_name, last_name, email, password_user: bcrypt.hashSync(password, 8)})

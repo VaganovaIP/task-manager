@@ -20,19 +20,17 @@ const storageConfig = multer.diskStorage({
 
 const upload = multer({storage:storageConfig}).single("file");
 
-//passport.authenticate("jwt", { session: false })
-
 router.get('/boards', passport.authenticate('jwt', { session: false }), boardController.fetchDataBoards);
-router.get('/board/:name_board', TaskController.fetchDataTasks);
-router.get('/all-tasks', TaskController.fetchDataTasksAll);
+router.get('/board/:name_board', passport.authenticate('jwt', { session: false }), TaskController.fetchDataTasks);
+router.get('/all-tasks', passport.authenticate('jwt', { session: false }), TaskController.fetchDataTasksAll);
 
-router.post('/board/:name_board', upload, TaskController.postActions);
-router.post('/boards', boardController.addBoard);
+router.post('/board/:name_board', passport.authenticate('jwt', { session: false }), upload, TaskController.postActions);
+router.post('/boards', passport.authenticate('jwt', { session: false }), boardController.addBoard);
 
-router.put('/board/:name_board', TaskController.putActions);
+router.put('/board/:name_board', passport.authenticate('jwt', { session: false }), TaskController.putActions);
 
-router.delete('/board/:name_board',TaskController.deleteActions);
-router.delete('/boards', boardController.deleteBoard);
+router.delete('/board/:name_board', passport.authenticate('jwt', { session: false }), TaskController.deleteActions);
+router.delete('/boards', passport.authenticate('jwt', { session: false }), boardController.deleteBoard);
 
 router.post('/register', AuthController.registerUser);
 router.post('/login', AuthController.loginUser);
