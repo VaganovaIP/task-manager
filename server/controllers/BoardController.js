@@ -15,14 +15,24 @@ const findUserById = async function (email){
 
 class BoardController{
     static async  fetchDataBoards(req, res){
-    const user_id = req.params.user_id;
-    await Board.findAll({
-                            attributes:['board_id', 'name_board'],
-                            where:{owner:"306dcf05-d3d6-4b43-8e06-6b6ffe2331f2"},
-                            order:[['createdAt', 'DESC']],
-                        }, {raw:true})
-        .then(board=>{res.status(200).json(board)})
-        .catch(err=>console.log(err));
+        const email = req.query.email;
+        try{
+            const user = await User.findOne({
+                attributes:['user_id', 'username','email'],
+                where:{
+                    email:email
+                }
+            })
+            let boards =  await BoardMember.findAll({
+                include:[
+                    {model: Board},
+                ],
+                where:{user_id:user.user_id},
+            })
+            await res.status(200).json({boards:boards})
+        }  catch (err){
+            console.log(err)
+        }
     }
 
     static async addBoard(req, res){
@@ -56,14 +66,21 @@ class BoardController{
     }
 
     static async deleteBoard(req, res){
-        const {board_id} = req.body;
-        await Board.destroy({
-            where:{
-                board_id:board_id,
-            }
-        })
-            .then(res.status(200).send({message: 'Delete board'}))
-            .catch((err) => {console.log(err)})
+        const board_id = req.query.board_id;
+        try{
+            await Board.destroy({
+                where:{
+                    board_id:board_id,
+                }
+            })
+            await BoardMember.destroy({
+                where:{
+                    board_id:board_id,
+                }
+            }).then(res.status(200).send({message: 'Delete board' }))
+        } catch (err){
+            console.log(err)
+        }
     }
 }
 

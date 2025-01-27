@@ -13,19 +13,17 @@ import "./listBoards.css"
 
 
 
-export default function ListBoards({token}) {
+export default function ListBoards({token, email}) {
     const [boards, setBoards] = useState([]);
     const [name, setName] = useState("")
     const [searchResults, setSearchResults] = useState(boards);
-    const options = {keys:["name_board"]};
+    const options = {keys:["name_board", "Board.name_board"]};
     const fuse = new Fuse(boards, options);
     const [onSearch, setOnSearch] = useState(false);
 
 
     useEffect( () => {
-        fetchAllBoards(boards, setBoards, token)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
+        fetchAllBoards(setBoards, token, email);
     }, []);
 
     const renderListBoards = (item) => {
@@ -33,9 +31,10 @@ export default function ListBoards({token}) {
             <div>
                     <Card key={item.board_id} >
                         <Card.Body className="item-board">
-                            <Link to={`/board/${item.name_board}`} state = {{board_id:item.board_id, name_board:item.name_board}}>
+                            <Link to={`/board/${item.Board?.name_board}`}
+                                  state = {{board_id:item.Board?.board_id, name_board:item.Board?.name_board}}>
                                 <Card.Title>
-                                    {item.name_board}
+                                    {item.Board?.name_board}
                                 </Card.Title>
                             </Link>
                         </Card.Body>
@@ -43,8 +42,8 @@ export default function ListBoards({token}) {
                             <Button className="delete-board-btn" variant="secondary"
                                 onClick={()=>
                                 {
-                                    deleteBoard(item.board_id);
-                                    onDeleteBoard(item.board_id);
+                                    deleteBoard(item.Board?.board_id, token);
+                                    onDeleteBoard(item.Board?.board_id);
                                 }}>
                                 <i className="bi bi-trash"></i> Удалить доску
                             </Button>
@@ -57,13 +56,15 @@ export default function ListBoards({token}) {
     const handleSubmitCardTask = async (event) => {
         event.preventDefault();
         let board_id = uuid();
-        const email = "user1@.ru";
-        createBoard(name, board_id, email)
+        createBoard(name, board_id, email, token)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_board = {
-            board_id:board_id,
-            name_board:name
+
+            Board:{
+                board_id:board_id,
+                name_board:name
+            }
         }
         setBoards([new_board, ...boards])
         setName("");
@@ -103,13 +104,15 @@ export default function ListBoards({token}) {
     }
 
     const onDeleteBoard = (id)=>{
-        const newList = boards.filter(item => item.board_id !== id);
+        const newList = boards.filter(item => item.Board?.board_id !== id);
         setBoards(newList);
     }
-
+    console.log(boards)
     return (
+
         <div className="f-container">
                 <HeaderMenu></HeaderMenu>
+
             <div className="main">
                 <div className="main-menu-content">
                     <Menu></Menu>
@@ -133,17 +136,17 @@ export default function ListBoards({token}) {
                         {addCardBoard(name, setName)}
                         {
                             onSearch ? (
-                                searchResults.map((board) =>
+                                searchResults.map((board, index) =>
                                     <div>
-                                        <li key={board.board_id}>
+                                        <li key={index}>
                                             {renderListBoards(board)}
                                         </li>
                                         <div className="delete-board">
                                             <Button className="delete-board-btn" variant="secondary" type="submit"
                                                 onClick={()=>
                                                     {
-                                                        deleteBoard(board.board_id);
-                                                        onDeleteBoard(board.board_id);
+                                                        deleteBoard(board.Board?.board_id, token);
+                                                        onDeleteBoard(board.Board?.board_id);
                                                     }}>
                                                 <i className="bi bi-trash"></i> Удалить доску
                                             </Button>
@@ -151,14 +154,15 @@ export default function ListBoards({token}) {
                                     </div>
                                     )
                             ) : (
-                                boards.map((board) => (
-                                        <li key={board.board_id}>
+                                boards.map((board, index) => (
+                                        <li key={index}>
                                             {renderListBoards(board)}
                                         </li>
                                 ))
                             )
                         }
                     </ul>
+
                 </div>
             </div>
         </div>

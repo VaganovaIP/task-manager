@@ -20,7 +20,7 @@ import {createList, deleteList, updateNameList} from "../../services/list.jsx";
 import {deleteMemberBoard} from "../../services/member.jsx";
 import ("./kanbanBoard.css");
 
-const KanbanBoard = () =>{
+const KanbanBoard = ({token, email}) =>{
     const location = useLocation()
     const {board_id, name_board} = location.state;
     const [nameList, setNameList] = useState("")
@@ -68,7 +68,6 @@ const KanbanBoard = () =>{
     const onCreateTaskCard = async (event) => {
         event.preventDefault();
         const name = event.target.name.value;
-        let email = "user1@.ru";
         let task_id = uuid();
         createTask(task_id, name_board, activeList, board_id, name, email)
             .then(r=>console.log(r))

@@ -59,7 +59,6 @@ async function deleteTask(req, res){
 
     await TaskAssignment.destroy({
         where:{
-            user_id:user.user_id,
             task_id:task_id,
         }
     })
@@ -125,7 +124,6 @@ class TaskController {
     }
     static async fetchDataTasks(req, res){
         const board_id = req.query.board_id;
-
         try {
             let board = await Board.findOne({
                 attributes:['name_board'],
@@ -209,12 +207,11 @@ class TaskController {
             // res.download(fileP, 'giphy.gif',(err)=>{
             //     console.log(err)
             // })
-            await res.status(200).json({tasks:tasks,})
+            await res.status(200).json({tasks:tasks})
         } catch (err){
             console.log(err)
         }
     }
-
 
 }
 

@@ -10,7 +10,7 @@ import {isWithinInterval} from "date-fns";
 import convertDate from "../../utils/helpers.jsx";
 import {fetchDataTasks} from "../../services/task.jsx";
 
-const ListTasks=()=>{
+const ListTasks=({email})=>{
     const [tasks, setTasks] = useState([]);
     const [dateStart, setDateStart] = useState(null);
     const [dateEnd, setDateEnd] = useState(null);
@@ -26,7 +26,6 @@ const ListTasks=()=>{
 
 
     useEffect(() => {
-        const email = "user1@.ru";
         fetchDataTasks(email, setTasks)
             .then(res => console.log(res))
             .catch(err => console.log(err));

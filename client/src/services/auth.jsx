@@ -35,8 +35,10 @@ export const loginUser = async (email, password, setError, setSuccess, setToken)
         })
         .then(function (response) {
             if (response.data.accessToken) {
+                console.log(response.data)
                 setToken(response.data.accessToken);
                 localStorage.setItem('token', response.data.accessToken);
+                localStorage.setItem('email', response.data.email);
             }
             setSuccess('');
             setError('');

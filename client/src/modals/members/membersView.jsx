@@ -1,7 +1,7 @@
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
-import {addMemberBoard} from "../../services/board.jsx"
+import {addMemberBoard} from "../../services/member.jsx"
 import Fuse from "fuse.js";
 import "./index.css"
 

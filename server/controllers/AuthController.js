@@ -46,7 +46,7 @@ class AuthController{
                 )
             return res
                 .status(200)
-                .json({ message: "user logged in", accessToken: accessToken });
+                .json({ message: "user logged in", accessToken: accessToken, email: email });
         } catch (err){console.log(err)}
     }
 }
