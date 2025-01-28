@@ -70,7 +70,6 @@ async function deleteTask(req, res){
 class TaskController {
     static async postActions(req, res){
         const {formName} = req.body;
-        console.log(formName)
         switch (formName){
             case "form-add-list":
                 await ListController.createList(req, res);
@@ -126,7 +125,8 @@ class TaskController {
         const board_id = req.query.board_id;
         try {
             let board = await Board.findOne({
-                attributes:['name_board'],
+                attributes:['name_board', 'owner'],
+                include:{model:User, attributes:['user_id', 'username', 'first_name', 'last_name']},
                 where: {board_id: board_id},
             })
 
@@ -141,7 +141,7 @@ class TaskController {
                     'importance', 'owner_id', 'status', 'list_id'],
                 include:[
                     {model: List},
-                    {model: User , attributes:['user_id', 'username']},
+                    {model: User , attributes:['user_id', 'username', 'first_name', 'last_name']},
                     {model: Board},
                 ],
                 where:{board_id:board_id},
@@ -149,22 +149,22 @@ class TaskController {
             })
 
             let members = await BoardMembers.findAll({
-                include:[{model: User, attributes:['user_id', 'username']}],
+                include:[{model: User, attributes:['user_id', 'username', 'first_name', 'last_name']}],
                 where:{board_id:board_id}
             })
 
             let assignments = await TaskAssignment.findAll({
                 attributes:['members_id', 'task_id'],
-                include:[{model: User, attributes:['user_id', 'username']},
+                include:[{model: User, attributes:['user_id', 'username', 'first_name', 'last_name']},
                     {model:Task,
                         where:{board_id:board_id},
-                        include:[{model: User , attributes:['user_id', 'username']},]
+                        include:[{model: User , attributes:['user_id', 'username', 'first_name', 'last_name']},]
                     }
                 ]
             })
 
             let users = await User.findAll({
-                attributes: ['user_id', 'username'],
+                attributes: ['user_id', 'username', 'first_name', 'last_name'],
             })
 
             // const fileP = path.join(__dirname, '../uploads', 'giphy.gif');

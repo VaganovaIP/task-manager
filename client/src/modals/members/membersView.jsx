@@ -7,9 +7,9 @@ import "./index.css"
 
 
 export function ModalAddMembers(props){
-    const {members, users, name_board, board_id} = props;
+    const {members, users, name_board, board_id, token} = props;
     const [searchResults, setSearchResults] = useState(users);
-    const options = {keys:["username"]};
+    const options = {keys:["username", "first_name", "last_name"]};
     const fuse = new Fuse(users, options);
     const [onSearch, setOnSearch] = useState(false);
 
@@ -57,9 +57,12 @@ export function ModalAddMembers(props){
                     searchResults.map((user) =>(
                         <li key={user.user_id}>
                             <div className="member-info">
-                                <p className="name-member">{user.username}</p>
+                                <div className="user-app">
+                                    <p className="name-member">{user.username}</p>
+                                    <p className="user-app-full">{user.first_name} {user.last_name}</p>
+                                </div>
                                 <button className="add-button-member"
-                                        type="button" onClick={() => addMemberBoard(name_board, user.user_id, board_id)}>
+                                        type="button" onClick={() => addMemberBoard(name_board, user.user_id, board_id, token)}>
                                     Добавить
                                 </button>
                             </div>

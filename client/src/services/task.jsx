@@ -4,9 +4,12 @@ import {BASE_API_URL} from "../utils/api.js";
 
 
 export async function fetchDataBoard(board_id, name, setLists, setTasks,
-                                     setMembers, setAssignments, setUsers, setBoardName) {
+                                     setMembers, setAssignments, setUsers, setBoardName, token) {
     await axios
         .get(`${BASE_API_URL}/board/${name}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
             params: {
                 board_id: board_id
             }
@@ -18,13 +21,15 @@ export async function fetchDataBoard(board_id, name, setLists, setTasks,
             setAssignments(res.data.assignments);
             setUsers(res.data.users);
             setBoardName(res.data.board);
-            console.log(res.data.board)
         })
 }
 
-export async function fetchDataTasks(email, setTasks) {
+export async function fetchDataTasks(email, setTasks, token) {
     await axios
         .get(`${BASE_API_URL}/all-tasks`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
             params: {
                 email: email
             }
@@ -33,7 +38,7 @@ export async function fetchDataTasks(email, setTasks) {
             setTasks(res.data.tasks);
         })
 }
-export const createTask = async (task_id, name_board, list_id, board_id, name_task, email) => {
+export const createTask = async (task_id, name_board, list_id, board_id, name_task, email, token) => {
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`, {
             formName:"form-add-task",
@@ -42,7 +47,11 @@ export const createTask = async (task_id, name_board, list_id, board_id, name_ta
             name_task: name_task,
             list_id:list_id,
             email:email,
-        })
+        },
+    {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }})
         .then(function (response) {
             console.log(response);
         })
@@ -51,7 +60,7 @@ export const createTask = async (task_id, name_board, list_id, board_id, name_ta
         });
 };
 
-export const saveTask = async (task_id, name, description, dateStart, dateEnd, list_id, importance, status, name_board)=>{
+export const saveTask = async (task_id, name, description, dateStart, dateEnd, list_id, importance, status, name_board, token)=>{
     await axios
         .put(`${BASE_API_URL}/board/${name_board}`, {
             formName: "form-save-task",
@@ -63,7 +72,11 @@ export const saveTask = async (task_id, name, description, dateStart, dateEnd, l
             list_id:list_id,
             importance:importance,
             status:status
-        })
+        },
+    {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }})
         .then(function (response) {
             console.log(response);
         })
@@ -72,10 +85,12 @@ export const saveTask = async (task_id, name, description, dateStart, dateEnd, l
         });
 }
 
-export const deleteTask = async (task_id, name_board) => {
-    const email = "user1@.ru";
+export const deleteTask = async (task_id, name_board, email, token) => {
     await axios
         .delete(`${BASE_API_URL}/board/${name_board}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
             data:{
                 formName: "form-delete-task",
                 task_id: task_id,

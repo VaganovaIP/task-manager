@@ -298,7 +298,7 @@ p{
 
 .btn-primary {
     --bs-btn-color: #fff;
-    --bs-btn-bg: rgba(69, 90, 160, 0.86);
+    --bs-btn-bg: rgb(69, 90, 160);
     --bs-btn-border-color: #3b52a4;
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #4358a0;

@@ -24,13 +24,39 @@
 
 li{
     list-style: none;
+    padding: 5px;
+}
+
+.member-info{
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
 }
 
 .add-button-member{
     background-color: #455AA0;
     border: none;
     color: #FFFFFF;
-    font-size: 14px;
-    border-radius: 5px;
+    font-size: 11px;
+    border-radius: 3px;
     padding: 3px;
+}
+
+.user-app{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.user-app-full{
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.62);
+    font-weight: initial;
+    padding: 0px;
+    margin: 0px;
+}
+
+.user-app .name-member{
+    height: 15px;
+    font-size: 14px;
 }

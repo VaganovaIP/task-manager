@@ -43,7 +43,7 @@ const KanbanBoard = ({token, email}) =>{
     const [boardName, setBoardName] = useState("")
 
     useEffect( () => {
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName, token)
             .catch(err => console.log(err));
         setUpdateName(boardName.name_board);
     }, []);
@@ -52,7 +52,7 @@ const KanbanBoard = ({token, email}) =>{
         event.preventDefault();
         const name = event.target.name.value;
         let list_id = uuid();
-        createList(list_id, name_board, name, board_id)
+        createList(list_id, name_board, name, board_id, token)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_list = {
@@ -69,7 +69,7 @@ const KanbanBoard = ({token, email}) =>{
         event.preventDefault();
         const name = event.target.name.value;
         let task_id = uuid();
-        createTask(task_id, name_board, activeList, board_id, name, email)
+        createTask(task_id, name_board, activeList, board_id, name, email, token)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_task = {
@@ -91,13 +91,13 @@ const KanbanBoard = ({token, email}) =>{
 
     const closeModalEdit = () => {
         setModalEditIsOpen(false);
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName, token)
             .catch(err => console.log(err));
     };
 
     const closeModalMembers = () => {
         setModalMembersIsOpen(false);
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName, token)
             .catch(err => console.log(err));
     };
 
@@ -151,7 +151,7 @@ const KanbanBoard = ({token, email}) =>{
     }
 
     const onKeyDownNameList=(list_id)=>{
-        updateNameList(saveList, list_id, name_board).then(r => console.log(r));
+        updateNameList(saveList, list_id, name_board, token).then(r => console.log(r));
     }
 
     const onDeleteMember = (id)=>{
@@ -191,7 +191,16 @@ const KanbanBoard = ({token, email}) =>{
                                 {members.map((member) =>(
                                     <Dropdown.Item key={member.members_id}>
                                         <div className="member-info">
-                                            <p className="name-member">{member.User.username}</p>
+                                            {member.user_id === boardName.owner ?
+                                                <div className="admin-user">
+                                                    <p className="name-member">{member.User.username}</p>
+                                                    <p className="admin">{member.User.first_name} {member.User.last_name} админ</p>
+                                                </div>
+                                                : <div className="admin-user">
+                                                    <p className="name-member">{member.User.username}</p>
+                                                    <p className="admin">{member.User.first_name} {member.User.last_name}</p>
+                                                </div>
+                                            }
                                             <Button className="members-btn"
                                                 onClick={()=>{
                                                     deleteMemberBoard(member.members_id, name_board);
@@ -225,7 +234,7 @@ const KanbanBoard = ({token, email}) =>{
                                                 <button className="delete-list"  type="submit"
                                                     onClick={()=>
                                                         {
-                                                            deleteList(list.list_id, name_board);
+                                                            deleteList(list.list_id, name_board, token);
                                                             onDeleteList(list.list_id);
                                                         }}>
                                                     <i className="bi bi-x"></i>
@@ -242,7 +251,7 @@ const KanbanBoard = ({token, email}) =>{
                                                                 <Button className="delete-task-btn" variant="secondary"
                                                                     onClick={()=>
                                                                         {
-                                                                            deleteTask(task.task_id, name_board);
+                                                                            deleteTask(task.task_id, name_board, token);
                                                                             onDeleteTask(task.task_id);
                                                                         }}>
                                                                     <i className="bi bi-trash"></i> Удалить задачу
@@ -289,6 +298,8 @@ const KanbanBoard = ({token, email}) =>{
                                 lists={lists}
                                 assignments={assignments}
                                 name_board={name_board}
+                                token = {token}
+                                owner = {boardName.owner}
                             />
                             <ModalAddMembers
                                 show={modalMembersIsOpen}
@@ -297,6 +308,7 @@ const KanbanBoard = ({token, email}) =>{
                                 users={users}
                                 name_board={name_board}
                                 board_id={board_id}
+                                token = {token}
                             />
                         </div>
                     </div>

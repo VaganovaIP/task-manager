@@ -10,7 +10,7 @@ import {isWithinInterval} from "date-fns";
 import convertDate from "../../utils/helpers.jsx";
 import {fetchDataTasks} from "../../services/task.jsx";
 
-const ListTasks=({email})=>{
+const ListTasks=({token, email})=>{
     const [tasks, setTasks] = useState([]);
     const [dateStart, setDateStart] = useState(null);
     const [dateEnd, setDateEnd] = useState(null);
@@ -26,7 +26,7 @@ const ListTasks=({email})=>{
 
 
     useEffect(() => {
-        fetchDataTasks(email, setTasks)
+        fetchDataTasks(email, setTasks, token)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     }, [])
@@ -49,8 +49,8 @@ const ListTasks=({email})=>{
         let importanceFilter, statusFilter, dateFilter;
         const filterData = tasks.filter((task)=>{
             if (dateStart && dateEnd) {
-                if (task.Task.date_start) {
-                    const itemDate = task.Task.date_start;
+                if (task.Task?.date_start) {
+                    const itemDate = task.Task?.date_start;
                     dateFilter = isWithinInterval(itemDate,
                         {
                         start: dateStart,
@@ -64,7 +64,7 @@ const ListTasks=({email})=>{
             if (!dateStart && !dateEnd) dateFilter = true;
 
             if (!dateStart && dateEnd) {
-                if (task.Task.date_end) {
+                if (task.Task?.date_end) {
                     const itemDate = task.Task.date_end;
                     dateFilter = isWithinInterval(itemDate,
                         {
@@ -78,16 +78,16 @@ const ListTasks=({email})=>{
 
             if (dateStart && !dateEnd) {
                 if (task.Task.date_start) {
-                    const itemDate = task.Task.date_start;
+                    const itemDate = task.Task?.date_start;
                     if (convertDate(itemDate) >= convertDate(dateStart)) dateFilter = itemDate;
                 } else {
                     dateFilter = true;
                 }
             }
 
-            importanceFilter = importance ? (task.Task.importance === importance) : true;
+            importanceFilter = importance ? (task.Task?.importance === importance) : true;
 
-            statusFilter = statusTask ? (task.Task.status === statusTask) : true;
+            statusFilter = statusTask ? (task.Task?.status === statusTask) : true;
 
             return dateFilter && statusFilter && importanceFilter;
         });

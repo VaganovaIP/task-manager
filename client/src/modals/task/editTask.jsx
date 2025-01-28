@@ -12,9 +12,10 @@ import {BASE_API_URL} from "../../utils/api.js";
 import axios from "axios";
 import uuid from "react-uuid";
 import "./index.css"
+import "../task/index.css"
 
 export function ModalEditTask (props){
-    const {members, data_task, lists, assignments, name_board} = props;
+    const {members, data_task, lists, assignments, name_board, token, owner} = props;
     const [nameTask,setNameTask] = useState('');
     const [descriptionTask,setDescriptionTask] = useState('');
     const [list, setList] = useState('');
@@ -40,7 +41,7 @@ export function ModalEditTask (props){
     const onSaveTaskState = async () => {
         saveTask(data_task.task_id, nameTask, descriptionTask,
             startDate, endDate,
-            list, importance, status, name_board)
+            list, importance, status, name_board, token)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         setList(null);
@@ -57,7 +58,7 @@ export function ModalEditTask (props){
     };
 
     const onAddAssignment=(name_board, user_id, task_id, username)=>{
-        onAddAssignmentTask(name_board, user_id, task_id)
+        onAddAssignmentTask(name_board, user_id, task_id, token)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_assignment = {
@@ -116,19 +117,23 @@ export function ModalEditTask (props){
                                defaultValue={data_task.name_task}
                                onChange={(e)=>setNameTask(e.target.value)}/>
                     </Modal.Title>
-                    <select className="list-task-label"
-                            onChange={(e)=> setList(e.target.value)}
-                            defaultValue={data_task.list_id}>
-                        {lists.map((list, index)=>(
-                            <option value={list.list_id} key={index}
-                                    onChange={()=>{
-                                        setNameList(list.name_list);
-                                        setList(list.list_id);
-                                    }}>
-                                {list.name_list}
-                            </option>
-                        ))}
-                    </select>
+                    <div className="list">
+                        <p className="list-label">в списке: </p>
+                        <select className="list-task-label"
+                                onChange={(e)=> setList(e.target.value)}
+                                defaultValue={data_task.list_id}>
+                            {lists.map((list, index)=>(
+                                <option value={list.list_id} key={index}
+                                        onChange={()=>{
+                                            setNameList(list.name_list);
+                                            setList(list.list_id);
+                                        }}>
+                                    {list.name_list}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
                 </div>
 
             </Modal.Header>
@@ -180,11 +185,20 @@ export function ModalEditTask (props){
                                     item.task_id === data_task.task_id) && (
                                         <Dropdown.Item key={key}>
                                             <div className="member-info">
-                                                <p className="name-member">{item.User.username}</p>
+                                                {item.User.user_id === owner ?
+                                                    <div className="admin-user">
+                                                        <p className="name-member">{item.User.username}</p>
+                                                        <p className="admin">{item.User.first_name} {item.User.last_name} админ</p>
+                                                    </div>
+                                                    : <div className="admin-user">
+                                                        <p className="name-member">{item.User.username}</p>
+                                                        <p className="admin">{item.User.first_name} {item.User.last_name}</p>
+                                                    </div>
+                                                }
                                                 <Button className="members-btn"
                                                     onClick={()=>
                                                         {
-                                                            deleteAssignment(item.members_id, name_board);
+                                                            deleteAssignment(item.members_id, name_board, token);
                                                             onDeleteAssignment(item.members_id);
                                                         }}>
                                                     Исключить
@@ -198,7 +212,16 @@ export function ModalEditTask (props){
                                 {members.map((member) => (
                                     <Dropdown.Item key={member.members_id}>
                                         <div className="member-info">
-                                            <p className="name-member">{member.User.username}</p>
+                                            {member.user_id === owner ?
+                                                <div className="admin-user">
+                                                    <p className="name-member">{member.User.username}</p>
+                                                    <p className="admin">{member.User.first_name} {member.User.last_name} админ</p>
+                                                </div>
+                                                : <div className="admin-user">
+                                                    <p className="name-member">{member.User.username}</p>
+                                                    <p className="admin">{member.User.first_name} {member.User.last_name}</p>
+                                                  </div>
+                                            }
                                             <Button className="members-btn"
                                                     type="button"
                                                     onClick={() => onAddAssignment(name_board, member.User.user_id, data_task.task_id, member.User.username)}>

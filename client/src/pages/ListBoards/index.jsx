@@ -107,7 +107,7 @@ export default function ListBoards({token, email}) {
         const newList = boards.filter(item => item.Board?.board_id !== id);
         setBoards(newList);
     }
-    console.log(boards)
+
     return (
 
         <div className="f-container">
@@ -137,8 +137,8 @@ export default function ListBoards({token, email}) {
                         {
                             onSearch ? (
                                 searchResults.map((board, index) =>
-                                    <div>
-                                        <li key={index}>
+                                    <div key={board.board_id}>
+                                        <li >
                                             {renderListBoards(board)}
                                         </li>
                                         <div className="delete-board">
@@ -155,7 +155,7 @@ export default function ListBoards({token, email}) {
                                     )
                             ) : (
                                 boards.map((board, index) => (
-                                        <li key={index}>
+                                        <li key={board.board_id}>
                                             {renderListBoards(board)}
                                         </li>
                                 ))

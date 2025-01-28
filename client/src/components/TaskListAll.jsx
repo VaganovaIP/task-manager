@@ -10,14 +10,14 @@ const renderListTasks=(task)=>{
             <Accordion.Item eventKey="0" >
                 <Accordion.Header>
                     <li className="task-item">
-                        <div className="name-task-list">{task.Task.name_task}</div>
+                        <div className="name-task-list">{task.Task?.name_task}</div>
                         <div className="info">
-                            <p className="title-info">{task.Task.importance}</p>
+                            <p className="title-info">{task.Task?.importance}</p>
                             <p className="title-info">
-                                {convertDate(task.Task.date_start)}</p>
+                                {convertDate(task.Task?.date_start)}</p>
                             <p className="title-info">
-                                {convertDate(task.Task.date_end)}</p>
-                            <Form.Check type={'checkbox'} checked={task.Task.status} disabled={true}>
+                                {convertDate(task.Task?.date_end)}</p>
+                            <Form.Check type={'checkbox'} checked={task.Task?.status} disabled={true}>
                             </Form.Check>
                         </div>
                     </li>
@@ -33,22 +33,22 @@ const renderListTasks=(task)=>{
                             <p className="title">
                                 Автор
                             </p>
-                            <p>{task.Task.User.username}</p>
-                            <p className="name-author">({task.Task.User.first_name} {task.Task.User.last_name})</p>
+                            <p>{task.Task?.User.username}</p>
+                            <p className="name-author">({task.Task?.User.first_name} {task.Task?.User.last_name})</p>
                             <p className="title">
                                 Доска
                             </p>
                             <div className="name-board-link">
-                                {task.Task.Board.name_board}
-                                <Link to={`/board/${task.Task.Board.name_board}`}
-                                      state = {{board_id:task.Task.Board.board_id, name_board:task.Task.Board.name_board}}>
+                                {task.Task?.Board.name_board}
+                                <Link to={`/board/${task.Task?.Board.name_board}`}
+                                      state = {{board_id:task.Task?.Board.board_id, name_board:task.Task?.Board.name_board}}>
                                     <i className="bi bi-box-arrow-up-right"></i>
                                 </Link>
                             </div>
                             <p className="title">
                                 Колонка
                             </p>
-                            <p>{task.Task.List.name_list}</p>
+                            <p>{task.Task?.List.name_list}</p>
                         </div>
                     </div>
                     <div>

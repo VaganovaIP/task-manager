@@ -41,7 +41,6 @@ export const createBoard = async (name_board, board_id, email, token) => {
 };
 
 export const updateNameBoard = async (updateName, board_id, name_board, token) => {
-    console.log(updateName);
     await axios
         .put(`${BASE_API_URL}/board/${name_board}`, {
             formName: "form-update-board",
