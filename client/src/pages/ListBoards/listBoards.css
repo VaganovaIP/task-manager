@@ -108,15 +108,28 @@ a:active, a:hover, a{
     justify-content: center;
 }
 
+
+.card-create{
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+}
+
+.button-close{
+    background-color: transparent;
+    border: none;
+    color: #3b52a4;
+}
+
 .add-button{
     display: flex;
-    justify-content: center;
-    font-size: 18px;
+    font-size: 12px;
     background-color: #455AA0;
     color: #FFFFFF;
-    height: 30px;
-    border-radius: 50px;
-    padding:5px;
+    border-radius: 45px;
+    align-content: center;
+    height: auto;
+    padding: 10px;
 }
 
 .delete-board{
@@ -230,3 +243,23 @@ a:active, a:hover, a{
 .name-board{
     font-size: 15px;
 }
+
+.board-action{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.item-board-add{
+    margin:0;
+    padding: 10px;
+    width: 200px;
+    height: 100px;
+    color: #1E2B32;
+}
+
+.card-name-board{
+    font-size: 18px;
+}
+

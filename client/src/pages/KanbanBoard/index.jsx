@@ -104,11 +104,19 @@ const KanbanBoard = ({token, email}) =>{
     const handleClickCreateList=()=> {
         setOnClickCreateList(true)
     }
+
+    const handleClickCloseCreateList=()=> {
+        setOnClickCreateList(false)
+        setNameList('');
+    }
     const handleClickCreateTask=(list_id)=> {
         setOnClickCreateTask(true)
         setActiveList(list_id)
     }
-
+    const handleClickCloseCreateTask=()=> {
+        setOnClickCreateTask(false)
+        setNameTask('');
+    }
     const CardCreateList = () =>{
         return(
                 <Card border="primary" className="item-board">
@@ -119,9 +127,13 @@ const KanbanBoard = ({token, email}) =>{
                                               type="text" placeholder="" value={nameList}
                                               onChange={(e) => setNameList(e.target.value)}/>
                             </Form.Group>
-                            <Button className="add-button" variant="secondary" type="submit">
-                                <i className="bi bi-plus"></i>
-                            </Button>
+                            <div className="card-create">
+                                <Button className="add-button" variant="secondary" type="submit">
+                                    Добавить колонку
+                                </Button>
+                                <button className="button-close" onClick={handleClickCloseCreateList}>
+                                    <i className="bi bi-x-lg"></i></button>
+                            </div>
                         </Form>
                     </Card.Body>
                 </Card>
@@ -135,14 +147,18 @@ const KanbanBoard = ({token, email}) =>{
                     <Card.Body>
                         <Form onSubmit={onCreateTaskCard}>
                             <Form.Group className="mb-3" >
-                                <Form.Control className="form-board" name="name"
+                                <Form.Control className="form-task-list" name="name"
                                               type="text" placeholder="" value={nameTask}
                                               onChange={(e) => setNameTask(e.target.value)
                                               }/>
                             </Form.Group>
-                            <Button className="add-button" variant="secondary" type="submit">
-                                <i className="bi bi-plus"></i>
-                            </Button>
+                            <div className="card-create">
+                                <Button className="add-button" variant="secondary" type="submit">
+                                    Добавить задачу
+                                </Button>
+                                <button className="button-close" onClick={handleClickCloseCreateTask}>
+                                    <i className="bi bi-x-lg"></i></button>
+                            </div>
                         </Form>
                     </Card.Body>
                 </Card>

@@ -46,8 +46,8 @@ a{
 
 .kanban-board{
     height: 100%;
-    margin: 10px 0px 0px 10px;
-    padding: 0px 0px 0px 0px;
+    margin: 10px 0 0 10px;
+    padding: 0 0 0 0;
     overflow-x: auto;
     scrollbar-color: #455AA0 #F2F5FF;
     position: relative;
@@ -66,7 +66,7 @@ a{
     display:flex;
     flex-direction: row;
     max-width: 220px;
-    min-width: 180px;
+    min-width: 200px;
     background-color: rgba(59, 82, 164, 0.84);
     padding: 2px;
     border-radius: 5px;
@@ -109,7 +109,6 @@ a{
 }
 
 
-
 .list-tasks{
     display: flex;
     flex-direction: column;
@@ -128,7 +127,7 @@ a{
 
 .create-list-button{
     height: 30px;
-    min-width: 200px;
+    min-width: 180px;
     background-color: #455AA0;
     padding: 0px;
 }
@@ -214,6 +213,9 @@ a{
 }
 
 .add-button-task-members .name-member{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin: 0px;
     font-size: 12px;
     height: 20px;
@@ -312,5 +314,34 @@ hr{
 .dropdown-item {
     padding-bottom: 0px;
     padding-top: 0px;
+}
+
+
+.card-create{
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+}
+
+.form-task-list{
+    font-size: 14px;
+    color: #383b80;
+}
+
+.button-close{
+    background-color: transparent;
+    border: none;
+    color: #3b52a4;
+}
+
+.add-button{
+    display: flex;
+    font-size: 12px;
+    background-color: #455AA0;
+    color: #FFFFFF;
+    border-radius: 45px;
+    align-content: center;
+    height: auto;
+    padding: 10px;
 }
 

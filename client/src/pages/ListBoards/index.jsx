@@ -20,7 +20,7 @@ export default function ListBoards({token, email}) {
     const options = {keys:["name_board", "Board.name_board"]};
     const fuse = new Fuse(boards, options);
     const [onSearch, setOnSearch] = useState(false);
-
+    const [onClickCreateBoard, setOnClickCreateBoard] = useState(false)
 
     useEffect( () => {
         fetchAllBoards(setBoards, token, email);
@@ -33,7 +33,7 @@ export default function ListBoards({token, email}) {
                         <Card.Body className="item-board">
                             <Link to={`/board/${item.Board?.name_board}`}
                                   state = {{board_id:item.Board?.board_id, name_board:item.Board?.name_board}}>
-                                <Card.Title>
+                                <Card.Title className="card-name-board">
                                     {item.Board?.name_board}
                                 </Card.Title>
                             </Link>
@@ -53,7 +53,7 @@ export default function ListBoards({token, email}) {
         )
     }
 
-    const handleSubmitCardTask = async (event) => {
+    const handleSubmitCardBoard = async (event) => {
         event.preventDefault();
         let board_id = uuid();
         createBoard(name, board_id, email, token)
@@ -68,22 +68,34 @@ export default function ListBoards({token, email}) {
         }
         setBoards([new_board, ...boards])
         setName("");
-
+        setOnClickCreateBoard(false);
     };
 
+
+    const handleClickCreateBoard=()=> {
+        setOnClickCreateBoard(true)
+    }
+    const handleClickCloseCreateBoard=()=> {
+        setOnClickCreateBoard(false)
+        setName('');
+    }
     const addCardBoard=(name, setName)=>{
        return(
-           <Card border="primary" className="item-board">
+           <Card border="primary" className="item-board-add">
                <Card.Body>
-                   <Form onSubmit={handleSubmitCardTask}>
+                   <Form onSubmit={handleSubmitCardBoard}>
                        <Form.Group className="mb-3" controlId="formBasicEmail">
                            <Form.Control className="form-board"
                                type="text" placeholder="" value={name}
                                onChange={(e) => setName(e.target.value)}/>
                        </Form.Group>
-                       <Button className="add-button" variant="secondary" type="submit">
-                           <i className="bi bi-plus"></i>
-                       </Button>
+                       <div className="card-create">
+                           <Button className="add-button" variant="secondary" type="submit">
+                               Добавить доску
+                           </Button>
+                           <button className="button-close" onClick={handleClickCloseCreateBoard}>
+                               <i className="bi bi-x-lg"></i></button>
+                       </div>
                    </Form>
                </Card.Body>
            </Card>
@@ -109,7 +121,6 @@ export default function ListBoards({token, email}) {
     }
 
     return (
-
         <div className="f-container">
                 <HeaderMenu></HeaderMenu>
 
@@ -119,7 +130,10 @@ export default function ListBoards({token, email}) {
                 </div>
                 <div className="content">
                     <div className="action-page">
-                        <div className="name-page">Доски
+                        <div className="board-action">
+                            <div>Доски</div>
+                            <button className="button-close" title="Добавить доску" onClick={handleClickCreateBoard}>
+                                <i className="bi bi-plus"></i>Добавить доску</button>
                         </div>
                         <Form className="d-flex">
                         <Form.Control
@@ -133,7 +147,7 @@ export default function ListBoards({token, email}) {
                     </div>
 
                     <ul className="list-boards">
-                        {addCardBoard(name, setName)}
+                        {onClickCreateBoard && addCardBoard(name, setName)}
                         {
                             onSearch ? (
                                 searchResults.map((board, index) =>
