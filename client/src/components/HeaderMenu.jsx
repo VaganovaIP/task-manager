@@ -1,19 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './index.css'
 import {Link} from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import ProfileUser from "../modals/User/ProfileUser.jsx";
 
-export const HeaderMenu=()=>{
+
+
+export const HeaderMenu=({userInfo})=>{
+
+    const [show, setShow] = useState(true);
+    const Show = () => setShow(!show);
+
     return (
         <header className="main-header">
             <div className="logo">
                 <a href="main.html" className="logo-name">Taskania</a>
             </div>
             <nav className="main-menu">
-                <div className="user-info">
+                <div className="user-info" onClick={Show}>
                     <i className="bi bi-person-circle" aria-hidden="true"></i>
                 </div>
+                {
+                    !show ? (
+                            <ProfileUser userInfo={userInfo}></ProfileUser>
+                        ) : <div>
+
+                    </div>
+
+                }
             </nav>
+
         </header>
     );
 }

@@ -123,6 +123,8 @@ class TaskController {
     }
     static async fetchDataTasks(req, res){
         const board_id = req.query.board_id;
+        const email = req.query.email;
+
         try {
             let board = await Board.findOne({
                 attributes:['name_board', 'owner'],
@@ -167,13 +169,19 @@ class TaskController {
                 attributes: ['user_id', 'username', 'first_name', 'last_name'],
             })
 
+            const userAuth = await User.findOne({
+                attributes:['user_id', 'username','email', 'first_name', 'last_name'],
+                where:{
+                    email:email
+                }
+            })
             // const fileP = path.join(__dirname, '../uploads', 'giphy.gif');
             // res.download(fileP, 'giphy.gif',(err)=>{
             //     console.log(err)
             // })
             // console.log(fileP)
             await res.status(200).json({lists:lists, tasks:tasks, members:members,
-                                           assignments:assignments, users:users, board:board})
+                                           assignments:assignments, users:users, board:board, user:userAuth})
         } catch (err){
             console.log(err)
         }
@@ -184,7 +192,7 @@ class TaskController {
 
         try {
             const user = await User.findOne({
-                attributes:['user_id', 'username','email'],
+                attributes:['user_id', 'username','email', 'first_name', 'last_name'],
                 where:{
                     email:email
                 }
@@ -207,7 +215,7 @@ class TaskController {
             // res.download(fileP, 'giphy.gif',(err)=>{
             //     console.log(err)
             // })
-            await res.status(200).json({tasks:tasks})
+            await res.status(200).json({tasks:tasks, user:user})
         } catch (err){
             console.log(err)
         }

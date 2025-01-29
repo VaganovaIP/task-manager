@@ -2,7 +2,7 @@ import axios from "axios";
 import {BASE_API_URL} from "../utils/api.js";
 
 
-export async function fetchAllBoards(setBoards, token, email) {
+export async function fetchAllBoards(setBoards, token, email, setUser) {
     await axios
         .get(`${BASE_API_URL}/boards`, {
             headers: {
@@ -13,8 +13,8 @@ export async function fetchAllBoards(setBoards, token, email) {
             }
         })
         .then(data => {
-            setBoards(data.data.boards)
-            console.log(data.data.boards);
+            setBoards(data.data.boards);
+            setUser(data.data.user);
         })
         .catch(function (error) {
             console.log(error);

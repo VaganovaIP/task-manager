@@ -19,14 +19,14 @@ const ListTasks=({token, email})=>{
     const [onFilter, setOnFilter] = useState(false);
     const [searchResults, setSearchResults] = useState(tasks);
     const [filtersResults, setFiltersResults] = useState(tasks);
-
+    const [user, setUser] = useState([])
     const options = {keys:['name_task', 'Task.name_task']};
     const fuse = new Fuse(tasks, options);
     const [onSearch, setOnSearch] = useState(false);
 
 
     useEffect(() => {
-        fetchDataTasks(email, setTasks, token)
+        fetchDataTasks(email, setTasks, token, setUser)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     }, [])
@@ -97,7 +97,7 @@ const ListTasks=({token, email})=>{
 
     return(
         <div className="f-container">
-            <HeaderMenu></HeaderMenu>
+            <HeaderMenu userInfo={user}></HeaderMenu>
             <div className="main">
                 <div className="main-menu-content">
                     <Menu></Menu>
@@ -193,7 +193,6 @@ const ListTasks=({token, email})=>{
                                         (tasks.map((task)=>(
                                             renderListTasks(task)
                                         ))))
-
                                 }
                             </div>
                         </div>

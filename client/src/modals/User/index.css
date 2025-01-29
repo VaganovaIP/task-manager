@@ -1,0 +1,87 @@
+
+.user-profile{
+    position: absolute;
+    right: 9px;
+    background-color: rgb(251, 252, 255);
+    width: 230px;
+    height: 300px;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid rgba(187, 202, 234, 0.71);
+    box-shadow: 1px 1px 2px var(--shadow);
+    z-index: 100;
+}
+.user-content{
+    display: flex;
+    flex-direction: column;
+    height: 45%;
+    flex-grow: 1;
+}
+
+.header-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.90rem;
+    height: 95px;
+}
+
+.icon{
+    font-size: 50px;
+    color: #32347a;
+}
+
+.name-user{
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+}
+
+.name{
+    font-size:   0.90rem;
+    align-content: center;
+}
+
+.username{
+    font-size: 0.85rem;
+    color: rgba(30, 43, 50, 0.71);
+    font-style: italic;
+}
+
+.title{
+    font-size: 0.68rem;
+    color: rgba(9, 9, 9, 0.71);
+    font-style: italic;
+}
+
+
+.info-content{
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 0;
+    gap: 5px;
+}
+
+.icon1{
+    align-content: center;
+    font-size: 1.20rem;
+}
+
+.icon2{
+    font-size: 1.20rem;
+}
+
+.log-out{
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 3px;
+    align-content: center;
+    gap: 5px;
+    height: 30px;
+    color: #383b80;
+    cursor: pointer;
+}
+
+.hr-line-user{
+   margin: 5px;
+}

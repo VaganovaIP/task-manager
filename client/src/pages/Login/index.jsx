@@ -1,5 +1,5 @@
 import "./login.css"
-import {Link, redirect} from "react-router-dom";
+import {Link, Navigate, redirect} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import {HeaderMain} from "../../components/HeaderMain.jsx";
@@ -30,9 +30,9 @@ const Login = ({ setToken }) =>{
         }
 
         if (email && password){
-            loginUser(email, password, setError, setSuccess, setToken).then(()=>navigate(`/boards`,{replace: false}))
+            loginUser(email, password, setError, setSuccess, setToken);
             setErrorInput(false);
-            // navigate(`/boards`);
+            navigate("/boards");
 
         }
 

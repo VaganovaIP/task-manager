@@ -11,11 +11,10 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Fuse from "fuse.js";
 import "./listBoards.css"
 
-
-
 export default function ListBoards({token, email}) {
     const [boards, setBoards] = useState([]);
     const [name, setName] = useState("")
+    const [user, setUser] = useState([]);
     const [searchResults, setSearchResults] = useState(boards);
     const options = {keys:["name_board", "Board.name_board"]};
     const fuse = new Fuse(boards, options);
@@ -23,8 +22,11 @@ export default function ListBoards({token, email}) {
     const [onClickCreateBoard, setOnClickCreateBoard] = useState(false)
 
     useEffect( () => {
-        fetchAllBoards(setBoards, token, email);
-    }, []);
+        const fetchData = async () =>{
+            fetchAllBoards(setBoards, token, email, setUser).then((r)=>console.log(r));
+        }
+        fetchData();
+    }, [email]);
 
     const renderListBoards = (item) => {
         return(
@@ -56,14 +58,14 @@ export default function ListBoards({token, email}) {
     const handleSubmitCardBoard = async (event) => {
         event.preventDefault();
         let board_id = uuid();
-        createBoard(name, board_id, email, token)
+        let name_board = name !== "" ? name : "Новая доска"
+        createBoard(name_board, board_id, email, token)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_board = {
-
             Board:{
                 board_id:board_id,
-                name_board:name
+                name_board:name_board
             }
         }
         setBoards([new_board, ...boards])
@@ -86,7 +88,7 @@ export default function ListBoards({token, email}) {
                    <Form onSubmit={handleSubmitCardBoard}>
                        <Form.Group className="mb-3" controlId="formBasicEmail">
                            <Form.Control className="form-board"
-                               type="text" placeholder="" value={name}
+                               type="text" placeholder="" value={name }
                                onChange={(e) => setName(e.target.value)}/>
                        </Form.Group>
                        <div className="card-create">
@@ -122,8 +124,7 @@ export default function ListBoards({token, email}) {
 
     return (
         <div className="f-container">
-                <HeaderMenu></HeaderMenu>
-
+                <HeaderMenu userInfo={user}></HeaderMenu>
             <div className="main">
                 <div className="main-menu-content">
                     <Menu></Menu>

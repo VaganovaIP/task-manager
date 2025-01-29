@@ -4,14 +4,15 @@ import {BASE_API_URL} from "../utils/api.js";
 
 
 export async function fetchDataBoard(board_id, name, setLists, setTasks,
-                                     setMembers, setAssignments, setUsers, setBoardName, token) {
+                                     setMembers, setAssignments, setUsers, setBoardName, token, email, setUser) {
     await axios
         .get(`${BASE_API_URL}/board/${name}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
             params: {
-                board_id: board_id
+                board_id: board_id,
+                email:email
             }
         })
         .then(res => {
@@ -21,10 +22,11 @@ export async function fetchDataBoard(board_id, name, setLists, setTasks,
             setAssignments(res.data.assignments);
             setUsers(res.data.users);
             setBoardName(res.data.board);
+            setUser(res.data.user);
         })
 }
 
-export async function fetchDataTasks(email, setTasks, token) {
+export async function fetchDataTasks(email, setTasks, token, setUser) {
     await axios
         .get(`${BASE_API_URL}/all-tasks`, {
             headers: {
@@ -36,6 +38,7 @@ export async function fetchDataTasks(email, setTasks, token) {
         })
         .then(res => {
             setTasks(res.data.tasks);
+            setUser(res.data.user);
         })
 }
 export const createTask = async (task_id, name_board, list_id, board_id, name_task, email, token) => {

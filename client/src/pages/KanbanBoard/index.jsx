@@ -31,6 +31,7 @@ const KanbanBoard = ({token, email}) =>{
     const [tasks, setTasks] = useState([])
     const [members, setMembers] = useState([])
     const [assignments, setAssignments] = useState([])
+    const [user, setUser] = useState([])
     const [users, setUsers] = useState([])
     const [onClickCreateList, setOnClickCreateList] = useState(false)
     const [onClickCreateTask, setOnClickCreateTask] = useState(false)
@@ -43,7 +44,7 @@ const KanbanBoard = ({token, email}) =>{
     const [boardName, setBoardName] = useState("")
 
     useEffect( () => {
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName, token)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName, token, email, setUser)
             .catch(err => console.log(err));
         setUpdateName(boardName.name_board);
     }, []);
@@ -91,7 +92,8 @@ const KanbanBoard = ({token, email}) =>{
 
     const closeModalEdit = () => {
         setModalEditIsOpen(false);
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName, token)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments,
+            setUsers, setBoardName, token, email)
             .catch(err => console.log(err));
     };
 
@@ -186,7 +188,7 @@ const KanbanBoard = ({token, email}) =>{
 
     return(
         <div className="f-container">
-            <HeaderMenu></HeaderMenu>
+            <HeaderMenu userInfo={user}></HeaderMenu>
             <div className="main">
                 <div className="main-menu-content">
                     <Menu></Menu>

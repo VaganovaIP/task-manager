@@ -18,7 +18,7 @@ class BoardController{
         const email = req.query.email;
         try{
             const user = await User.findOne({
-                attributes:['user_id', 'username','email'],
+                attributes:['user_id', 'username','email', 'first_name', 'last_name'],
                 where:{
                     email:email
                 }
@@ -29,7 +29,7 @@ class BoardController{
                 ],
                 where:{user_id:user.user_id},
             })
-            await res.status(200).json({boards:boards})
+            await res.status(200).json({boards:boards, user:user})
         }  catch (err){
             console.log(err)
         }
