@@ -85,12 +85,11 @@ export function ModalEditTask (props){
         const id = uuid();
         formData.append('file', file); // добавление файла
         formData.append('formName', "form-upload-file");
-        formData.append('id', id);
-        formData.append('id_task', data_task.task_id);
         axios
             .post(`${BASE_API_URL}/board/${name_board}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data; charset=UTF-8',
+                    Authorization: `Bearer ${token}`
                 }
             })
             .then(function (response) {

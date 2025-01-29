@@ -13,7 +13,7 @@ const BoardController = require("./BoardController");
 const AssignmentController = require("./AssignmentController");
 const FilesTaskController = require("./FilesTaskController");
 const path = require("path");
-
+const download = require('download');
 
 async function createTask(req, res) {
     const {board_id, name_task, list_id, task_id, email} = req.body;
@@ -180,6 +180,23 @@ class TaskController {
             //     console.log(err)
             // })
             // console.log(fileP)
+
+                //
+                // const file = `./uploads/giphy.gif`;
+                // res.download(file); // Set disposition and send it.
+            //     // console.log("file")
+            // const folderPath = __dirname+'\uploads';
+            // // download(file,`/giphy.gif`)
+            // //     .then(() => {
+            // //         console.log('Download Completed');
+            // //     })
+            //
+            // console.log(folderPath)
+            // res.download(folderPath+'/giphy.gif', function(err) {
+            //     if(err) {
+            //         console.log(err);
+            //     }
+            // })
             await res.status(200).json({lists:lists, tasks:tasks, members:members,
                                            assignments:assignments, users:users, board:board, user:userAuth})
         } catch (err){

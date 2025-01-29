@@ -14,8 +14,8 @@
 .user-content{
     display: flex;
     flex-direction: column;
-    height: 45%;
     flex-grow: 1;
+    height: 150px;
 }
 
 .header-profile{
@@ -23,11 +23,11 @@
     flex-direction: column;
     align-items: center;
     font-size: 0.90rem;
-    height: 95px;
+    height: 80px;
 }
 
 .icon{
-    font-size: 50px;
+    font-size: 45px;
     color: #32347a;
 }
 
@@ -38,8 +38,10 @@
 }
 
 .name{
-    font-size:   0.90rem;
+    font-size: 0.8rem;
     align-content: center;
+    height: auto;
+    margin: 0;
 }
 
 .username{
@@ -60,6 +62,15 @@
     justify-content: flex-start;
     padding-left: 0;
     gap: 5px;
+    max-height: 100px;
+}
+
+.info-content2{
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 0;
+    gap: 5px;
+    max-height: 100px;
 }
 
 .icon1{
@@ -73,7 +84,7 @@
 
 .log-out{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding-left: 3px;
     align-content: center;
     gap: 5px;
@@ -84,4 +95,66 @@
 
 .hr-line-user{
    margin: 5px;
+}
+
+
+.form-input-user{
+    display: block;
+    width: 100%;
+    height: 1.75rem;
+    padding: 0.23rem;
+    font-family: inherit;
+    font-size: 0.857em;
+    font-weight: 400;
+    line-height: 0.91;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    transition: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-bottom: 2px;
+}
+
+.form-input-user::placeholder {
+    color: #212529;
+    opacity: 0.4;
+}
+
+.form-input-user:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #bbcaea;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(83, 107, 208, 0.42);
+}
+
+.input-error-user{
+    width: 100%;
+    height: 1.75rem;
+    padding: 0.23rem;
+    font-family: inherit;
+    font-size: 0.857em;
+    font-weight: 400;
+    line-height: 0.91;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(173, 56, 36, 0.75);
+    border-radius: 0.25rem;
+    transition: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-bottom: 2px;
+}
+
+.input-error-user:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #bbcaea;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(83, 107, 208, 0.42);
+}
+
+.input-error-user::placeholder {
+    color: #212529;
+    opacity: 0.4;
 }

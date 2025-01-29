@@ -93,13 +93,14 @@ const KanbanBoard = ({token, email}) =>{
     const closeModalEdit = () => {
         setModalEditIsOpen(false);
         fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments,
-            setUsers, setBoardName, token, email)
+            setUsers, setBoardName, token, email, setUser)
             .catch(err => console.log(err));
     };
 
     const closeModalMembers = () => {
         setModalMembersIsOpen(false);
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments, setUsers, setBoardName, token)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments,
+            setUsers, setBoardName, token, setUser)
             .catch(err => console.log(err));
     };
 
