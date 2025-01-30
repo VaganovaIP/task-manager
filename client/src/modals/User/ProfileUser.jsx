@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css"
 import {useNavigate} from "react-router-dom";
+import {updateDataUser} from "../../services/user.jsx";
 
-function ProfileUser({userInfo}) {
+function ProfileUser({user}) {
+    const [token, setToken] = useState(localStorage.getItem('token'));
     const navigate = useNavigate();
     const [show, setShow] = useState(true);
     const [nameUser, setNameUser] = useState('')
@@ -12,12 +14,12 @@ function ProfileUser({userInfo}) {
     const [Edit, setEdit] = useState(false)
     const [usernameError, setUsernameError] = useState(false);
 
-
     useEffect(()=>{
-        setNameUser(userInfo.username)
-        setFirstName(userInfo.first_name)
-        setLastName(userInfo.last_name)
-    },[userInfo])
+        setToken(localStorage.getItem('token'));
+        setNameUser(user.username)
+        setFirstName(user.first_name)
+        setLastName(user.last_name)
+    },[user])
     const logOut = () =>{
         localStorage.removeItem('token');
         localStorage.removeItem('email');
@@ -26,7 +28,9 @@ function ProfileUser({userInfo}) {
 
     const saveInfo=()=>{
         if(!nameUser) return setUsernameError(true);
-
+        const path = window.location.pathname;
+        updateDataUser(user.user_id, nameUser, firstName, lastName, path, token);
+        setShow(true);
     }
 
     return (
@@ -42,8 +46,8 @@ function ProfileUser({userInfo}) {
                 <div className="user-content">
                     {
                         show ?  <div className="name-user">
-                            <div className="name">{userInfo.first_name} {userInfo.last_name}</div>
-                            <div className="username">{userInfo.username}</div>
+                            <div className="name">{firstName} {lastName}</div>
+                            <div className="username">{nameUser}</div>
                             <div className="title">Имя пользователя</div>
                         </div> :
                             <div>
@@ -63,7 +67,7 @@ function ProfileUser({userInfo}) {
                             <i className="bi bi-at"></i>
                         </div>
                         <div className="group1">
-                            <div className="name">{userInfo.email}</div>
+                            <div className="name">{user.email}</div>
                             <div className="title">Email</div>
                         </div>
                     </div>
@@ -86,8 +90,6 @@ function ProfileUser({userInfo}) {
                             </div>
                         </div>
                     }
-
-
             </div>
         </div>
 )

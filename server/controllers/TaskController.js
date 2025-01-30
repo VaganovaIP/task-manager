@@ -14,6 +14,7 @@ const AssignmentController = require("./AssignmentController");
 const FilesTaskController = require("./FilesTaskController");
 const path = require("path");
 const download = require('download');
+const UserController = require("./UserController");
 
 async function createTask(req, res) {
     const {board_id, name_task, list_id, task_id, email} = req.body;
@@ -100,7 +101,10 @@ class TaskController {
                 break;
             case "form-save-task":
                 await saveTask(req, res);
-
+                break;
+            case "form-update-user":
+                await UserController.updateDataUser(req, res);
+                break;
         }
     }
 

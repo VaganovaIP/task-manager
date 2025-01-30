@@ -54,7 +54,6 @@ class BoardController{
 
     static async updateNameBoard(req, res){
         const {name_board, board_id} = req.body;
-        console.log(name_board)
         await Board.update({name_board: name_board},
             {
                 where:{

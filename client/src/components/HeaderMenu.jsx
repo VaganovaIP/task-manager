@@ -21,7 +21,7 @@ export const HeaderMenu=({userInfo})=>{
                     <i className="bi bi-person-circle" aria-hidden="true"></i>
                 </div>
                 {
-                    !show && <ProfileUser userInfo={userInfo}></ProfileUser>
+                    !show && <ProfileUser user={userInfo}></ProfileUser>
 
                 }
             </nav>
