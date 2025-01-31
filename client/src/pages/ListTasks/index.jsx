@@ -1,14 +1,17 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {HeaderMenu, Menu} from "../../components/HeaderMenu.jsx";
 import Form from "react-bootstrap/Form";
-import "./all-tasks.css"
-import DatePicker from "react-datepicker";
+import DatePicker, {registerLocale} from "react-datepicker";
 import Button from "react-bootstrap/Button";
 import Fuse from "fuse.js";
 import renderListTasks from "../../components/TaskListAll.jsx";
 import {isWithinInterval} from "date-fns";
 import convertDate from "../../utils/helpers.jsx";
 import {fetchDataTasks} from "../../services/task.jsx";
+import {ru} from 'date-fns/locale/ru';
+registerLocale('ru', ru)
+import "react-datepicker/dist/react-datepicker.css";
+import "./all-tasks.css"
 
 const ListTasks=({token, email})=>{
     const [tasks, setTasks] = useState([]);

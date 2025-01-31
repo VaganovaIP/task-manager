@@ -6,125 +6,62 @@ const BoardMembers = require("../models/BoardMember");
 const TaskAssignment = require("../models/TaskAssignment");
 const { v4: uuidv4 } = require("uuid");
 const date = require('date-and-time');
-const ListController = require("./ListController");
-const {addAssignments} = require("./AssignmentController");
-const MemberController = require("./MemberController");
-const BoardController = require("./BoardController");
-const AssignmentController = require("./AssignmentController");
-const FilesTaskController = require("./FilesTaskController");
-const path = require("path");
-const download = require('download');
-const UserController = require("./UserController");
 
-async function createTask(req, res) {
-    const {board_id, name_task, list_id, task_id, email} = req.body;
-    const value = date.format((new Date()),
-        'YYYY/MM/DD HH:mm:ss');
-    const user = await User.findOne({
-        attributes:['user_id'],
-        where:{
-            email:email
-        }
-    })
-    await Task.create({task_id, name_task, list_id, board_id, created_at:new Date(), owner_id:user.user_id})
-        .then(res.status(200).send({message: 'New task created'}))
-        .catch((err) => {console.log(err)})
-}
 
-async function saveTask (req, res){
-    const {task_id, name_task,description,date_start,date_end,list_id,importance,status} = req.body;
-    await Task.update({name_task:name_task, description:description, date_start:date_start,
-            date_end:date_end, list_id:list_id, importance:importance, status:status },
-        {
-            where: {
-                task_id:task_id,
-            },
-        })
-        .then(res.status(200).send({message: `Task ${name_task} updated`}))
-        .catch((err) => {console.log(err)})
-}
-
-async function deleteTask(req, res){
-    const {task_id, email} = req.body;
-    await Task.destroy({
-        where:{
-            task_id:task_id,
-        }
-    })
-    const user = await User.findOne({
-        attributes:['user_id'],
-        where:{
-            email:email
-        }
-    })
-
-    await TaskAssignment.destroy({
-        where:{
-            task_id:task_id,
-        }
-    })
-        .then(res.status(200).send({message: 'Delete task'}))
-        .catch((err) => {console.log(err)})
-}
 
 
 class TaskController {
-    static async postActions(req, res){
-        const {formName} = req.body;
-        switch (formName){
-            case "form-add-list":
-                await ListController.createList(req, res);
-                break;
-            case "form-add-task":
-                await createTask(req, res);
-                break;
-            case "form-add-assignments":
-                await addAssignments(req, res);
-                break;
-            case "form-add-members":
-                await MemberController.addMemberBoard(req, res);
-                break;
-            case "form-upload-file":
-                await FilesTaskController.uploadFile(req, res);
-                break;
-        }
+    static async createTask(req, res) {
+        const {board_id, name_task, list_id, task_id, email} = req.body;
+        const value = date.format((new Date()),
+            'YYYY/MM/DD HH:mm:ss');
+        const user = await User.findOne({
+            attributes:['user_id'],
+            where:{
+                email:email
+            }
+        })
+        await Task.create({task_id, name_task, list_id, board_id, created_at:new Date(), owner_id:user.user_id})
+            .then(res.status(200).send({message: 'New task created'}))
+            .catch((err) => {console.log(err)})
     }
 
-    static async putActions(req, res){
-        const {formName} = req.body;
-        switch (formName) {
-            case "form-update-board":
-                await BoardController.updateNameBoard(req, res);
-                break;
-            case "form-update-list":
-                await ListController.updateNameList(req, res);
-                break;
-            case "form-save-task":
-                await saveTask(req, res);
-                break;
-            case "form-update-user":
-                await UserController.updateDataUser(req, res);
-                break;
-        }
+    static async saveTask (req, res){
+        const {task_id, name_task,description,date_start,date_end,list_id,importance,status} = req.body;
+        await Task.update({name_task:name_task, description:description, date_start:date_start,
+                date_end:date_end, list_id:list_id, importance:importance, status:status },
+            {
+                where: {
+                    task_id:task_id,
+                },
+            })
+            .then(res.status(200).send({message: `Task ${name_task} updated`}))
+            .catch((err) => {console.log(err)})
     }
 
-    static async deleteActions(req, res) {
-        const {formName} = req.body;
-        switch (formName) {
-            case "form-delete-assignment":
-                await AssignmentController.deleteAssignmentTask(req, res);
-                break;
-            case "form-delete-member":
-                await MemberController.deleteMemberBoard(req, res);
-                break;
-            case "form-delete-task":
-                await deleteTask(req, res);
-                break;
-            case "form-delete-list":
-                await ListController.deleteListBoard(req, res);
-                break;
-        }
+    static async deleteTask(req, res){
+        const {task_id, email} = req.body;
+        await Task.destroy({
+            where:{
+                task_id:task_id,
+            }
+        })
+        const user = await User.findOne({
+            attributes:['user_id'],
+            where:{
+                email:email
+            }
+        })
+
+        await TaskAssignment.destroy({
+            where:{
+                task_id:task_id,
+            }
+        })
+            .then(res.status(200).send({message: 'Delete task'}))
+            .catch((err) => {console.log(err)})
     }
+
     static async fetchDataTasks(req, res){
         const board_id = req.query.board_id;
         const email = req.query.email;
@@ -179,30 +116,9 @@ class TaskController {
                     email:email
                 }
             })
-            // const fileP = path.join(__dirname, '../uploads', 'giphy.gif');
-            // res.download(fileP, 'giphy.gif',(err)=>{
-            //     console.log(err)
-            // })
-            // console.log(fileP)
 
-                //
-                // const file = `./uploads/giphy.gif`;
-                // res.download(file); // Set disposition and send it.
-            //     // console.log("file")
-            // const folderPath = __dirname+'\uploads';
-            // // download(file,`/giphy.gif`)
-            // //     .then(() => {
-            // //         console.log('Download Completed');
-            // //     })
-            //
-            // console.log(folderPath)
-            // res.download(folderPath+'/giphy.gif', function(err) {
-            //     if(err) {
-            //         console.log(err);
-            //     }
-            // })
             await res.status(200).json({lists:lists, tasks:tasks, members:members,
-                                           assignments:assignments, users:users, board:board, user:userAuth})
+                assignments:assignments, users:users, board:board, user:userAuth})
         } catch (err){
             console.log(err)
         }
@@ -218,7 +134,7 @@ class TaskController {
                     email:email
                 }
             })
-            //вывод задач из таблицы Assignments, где есть user
+
             let tasks = await TaskAssignment.findAll({
                 include:[
                     {model:Task, attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',

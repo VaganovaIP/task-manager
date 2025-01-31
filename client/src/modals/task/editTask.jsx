@@ -78,12 +78,11 @@ export function ModalEditTask (props){
     const [file, setFile] = useState('');
 
     const handleChangeFile = (e) => {
-        const file = e.target.files[0]; // доступ к файлу
-        console.log(file);
-        setFile(file); // сохранение файла
+        const file = e.target.files[0];
+        setFile(file);
         const formData = new FormData();
         const id = uuid();
-        formData.append('file', file); // добавление файла
+        formData.append('file', file);
         formData.append('formName', "form-upload-file");
         axios
             .post(`${BASE_API_URL}/board/${name_board}`, formData, {
@@ -100,6 +99,10 @@ export function ModalEditTask (props){
             });
     }
 
+    // const downloadFile = () =>{
+    //
+    // }
+
 
     return(
         <Modal
@@ -115,7 +118,9 @@ export function ModalEditTask (props){
                         <input type="text" className="name-task-modal" placeholder="Название задачи"
                                defaultValue={data_task.name_task}
                                onChange={(e)=>setNameTask(e.target.value)}/>
+
                     </Modal.Title>
+
                     <div className="list">
                         <p className="list-label">в списке: </p>
                         <select className="list-task-label"

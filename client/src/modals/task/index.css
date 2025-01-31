@@ -71,7 +71,7 @@
 }
 
 .form-input{
-    width: 100%;
+    width: 120px;
     height: 25px;
     font-size: 14px;
     padding: 2px 2px 2px 5px;
@@ -79,14 +79,39 @@
     border-radius: 4px;
     box-shadow: 2px 1px 5px #DBD8F6FF;
 }
+.form-input::placeholder {
+    color: #212529;
+    opacity: 0.4;
+}
+
+.form-input:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #bbcaea;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(83, 107, 208, 0.42);
+}
 
 .date-form{
     display: flex;
-    flex-direction: inherit;
+    flex-direction: row;
     gap: 12px;
     width:100%;
-    justify-content: space-between;
+    justify-content: flex-start;
     position: relative;
+}
+
+.react-datepicker__header{
+    text-align: center;
+    background-color: rgba(239, 241, 250, 0.88);
+    border-bottom: 1px solid #aeaeae;
+    border-top-left-radius: 0.3rem;
+    padding: 8px 0;
+    position: relative;
+}
+
+.react-datepicker__day--selected{
+  background-color: #3b52a4;
 }
 
 .name-task-modal{

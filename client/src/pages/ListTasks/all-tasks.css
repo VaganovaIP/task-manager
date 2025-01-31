@@ -204,14 +204,49 @@ p{
     min-width: 120px;
 }
 
+
 .form-input{
     width: 100%;
     height: 25px;
-    font-size: 12px;
-    border: solid 0.002rem rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    padding: 2px 2px 2px 5px;
+    border: solid 0.02rem rgba(0, 0, 0, 0.15);
     border-radius: 4px;
     box-shadow: 2px 1px 5px #DBD8F6FF;
-    padding-left: 3px;
+}
+.form-input::placeholder {
+    color: #212529;
+    opacity: 0.4;
+}
+
+.form-input:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #bbcaea;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(83, 107, 208, 0.42);
+}
+
+.date-form{
+    display: flex;
+    flex-direction: inherit;
+    gap: 12px;
+    width:100%;
+    justify-content: space-between;
+    position: relative;
+}
+
+.react-datepicker__header{
+    text-align: center;
+    background-color: rgba(239, 241, 250, 0.88);
+    border-bottom: 1px solid #aeaeae;
+    border-top-left-radius: 0.3rem;
+    padding: 8px 0;
+    position: relative;
+}
+
+.react-datepicker__day--selected{
+    background-color: #3b52a4;
 }
 
 .title-info{

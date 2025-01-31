@@ -5,8 +5,9 @@ import {BASE_API_URL} from "../utils/api.js";
 
 export async function fetchDataBoard(board_id, name, setLists, setTasks,
                                      setMembers, setAssignments, setUsers, setBoardName, token, email, setUser) {
+    console.log(board_id)
     await axios
-        .get(`${BASE_API_URL}/board/${name}`, {
+        .get(`${BASE_API_URL}/board/${name}?type=data`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

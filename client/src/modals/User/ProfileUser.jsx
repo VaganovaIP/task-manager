@@ -11,7 +11,6 @@ function ProfileUser({user}) {
     const [nameUser, setNameUser] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
-    const [Edit, setEdit] = useState(false)
     const [usernameError, setUsernameError] = useState(false);
 
     useEffect(()=>{

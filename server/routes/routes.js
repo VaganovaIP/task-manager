@@ -5,6 +5,8 @@ const AuthController = require('../controllers/AuthController');
 const multer = require("multer");
 const passport = require("passport");
 const UserController = require("../controllers/UserController");
+const TaskActions = require('../controllers/TaskActions');
+const FilesTaskController = require("../controllers/FilesTaskController");
 
 const router = express.Router();
 const storageConfig = multer.diskStorage({
@@ -22,17 +24,17 @@ const storageConfig = multer.diskStorage({
 const upload = multer({storage:storageConfig}).single("file");
 
 router.get('/boards', passport.authenticate('jwt', { session: false }), boardController.fetchDataBoards);
-router.get('/board/:name_board', passport.authenticate('jwt', { session: false }), TaskController.fetchDataTasks);
+router.get('/board/:name_board', passport.authenticate('jwt', { session: false }), TaskActions.getActions);
 router.get('/all-tasks', passport.authenticate('jwt', { session: false }), TaskController.fetchDataTasksAll);
 
-router.post('/board/:name_board', passport.authenticate('jwt', { session: false }), upload, TaskController.postActions);
+router.post('/board/:name_board', passport.authenticate('jwt', { session: false }), upload, TaskActions.postActions);
 router.post('/boards', passport.authenticate('jwt', { session: false }), boardController.addBoard);
 
 router.put('/boards', passport.authenticate('jwt', { session: false }), UserController.updateDataUser);
-router.put('/board/:name_board', passport.authenticate('jwt', { session: false }), TaskController.putActions);
+router.put('/board/:name_board', passport.authenticate('jwt', { session: false }), TaskActions.putActions);
 router.put('/all-tasks', passport.authenticate('jwt', { session: false }), UserController.updateDataUser);
 
-router.delete('/board/:name_board', passport.authenticate('jwt', { session: false }), TaskController.deleteActions);
+router.delete('/board/:name_board', passport.authenticate('jwt', { session: false }), TaskActions.deleteActions);
 router.delete('/boards', passport.authenticate('jwt', { session: false }), boardController.deleteBoard);
 
 router.post('/register', AuthController.registerUser);

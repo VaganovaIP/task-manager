@@ -2,7 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const Board = require('../models/Board');
 const User = require('../models/User');
 const BoardMember = require('../models/BoardMember');
-const List = require("../models/List");
 
 const findUserById = async function (email){
     const user = await User.findOne({
