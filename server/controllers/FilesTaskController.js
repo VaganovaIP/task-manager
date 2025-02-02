@@ -4,11 +4,10 @@ const fs = require("fs");
 
 class FilesTaskController {
     static async uploadFile(req, res, next){
-        const {formName} = req.body;
-        // console.log(id)
-        console.log(formName)
-        return !req.file ? res.status(500).send({msg: "file is not found"})
-            : res.status(200).send("file upload");
+        if (!req.file) {
+            return res.status(400).send('Файл не был загружен.');
+        }
+        res.send('Файл успешно загружен.');
     }
 
     static async downloadFile(req, res){

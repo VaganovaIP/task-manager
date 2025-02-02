@@ -7,11 +7,20 @@ const passport = require("passport");
 const UserController = require("../controllers/UserController");
 const TaskActions = require('../controllers/TaskActions');
 const FilesTaskController = require("../controllers/FilesTaskController");
+const path = require("path");
+const fs = require("fs");
 
 const router = express.Router();
 const storageConfig = multer.diskStorage({
-    destination: (req, file, cb) =>{
-        cb(null, "uploads");
+    destination: function (req, file, cb) {
+        const task_id = req.headers['task-id'];
+        const taskDir = path.join(__dirname, '../uploads', task_id);
+
+        if (!fs.existsSync(taskDir)) {
+            fs.mkdirSync(taskDir, { recursive: true });
+        }
+
+        cb(null, taskDir);
     },
     filename: (req, file, cb) =>{
         const originalName = Buffer.from(
