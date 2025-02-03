@@ -110,7 +110,7 @@ class TaskController {
                 attributes: ['user_id', 'username', 'first_name', 'last_name'],
             })
 
-            const userAuth = await User.findOne({
+            let userAuth = await User.findOne({
                 attributes:['user_id', 'username','email', 'first_name', 'last_name'],
                 where:{
                     email:email

@@ -8,11 +8,10 @@ import {saveTask} from "../../services/task.jsx";
 import 'react-calendar/dist/Calendar.css'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {BASE_API_URL} from "../../utils/api.js";
-import axios from "axios";
-import uuid from "react-uuid";
 import "./index.css"
 import "../task/index.css"
+import {deleteFile, downloadFile, fetchFilesTask, uploadFile} from "../../services/file.js";
+import uuid from "react-uuid";
 
 export function ModalEditTask (props){
     const {members, data_task, lists, assignments, name_board, token, owner} = props;
@@ -25,8 +24,16 @@ export function ModalEditTask (props){
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [assignment, setAssignments] = useState([])
+    const [filesTask, setFilesTask] = useState([])
 
     useEffect(()=>{
+        fetchFilesTask(name_board, data_task?.task_id, setFilesTask, token)
+            .then(function (response) {
+            console.log(response);
+        })
+            .catch(function (error) {
+                console.log(error);
+            });
         setNameTask(data_task.name_task);
         setList(data_task.list_id);
         setNameList(data_task.List?.name_list);
@@ -74,37 +81,37 @@ export function ModalEditTask (props){
         setAssignments(newList);
     }
 
-    const [data, getFile] = useState({ name: "", path: "" });
     const [file, setFile] = useState('');
 
-    const handleChangeFile = (e) => {
+    const onUploadFile = (e) => {
         const file = e.target.files[0];
         setFile(file);
         const formData = new FormData();
-        const id = uuid();
-        console.log();
+        let fileId = uuid();
         formData.append('file', file);
         formData.append('formName', "form-upload-file");
-        axios
-            .post(`${BASE_API_URL}/board/${name_board}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data; charset=UTF-8',
-                    Authorization: `Bearer ${token}`,
-                    'task-id':  data_task.task_id,
-                }
-            })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        formData.append('task_id', data_task.task_id);
+        formData.append('file_name', file.name);
+        formData.append('fileId', fileId);
+        uploadFile(name_board, formData, data_task.task_id, token);
+        const new_file = {
+            file_id:fileId,
+            task_id:data_task.task_id,
+            name_file: file.name,
+        }
+        setFilesTask([new_file, ...filesTask])
     }
 
-    // const downloadFile = () =>{
-    //
-    // }
+    const onDownloadFile = (fileName) =>{
+        downloadFile(name_board, data_task.task_id, fileName, token);
+    }
 
+    const onDeleteFile = (id, name)=>{
+        deleteFile(name_board, id, data_task.task_id, name, token)
+        console.log(id)
+        const newList = filesTask.filter(item => item.file_id !== id);
+        setFilesTask(newList);
+    }
 
     return(
         <Modal
@@ -160,13 +167,24 @@ export function ModalEditTask (props){
                                         onChange={(date) => setEndDate(date)}/>
                         </div>
                         <hr/>
-
                         <Form.Group className="form-file-upload">
                             <Form.Label><i className="bi bi-paperclip" aria-hidden="true"></i> Вложения </Form.Label>
                             <Form.Control type="file" className="file-upload" title={"Прикрепить"}
-                                onChange={handleChangeFile}
+                                onChange={onUploadFile}
                             />
                         </Form.Group>
+                        <div className="list-files">
+                            {filesTask.map((file) =>
+                                <div key={file.file_id} className="file-item">
+                                    <li className="name-file" onClick={()=>onDownloadFile(file.name_file)}>{file.name_file}</li>
+                                    <button onClick={()=>onDeleteFile(file.file_id, file.name_file)} className="button-delete-file">
+                                        Удалить
+                                    </button>
+                                </div>
+
+                            )
+                            }
+                        </div>
                     </Form.Group>
                     <Form.Group className="form-data-task2">
                         <Form.Label>Важность</Form.Label>
@@ -201,7 +219,7 @@ export function ModalEditTask (props){
                                                         <p className="admin">{item.User.first_name} {item.User.last_name}</p>
                                                     </div>
                                                 }
-                                                <Button className="members-btn"
+                                                <Button className="members-btn-del"
                                                     onClick={()=>
                                                         {
                                                             deleteAssignment(item.members_id, name_board, token);

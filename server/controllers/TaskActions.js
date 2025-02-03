@@ -20,6 +20,10 @@ class TaskActions {
             case "download":
                 await FilesTaskController.downloadFile(req, res);
                 break;
+            case "files":
+                await FilesTaskController.fetchDataFilesTasks(req, res);
+                break;
+
         }
 
     }
@@ -66,6 +70,7 @@ class TaskActions {
 
     static async deleteActions(req, res) {
         const {formName} = req.body;
+        console.log(formName + "111")
         switch (formName) {
             case "form-delete-assignment":
                 await AssignmentController.deleteAssignmentTask(req, res);
@@ -78,6 +83,9 @@ class TaskActions {
                 break;
             case "form-delete-list":
                 await ListController.deleteListBoard(req, res);
+                break;
+            case "form-delete-file":
+                await FilesTaskController.deleteFile(req, res);
                 break;
         }
     }

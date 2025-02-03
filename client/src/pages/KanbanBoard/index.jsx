@@ -186,35 +186,9 @@ const KanbanBoard = ({token, email}) =>{
         setTasks(newList);
     }
 
-    async function downloadFile() {
-        const params = new URLSearchParams({ formName: "form-get-file" }).toString();
-        // const response = await fetch(`${BASE_API_URL}/board/${name_board}?type=download`,{
-        //     headers: {
-        //         Authorization: `Bearer ${token}`
-        //     }
-        // })
 
-        const response = await fetch(`${BASE_API_URL}/board/${name_board}?type=download`,
-            {headers: {
-                    Authorization: `Bearer ${token}`
-                }});
 
-        if (response.ok) {
-            console.log("ok")
-            console.log(response)
 
-            const blob = await response.blob();
-            const downloadUrl = URL.createObjectURL(blob);
-            const link = document.createElement('a')
-            link.href = downloadUrl
-            link.download = '11giphy.gif'
-            document.body.appendChild(link)
-            console.log("ok")
-
-            link.click()
-            link.remove()
-        }
-    }
     return(
         <div className="f-container">
             <HeaderMenu userInfo={user}></HeaderMenu>
@@ -224,9 +198,6 @@ const KanbanBoard = ({token, email}) =>{
                 </div>
                 <div className="content" >
                     <div className="action-page">
-                        <Button onClick={downloadFile} className="button-save">
-                            Сохранить
-                        </Button>
                         <div className="update-name-task">
                                 <input type="text" className="input-name" defaultValue={boardName.name_board}
                                        onChange={(e) => setUpdateName(e.target.value)}
