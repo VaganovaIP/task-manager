@@ -38,7 +38,7 @@ export const fetchFilesTask = async (name_board, task_id, setFilesTask, token) =
 }
 
 export const downloadFile = async (name_board, task_id, name_file, token) =>{
-    const response = await fetch(`${BASE_API_URL}/board/${name_board}?type=download`,
+    await fetch(`${BASE_API_URL}/board/${name_board}?type=download`,
         {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -46,23 +46,19 @@ export const downloadFile = async (name_board, task_id, name_file, token) =>{
                 'file_name': encodeURIComponent(name_file)
         }}
     )
-        .then(function (response) {
-        console.log(response);
+        .then(async function (response) {
+            const blob = await response.blob();
+            const downloadUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = name_file;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
         })
         .catch(function (error) {
             console.log(error);
-        });;
-
-    if (response.ok) {
-        const blob = await response.blob();
-        const downloadUrl = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = name_file;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-    }
+        });
 }
 
 export const deleteFile = async (name_board, file_id, task_id, file_name, token) => {

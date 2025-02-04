@@ -36,6 +36,7 @@
     scrollbar-color: #455AA0 #F2F5FF;
     border-radius: 4px;
     box-shadow: 2px 1px 5px #DBD8F6FF;
+    font-size: 0.84rem;
 }
 
 .form-data-task{
@@ -161,6 +162,10 @@
     padding-left: 5px;
 }
 
+.list-members-button:active{
+    background-color: #bbcaea;
+}
+
 .list{
     display: flex;
     flex-direction: row;
@@ -227,6 +232,7 @@
     border: none;
 }
 
+
 .members-btn:hover{
     color: rgb(50, 52, 122);
 }
@@ -238,6 +244,7 @@
     --bs-btn-active-bg:none;
     --bs-btn-hover-bg:none;
     border: none;
+    background-color: transparent;
 }
 
 .members-btn-del:hover{

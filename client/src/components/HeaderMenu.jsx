@@ -14,7 +14,7 @@ export const HeaderMenu=({userInfo})=>{
     return (
         <header className="main-header">
             <div className="logo">
-                <a href="main.html" className="logo-name">Taskania</a>
+                <p className="logo-name" >Taskania</p>
             </div>
             <nav className="main-menu">
                 <div className="user-info" onClick={Show}>
@@ -22,7 +22,6 @@ export const HeaderMenu=({userInfo})=>{
                 </div>
                 {
                     !show && <ProfileUser user={userInfo}></ProfileUser>
-
                 }
             </nav>
 

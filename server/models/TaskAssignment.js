@@ -29,4 +29,6 @@ Task.hasMany(TaskAssignment,{
 })
 TaskAssignment.belongsTo(Task, {foreignKey:"task_id"})
 
+
+
 module.exports = TaskAssignment;

@@ -154,7 +154,7 @@ export function ModalEditTask (props){
                 <Form className="form-data-task">
                     <Form.Group className="form-task">
                         <Form.Label>Описание</Form.Label>
-                        <Form.Control as="textarea" rows={4} className="textarea-task"
+                        <Form.Control as="textarea" rows={6} className="textarea-task"
                                       defaultValue={data_task.description}
                                       onChange={(e) => setDescriptionTask(e.target.value)}
                         />
@@ -219,14 +219,14 @@ export function ModalEditTask (props){
                                                         <p className="admin">{item.User.first_name} {item.User.last_name}</p>
                                                     </div>
                                                 }
-                                                <Button className="members-btn-del"
+                                                <button className="members-btn-del"
                                                     onClick={()=>
                                                         {
                                                             deleteAssignment(item.members_id, name_board, token);
                                                             onDeleteAssignment(item.members_id);
                                                         }}>
                                                     Исключить
-                                                </Button>
+                                                </button>
                                             </div>
                                         </Dropdown.Item>
                                     )
@@ -246,11 +246,11 @@ export function ModalEditTask (props){
                                                     <p className="admin">{member.User.first_name} {member.User.last_name}</p>
                                                   </div>
                                             }
-                                            <Button className="members-btn"
+                                            <button className="members-btn"
                                                     type="button"
                                                     onClick={() => onAddAssignment(name_board, member.User.user_id, data_task.task_id, member.User.username)}>
                                                 Добавить
-                                            </Button>
+                                            </button>
                                         </div>
                                     </Dropdown.Item>
                                 ))}

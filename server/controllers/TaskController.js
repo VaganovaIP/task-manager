@@ -8,8 +8,6 @@ const { v4: uuidv4 } = require("uuid");
 const date = require('date-and-time');
 
 
-
-
 class TaskController {
     static async createTask(req, res) {
         const {board_id, name_task, list_id, task_id, email} = req.body;
@@ -148,10 +146,7 @@ class TaskController {
                 ],
                 where:{user_id:user.user_id},
             })
-            // const fileP = path.join(__dirname, '../uploads', 'giphy.gif');
-            // res.download(fileP, 'giphy.gif',(err)=>{
-            //     console.log(err)
-            // })
+
             await res.status(200).json({tasks:tasks, user:user})
         } catch (err){
             console.log(err)

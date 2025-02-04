@@ -254,6 +254,12 @@ a{
     --bs-btn-hover-bg:none;
     color: #1E2B32;
     background-color: transparent;
+    border: none;
+}
+
+
+.members-btn:hover{
+    color: rgba(203, 51, 51, 0.86);
 }
 
 .list-members{

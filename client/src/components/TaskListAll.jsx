@@ -28,6 +28,7 @@ const renderListTasks=(task)=>{
                             <p className="title">
                                 Описание
                             </p>
+                            <p className="description">{task.Task?.description}</p>
                         </div>
                         <div className="column2">
                             <p className="title">
@@ -50,11 +51,6 @@ const renderListTasks=(task)=>{
                             </p>
                             <p>{task.Task?.List.name_list}</p>
                         </div>
-                    </div>
-                    <div>
-                        <p className="title-files">
-                            Вложения
-                        </p>
                     </div>
                 </Accordion.Body>
             </Accordion.Item>

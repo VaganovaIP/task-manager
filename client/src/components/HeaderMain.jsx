@@ -8,7 +8,7 @@ export const HeaderMain=()=>{
     return (
         <header className="main-header">
             <div className="logo">
-                <a href="main.html" className="logo-name">Taskania</a>
+                <p className="logo-name">Taskania</p>
             </div>
             <nav className="main-menu">
                 <ul className="main-menu-list">
