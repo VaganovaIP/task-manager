@@ -149,7 +149,7 @@ ul li{
 }
 
 .accordion-button{
-    padding: 0px;
+    padding: 0;
 }
 
 .info{
@@ -209,7 +209,7 @@ ul li{
 }
 
 p{
-    margin: 0px;
+    margin: 0;
 }
 
 .info .status{

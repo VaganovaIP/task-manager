@@ -1,10 +1,10 @@
 import "./login.css"
-import {Link, Navigate, redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import {HeaderMain} from "../../components/HeaderMain.jsx";
 import Form from "react-bootstrap/Form";
-import {loginUser, registerUser} from "../../services/auth.jsx";
+import {loginUser} from "../../services/auth.jsx";
 
 const Login = ({ setToken }) =>{
     const [emailError, setEmailError] = useState(false);
@@ -46,7 +46,7 @@ const Login = ({ setToken }) =>{
                     <div className="title-auth-reg">
                         Войти в аккаунт
                     </div>
-                    <form classs="form-auth-reg" method="post" onSubmit={onLoginSubmit}>
+                    <form className="form-auth-reg" method="post" onSubmit={onLoginSubmit}>
                         <div className="title-message-error">{errorInput ? "Заполните поля" : ""}</div>
                         <Form.Control type="email" className={!emailError ? "form-input-login" : "input-error"}
                                       placeholder="Email*"

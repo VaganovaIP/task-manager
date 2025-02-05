@@ -6,7 +6,7 @@ const multer = require("multer");
 const passport = require("passport");
 const UserController = require("../controllers/UserController");
 const TaskActions = require('../controllers/TaskActions');
-const FilesTaskController = require("../controllers/FilesTaskController");
+require("../controllers/FilesTaskController");
 const path = require("path");
 const fs = require("fs");
 

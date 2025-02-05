@@ -75,7 +75,7 @@ a:active, a:hover, a{
 
 .header{
     position: relative;
-    margin: 0px;
+    margin: 0;
     max-height: 40px;
     background-color: #b2c9ff;
 }

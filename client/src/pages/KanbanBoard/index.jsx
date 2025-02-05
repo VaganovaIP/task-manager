@@ -18,7 +18,7 @@ import {updateNameBoard} from "../../services/board.jsx";
 import {createTask, deleteTask, fetchDataBoard} from "../../services/task.jsx";
 import {createList, deleteList, updateNameList} from "../../services/list.jsx";
 import {deleteMemberBoard} from "../../services/member.jsx";
-import {BASE_API_URL} from "../../utils/api.js";
+
 import ("./kanbanBoard.css");
 
 const KanbanBoard = ({token, email}) =>{

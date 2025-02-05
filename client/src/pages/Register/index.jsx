@@ -1,5 +1,4 @@
 import "./register.css"
-import {Link} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {HeaderMain} from "../../components/HeaderMain.jsx";
 import Form from "react-bootstrap/Form";
@@ -56,7 +55,7 @@ const Register = () =>{
                     <div className="title-auth-reg">
                         Регистрация аккаунта
                     </div>
-                    <form classs="form-auth-reg" method="post" onSubmit={onRegisterSubmit}>
+                    <form className="form-auth-reg" method="post" onSubmit={onRegisterSubmit}>
                         <div className="title-message-error">{errorInput ? "Заполните обязательные поля *" : ""}</div>
                         <input type="text" className={!usernameError ? "form-input-login" : "input-error"}
                                placeholder="Имя пользователя*"

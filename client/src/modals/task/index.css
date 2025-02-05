@@ -49,7 +49,7 @@
     display: flex;
     flex-direction: column;
     width: 12rem;
-    padding: 0px 20px 0px 20px;
+    padding:0 20px 0 20px;
     gap: 5px;
 }
 
@@ -128,26 +128,26 @@
 
 .form-label{
     font-size: 14px;
-    margin: 0px;
+    margin:0;
     align-content: center;
-    padding: 0px;
+    padding:0;
 }
 
 .status{
     display: flex;
     flex-direction: row;
     gap: 5px;
-    margin: 0px;
+    margin:0;
 }
 
 .label-status{
     font-size: 14px;
     align-content: center;
-    margin: 0px;
+    margin:0;
 }
 
 .list-members-button{
-    padding-left: 0px;
+    padding-left:0;
     width: 100%;
     color: #1E2B32;
     align-content: flex-end;
@@ -173,18 +173,18 @@
 }
 
 .list-label{
-    margin: 0px;
+    margin:0;
 }
 
 .name-member{
-    margin: 0px;
+    margin:0;
     font-size: 12px;
     height: 5px;
 }
 
 .label-member{
     padding-left: 16px;
-    margin: 0px;
+    margin:0;
     font-size: 14px;
 }
 
@@ -209,7 +209,7 @@
     font-size: 11px;
     color: rgba(33, 34, 80, 0.8);
     font-weight: initial;
-    margin: 0px;
+    margin:0;
 }
 
 .dropdown-item {
@@ -218,7 +218,7 @@
     clear: both;
     font-weight: 400;
     background-color: transparent;
-    margin: 0px;
+    margin:0;
     font-size: 15px;
     height: 20px;
 }

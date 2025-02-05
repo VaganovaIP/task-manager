@@ -19,7 +19,6 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: "PT Sans", Calibri, Tahoma, inherit;
     font-variant: normal;
 }
 
@@ -75,7 +74,7 @@ a{
 .input-name{
     background-color: transparent;
     border: none;
-    padding: 0px 5px 0px 5px;
+    padding: 0 5px 0 5px;
     font-size: 18px;
     font-family: "PT Sans", Calibri, Tahoma, sans-serif;
     width: 100%;
@@ -129,7 +128,7 @@ a{
     height: 30px;
     min-width: 180px;
     background-color: #455AA0;
-    padding: 0px;
+    padding: 0;
 }
 
 .create-list-button:hover{
@@ -190,7 +189,7 @@ a{
     grid-gap:20px;
     height: 50px;
     justify-content: space-between;
-    margin: 0px;
+    margin: 0;
     padding: 10px;
     box-shadow: 2px 1px 5px var(--shadow);
 }
@@ -199,7 +198,7 @@ a{
     padding: 3px;
     font-weight: normal;
     font-size: 15px;
-    margin: 0px;
+    margin: 0;
     vertical-align: bottom;
 }
 
@@ -216,7 +215,7 @@ a{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0px;
+    margin: 0;
     font-size: 12px;
     height: 20px;
 }
@@ -231,7 +230,7 @@ a{
     font-size: 11px;
     color: rgba(0, 0, 0, 0.62);
     font-weight: initial;
-    padding: 0px;
+    padding: 0;
 }
 
 .dropdown-item {
@@ -240,7 +239,7 @@ a{
     clear: both;
     font-weight: 400;
     background-color: transparent;
-    margin: 0px;
+    margin:0;
     font-size: 15px;
     height: auto;
 }
@@ -318,8 +317,8 @@ hr{
 }
 
 .dropdown-item {
-    padding-bottom: 0px;
-    padding-top: 0px;
+    padding-bottom:0;
+    padding-top:0;
 }
 
 

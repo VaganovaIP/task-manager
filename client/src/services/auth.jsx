@@ -1,7 +1,5 @@
 import axios from "axios";
 import {BASE_API_URL} from "../utils/api.js";
-import {useNavigate} from "react-router-dom";
-
 
 
 export const registerUser = async (username, first_name, last_name, email, password, setError, setSuccess) =>{

@@ -1,6 +1,6 @@
 const List = require("../models/List");
-const Board = require("../models/Board");
-const BoardMembers = require("../models/BoardMember");
+require("../models/Board");
+require("../models/BoardMember");
 
 
 class ListController {

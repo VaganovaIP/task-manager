@@ -1,5 +1,4 @@
 import "./main.css"
-import {Link} from "react-router-dom";
 import React from "react";
 import {HeaderMain} from "../../components/HeaderMain.jsx";
 

@@ -77,7 +77,7 @@ a:active, a:hover, a{
 
 .header{
     position: relative;
-    margin: 0px;
+    margin: 0;
     max-height: 40px;
     background-color: #b2c9ff;
 }
@@ -226,16 +226,15 @@ a:active, a:hover, a{
     min-height: 40px;
     font-size: 20px;
     color: #FFFFFF;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 
 .menu-item a{
     color:#FFFFFF;
 }
 .my-case{
-    padding: 0px;
-    font-family: "Arial Rounded MT Bold";
+    padding: 0;
     font-size: 25px;
     text-transform:uppercase;
     font-weight: normal;
@@ -349,8 +348,8 @@ li:hover{
     display:flex;
     list-style: none;
     margin-left: auto;
-    margin-bottom: 0px;
-    padding: 0px;
+    margin-bottom: 0;
+    padding: 0;
     color: #1E2B32;
 }
 

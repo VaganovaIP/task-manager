@@ -26,7 +26,7 @@ class AuthController{
     static async loginUser(req, res){
         const {email, password } = req.body;
         try{
-            const user = await User.findOne({where: {email}});
+            const user = await User.findOne({where: {email: email}});
             if(!user) {
                 return res.status(404).json({ message: 'Пользователь не существует' });
             }

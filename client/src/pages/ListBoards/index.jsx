@@ -151,7 +151,7 @@ export default function ListBoards({token, email}) {
                         {onClickCreateBoard && addCardBoard(name, setName)}
                         {
                             onSearch ? (
-                                searchResults.map((board, index) =>
+                                searchResults.map((board) =>
                                     <div key={board.board_id}>
                                         <li >
                                             {renderListBoards(board)}
@@ -169,7 +169,7 @@ export default function ListBoards({token, email}) {
                                     </div>
                                     )
                             ) : (
-                                boards.map((board, index) => (
+                                boards.map((board) => (
                                         <li key={board.board_id}>
                                             {renderListBoards(board)}
                                         </li>
