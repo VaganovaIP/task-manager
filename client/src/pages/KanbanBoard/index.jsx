@@ -272,7 +272,7 @@ const KanbanBoard = ({token, email}) =>{
                                                                 <Button className="delete-task-btn" variant="secondary"
                                                                     onClick={()=>
                                                                         {
-                                                                            deleteTask(task.task_id, name_board, token);
+                                                                            deleteTask(task.task_id, name_board, email, token);
                                                                             onDeleteTask(task.task_id);
                                                                         }}>
                                                                     <i className="bi bi-trash"></i> Удалить задачу

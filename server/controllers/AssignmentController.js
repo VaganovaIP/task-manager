@@ -1,16 +1,16 @@
-const TaskAssignment = require("../models/TaskAssignment");
+const db = require("../config/db");
 
 class AssignmentController{
     static async addAssignments(req, res){
         const {user_id, task_id} = req.body;
-        await TaskAssignment.create({user_id, task_id})
+        await db.TaskAssignment.create({user_id, task_id})
             .then(res.status(200).send({message: 'New assignment created'}))
             .catch((err) => {console.log(err)})
     }
 
     static async deleteAssignmentTask(req, res){
         const {assignment_id} = req.body;
-        await TaskAssignment.destroy({
+        await db.TaskAssignment.destroy({
             where:{
                 members_id:assignment_id
             }

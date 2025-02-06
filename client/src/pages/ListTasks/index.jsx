@@ -184,6 +184,7 @@ const ListTasks=({token, email})=>{
                                     <p className="status">Статус</p>
                                 </div>
                             </div>
+                            {console.log(tasks)}
                             <div className="tasks-list">
                                 {
                                     onSearch ? (

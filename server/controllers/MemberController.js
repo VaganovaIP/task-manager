@@ -1,17 +1,17 @@
-const BoardMembers = require("../models/BoardMember");
+const db = require("../config/db");
 
 
 class MemberController{
     static async addMemberBoard(req, res){
         const {user_id, board_id} = req.body;
-        await BoardMembers.create({user_id, board_id})
+        await db.BoardMember.create({user_id, board_id})
             .then(res.status(200).send({message: 'New member created'}))
             .catch((err) => {console.log(err)})
     }
 
     static async deleteMemberBoard(req, res){
         const {members_id} = req.body;
-        await BoardMembers.destroy({
+        await db.BoardMember.destroy({
                 where:{
                     members_id:members_id
                 }

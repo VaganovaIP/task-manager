@@ -1,31 +1,31 @@
-const {DataTypes} = require('sequelize');
-const sequelize = require('../config/db');
-const User = require('../models/User');
-const Board = require('../models/Board');
-
-const BoardMember = sequelize.define(
-    'BoardMembers', {
+module.exports = (sequelize, DataTypes) => {
+    const BoardMember = sequelize.define(
+        'BoardMembers', {
         members_id:{
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey:true,
         },
+        board_id: {
+                type: DataTypes.UUID,
+                references: {
+                    model: 'Boards',
+                    key: 'board_id',
+                },
+            },
+        user_id: {
+                type: DataTypes.UUID,
+                references: {
+                    model: 'Users',
+                    key: 'user_id',
+                },
+            },
     },
     {
         timestamps: true,
-        createdAt: false,
-        updatedAt: false,
+        createdAt: true,
+        updatedAt: true,
     }
-)
-
-User.hasMany(BoardMember,{
-    foreignKey: 'user_id',
-});
-BoardMember.belongsTo(User, {foreignKey:"user_id"})
-
-Board.hasMany(BoardMember,{
-    foreignKey: 'board_id',
-});
-BoardMember.belongsTo(Board, {foreignKey:"board_id"})
-
-module.exports = BoardMember;
+    )
+    return BoardMember;
+}

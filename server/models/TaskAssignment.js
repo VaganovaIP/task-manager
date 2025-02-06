@@ -1,34 +1,39 @@
-const {DataTypes} = require('sequelize');
-const sequelize = require('../config/db');
-const User = require('../models/User');
-const Task = require('../models/Task');
 
-const TaskAssignment = sequelize.define(
-    'TaskAssignments', {
-        members_id:{
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
+module.exports = (sequelize, DataTypes) => {
+    const TaskAssignment = sequelize.define(
+        'TaskAssignments', {
+            members_id:{
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
+            task_id: {
+                type: DataTypes.UUID,
+                references: {
+                    model: 'Tasks',
+                    key: 'task_id',
+                },
+            },
+            user_id: {
+                type: DataTypes.UUID,
+                references: {
+                    model: 'Users',
+                    key: 'user_id',
+                },
+            },
         },
-    },
-    {
-        timestamps: true,
-        createdAt: false,
-        updatedAt: false,
-    }
-)
+        {
+            timestamps: true,
+            createdAt: false,
+            updatedAt: false,
+        }
+    )
 
-User.hasMany(TaskAssignment,{
-    foreignKey: 'user_id',
-});
-TaskAssignment.belongsTo(User, {foreignKey:"user_id"})
-
-Task.hasMany(TaskAssignment,{
-    foreignKey: 'task_id',
-    sourceKey: 'task_id',
-})
-TaskAssignment.belongsTo(Task, {foreignKey:"task_id"})
+    return TaskAssignment
+}
 
 
-
-module.exports = TaskAssignment;
+// sequelize.sync({force:true}).then(()=>{
+//
+//     console.log("Tables have been created");
+// }).catch(err=>console.log(err));

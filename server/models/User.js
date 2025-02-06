@@ -1,52 +1,37 @@
-const {DataTypes} = require('sequelize');
-const sequelize = require("../config/db.js");
-const Role = require("./Role");
+const db = require("../config/db");
 
+module.exports = (sequelize, DataTypes) => {
+    const User = sequelize.define(
+        'Users',
+        {
+            user_id: {
+                type: DataTypes.UUID,
+                primaryKey: true,
+            },
+            username: {
+                type: DataTypes.STRING,
+            },
+            first_name: {
+                type: DataTypes.STRING,
+            },
+            last_name: {
+                type: DataTypes.STRING,
+            },
+            email: {
+                type: DataTypes.STRING,
+                unique: true,
+            },
+            password_user: {
+                type: DataTypes.STRING,
+            },
+        },
+        {
+            timestamps: true,
+            createdAt: false,
+            updatedAt: false,
+        }
+    )
 
-const User = sequelize.define(
-    'Users',
-    {
-        user_id:{
-            type: DataTypes.UUID,
-            primaryKey:true,
-        },
-        username:{
-            type:DataTypes.STRING,
-        },
-        first_name:{
-            type:DataTypes.STRING,
-        },
-        last_name:{
-            type:DataTypes.STRING,
-        },
-        email:{
-            type: DataTypes.STRING,
-            unique: true,
-        },
-        password_user:{
-            type: DataTypes.STRING,
-        },
-        roleId: {
-            type: DataTypes.UUID,
-        },
-    },
-    {
-        timestamps: true,
-        createdAt: false,
-        updatedAt: false,
-    }
-)
+    return User;
+}
 
-User.belongsTo(Role, { foreignKey: 'roleId' });
-Role.hasMany(User, { foreignKey: 'roleId' });
-
-User.beforeCreate(async (user, options) => {
-    const defaultRole = await Role.findOne({ where: { name_role: 'User' } });
-    if (!defaultRole) {
-        throw new Error('Роль "User" не найдена в базе данных');
-    }
-    user.roleId = defaultRole.role_id;
-});
-
-
-module.exports = User;

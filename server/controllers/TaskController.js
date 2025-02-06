@@ -1,11 +1,6 @@
-const List = require("../models/List")
-const Board = require("../models/Board");
-const Task = require("../models/Task");
-const User = require("../models/User");
-const BoardMembers = require("../models/BoardMember");
-const TaskAssignment = require("../models/TaskAssignment");
 const { v4: uuidv4 } = require("uuid");
 const date = require('date-and-time');
+const db = require("../config/db");
 
 
 class TaskController {
@@ -13,20 +8,20 @@ class TaskController {
         const {board_id, name_task, list_id, task_id, email} = req.body;
         const value = date.format((new Date()),
             'YYYY/MM/DD HH:mm:ss');
-        const user = await User.findOne({
+        const user = await db.User.findOne({
             attributes:['user_id'],
             where:{
                 email:email
             }
         })
-        await Task.create({task_id, name_task, list_id, board_id, created_at:new Date(), owner_id:user.user_id})
+        await db.Task.create({task_id, name_task, list_id, board_id:board_id, created_at:new Date(), owner_id:user.user_id})
             .then(res.status(200).send({message: 'New task created'}))
             .catch((err) => {console.log(err)})
     }
 
     static async saveTask (req, res){
         const {task_id, name_task,description,date_start,date_end,list_id,importance,status} = req.body;
-        await Task.update({name_task:name_task, description:description, date_start:date_start,
+        await db.Task.update({name_task:name_task, description:description, date_start:date_start,
                 date_end:date_end, list_id:list_id, importance:importance, status:status },
             {
                 where: {
@@ -39,19 +34,19 @@ class TaskController {
 
     static async deleteTask(req, res){
         const {task_id, email} = req.body;
-        await Task.destroy({
+        await db.Task.destroy({
             where:{
                 task_id:task_id,
             }
         })
-        const user = await User.findOne({
+        const user = await db.User.findOne({
             attributes:['user_id'],
             where:{
                 email:email
             }
         })
 
-        await TaskAssignment.destroy({
+        await db.TaskAssignment.destroy({
             where:{
                 task_id:task_id,
             }
@@ -65,50 +60,50 @@ class TaskController {
         const email = req.query.email;
 
         try {
-            let board = await Board.findOne({
-                attributes:['name_board', 'owner'],
-                include:{model:User, attributes:['user_id', 'username', 'first_name', 'last_name']},
+            let board = await db.Board.findOne({
+                attributes:['name_board', 'user_id'],
+                include:{model:db.User, attributes:['user_id', 'username', 'first_name', 'last_name']},
                 where: {board_id: board_id},
             })
 
-            let lists = await List.findAll({
+            let lists = await db.List.findAll({
                 attributes: ['list_id', 'name_list'],
-                where: {id_board: board_id},
+                where: {board_id: board_id},
                 order:[['createdAt', 'ASC']],
             })
 
-            let tasks = await Task.findAll({
+            let tasks = await db.Task.findAll({
                 attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
                     'importance', 'owner_id', 'status', 'list_id'],
                 include:[
-                    {model: List},
-                    {model: User , attributes:['user_id', 'username', 'first_name', 'last_name']},
-                    {model: Board},
+                    {model: db.List},
+                    {model: db.User , attributes:['user_id', 'username', 'first_name', 'last_name']},
+                    {model: db.Board},
                 ],
                 where:{board_id:board_id},
                 order:[['createdAt', 'DESC']],
             })
 
-            let members = await BoardMembers.findAll({
-                include:[{model: User, attributes:['user_id', 'username', 'first_name', 'last_name']}],
+            let members = await db.BoardMember.findAll({
+                include:[{model: db.User, attributes:['user_id', 'username', 'first_name', 'last_name']}],
                 where:{board_id:board_id}
             })
 
-            let assignments = await TaskAssignment.findAll({
+            let assignments = await db.TaskAssignment.findAll({
                 attributes:['members_id', 'task_id'],
-                include:[{model: User, attributes:['user_id', 'username', 'first_name', 'last_name']},
-                    {model:Task,
+                include:[{model: db.User, attributes:['user_id', 'username', 'first_name', 'last_name']},
+                    {model:db.Task,
                         where:{board_id:board_id},
-                        include:[{model: User , attributes:['user_id', 'username', 'first_name', 'last_name']},]
+                        include:[{model: db.User , attributes:['user_id', 'username', 'first_name', 'last_name']},]
                     }
                 ]
             })
 
-            let users = await User.findAll({
+            let users = await db.User.findAll({
                 attributes: ['user_id', 'username', 'first_name', 'last_name'],
             })
 
-            let userAuth = await User.findOne({
+            let userAuth = await db.User.findOne({
                 attributes:['user_id', 'username','email', 'first_name', 'last_name'],
                 where:{
                     email:email
@@ -124,23 +119,23 @@ class TaskController {
 
     static async fetchDataTasksAll(req, res){
         const email = req.query.email;
-
         try {
-            const user = await User.findOne({
+            const user = await db.User.findOne({
                 attributes:['user_id', 'username','email', 'first_name', 'last_name'],
                 where:{
                     email:email
                 }
             })
 
-            let tasks = await TaskAssignment.findAll({
+            let tasks = await db.TaskAssignment.findAll({
                 include:[
-                    {model:Task, attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
+                    {model:db.Task, attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
                             'importance', 'owner_id', 'status', 'list_id'],
                         include:[
-                            {model: List},
-                            {model: User , attributes:['user_id', 'username', 'first_name', 'last_name']},
-                            {model: Board},
+                            {model: db.List},
+                            {model: db.User , attributes:['user_id', 'username',
+                                    'first_name', 'last_name']},
+                            {model: db.Board},
                         ]
                     },
                 ],

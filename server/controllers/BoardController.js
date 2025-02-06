@@ -1,10 +1,9 @@
 const { v4: uuidv4 } = require('uuid');
-const Board = require('../models/Board');
-const User = require('../models/User');
-const BoardMember = require('../models/BoardMember');
+const db = require("../config/db");
+
 
 const findUserById = async function (email){
-    const user = await User.findOne({
+    const user = await db.User.findOne({
         where:{
             email:email
         }
@@ -16,15 +15,15 @@ class BoardController{
     static async  fetchDataBoards(req, res){
         const email = req.query.email;
         try{
-            const user = await User.findOne({
+            const user = await db.User.findOne({
                 attributes:['user_id', 'username','email', 'first_name', 'last_name'],
                 where:{
                     email:email
                 }
             })
-            let boards =  await BoardMember.findAll({
+            let boards =  await db.BoardMember.findAll({
                 include:[
-                    {model: Board},
+                    {model: db.Board},
                 ],
                 where:{user_id:user.user_id},
             })
@@ -36,16 +35,16 @@ class BoardController{
 
     static async addBoard(req, res){
         const { board_id, name_board, email } = req.body;
-        const user = await User.findOne({
+        const user = await db.User.findOne({
             attributes:['user_id', 'username','email'],
             where:{
                 email:email
             }
         })
-        await Board.create({board_id, name_board, owner: user.user_id})
-        await BoardMember.create({
-            user_id:user.user_id,
-            board_id
+        await db.Board.create({board_id, name_board, user_id: user.user_id})
+        await db.BoardMember.create({
+            user_id: user.user_id,
+            board_id: board_id
         })
         .then(res.status(200).send({ message: 'New list created'}))
         .catch((err) => {console.log(err)})
@@ -53,7 +52,7 @@ class BoardController{
 
     static async updateNameBoard(req, res){
         const {name_board, board_id} = req.body;
-        await Board.update({name_board: name_board},
+        await db.Board.update({name_board: name_board},
             {
                 where:{
                     board_id:board_id
@@ -66,12 +65,12 @@ class BoardController{
     static async deleteBoard(req, res){
         const board_id = req.query.board_id;
         try{
-            await Board.destroy({
+            await db.Board.destroy({
                 where:{
                     board_id:board_id,
                 }
             })
-            await BoardMember.destroy({
+            await db.BoardMember.destroy({
                 where:{
                     board_id:board_id,
                 }

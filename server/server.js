@@ -8,6 +8,7 @@ const passport = require("passport");
 require('./config/passport');
 const port = process.env.PORT;
 
+
 const app = express();
 app.use(passport.initialize());
 app.use(express.static(__dirname));
@@ -17,7 +18,9 @@ app.use(cors());
 
 app.use('/', router);
 
-db.sync({force:false})
-    .then(()=>{
-        app.listen(port, console.log('Server is running on port: ' + port));
+db.sequelize.sync({force:false}).then(()=>{
+        app.listen(port);
     })
+    .catch(err => console.log(err))
+
+module.exports = app

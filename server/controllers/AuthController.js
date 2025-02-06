@@ -1,7 +1,7 @@
-const User = require("../models/User");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid');
+const db = require("../config/db");
 const SECRET_KEY = process.env.JWT_SECRET;
 
 class AuthController{
@@ -12,11 +12,17 @@ class AuthController{
                 return res.status(400).send({message: 'заполните поля'})
             }
 
-            if(await User.findOne({where: {email}})) {
+            if(await db.User.findOne({where: {email}})) {
                 return res.status(401).json({ message: 'Пользователь существует' });
             }
 
-            await User.create({user_id: uuid.v4(), username, first_name, last_name, email, password_user: bcrypt.hashSync(password, 8)})
+            const defaultRole = await db.Role.findOne({ where: { name_role: 'User' } });
+                if (!defaultRole) {
+                    throw new Error('Роль "User" не найдена в базе данных');
+                }
+
+            await db.User.create({user_id: uuid.v4(), username, first_name, last_name, email,
+                password_user: bcrypt.hashSync(password, 8), roleId: defaultRole.role_id})
                 .then(res.status(201).send({message: 'New user created'}))
                 .catch((err) => {console.log(err)})
         } catch (err){console.log(err)}
@@ -26,7 +32,7 @@ class AuthController{
     static async loginUser(req, res){
         const {email, password } = req.body;
         try{
-            const user = await User.findOne({where: {email: email}});
+            const user = await db.User.findOne({where: {email: email}});
             if(!user) {
                 return res.status(404).json({ message: 'Пользователь не существует' });
             }
