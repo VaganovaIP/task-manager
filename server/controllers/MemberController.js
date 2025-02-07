@@ -5,7 +5,7 @@ class MemberController{
     static async addMemberBoard(req, res){
         const {user_id, board_id} = req.body;
         await db.BoardMember.create({user_id, board_id})
-            .then(res.status(200).send({message: 'New member created'}))
+            .then(res.status(201).send({message: 'New member created'}))
             .catch((err) => {console.log(err)})
     }
 
@@ -16,7 +16,7 @@ class MemberController{
                     members_id:members_id
                 }
         })
-            .then(res.status(200).send({message: 'Delete member board'}))
+            .then(res.status(204).send({message: 'Delete member board'}))
             .catch((err) => {console.log(err)})
     }
 

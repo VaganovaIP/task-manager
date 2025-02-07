@@ -70,8 +70,7 @@ db.sequelize = sequelize;
 
 
 // sequelize.sync({force:true}).then(()=>{
-//
-//     console.log("Tables have been created");
+//     console.log("Tables  created");
 // }).catch(err=>console.log(err));
 
 module.exports = db;

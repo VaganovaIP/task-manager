@@ -4,7 +4,7 @@ class AssignmentController{
     static async addAssignments(req, res){
         const {user_id, task_id} = req.body;
         await db.TaskAssignment.create({user_id, task_id})
-            .then(res.status(200).send({message: 'New assignment created'}))
+            .then(res.status(201).send({message: 'New assignment created'}))
             .catch((err) => {console.log(err)})
     }
 
@@ -15,7 +15,7 @@ class AssignmentController{
                 members_id:assignment_id
             }
         })
-            .then(res.status(200).send({message: 'Delete assignment task'}))
+            .then(res.status(204).send({message: 'Delete assignment task'}))
             .catch((err) => {console.log(err)})
     }
 }

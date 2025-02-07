@@ -201,7 +201,7 @@ const KanbanBoard = ({token, email}) =>{
                         <div className="update-name-task">
                                 <input type="text" className="input-name" defaultValue={boardName.name_board}
                                        onChange={(e) => setUpdateName(e.target.value)}
-                                       onKeyDown={()=>updateNameBoard(updateName, board_id, name_board)}
+                                       onKeyDown={()=>updateNameBoard(updateName, board_id, name_board, token)}
                                 />
                         </div>
                         <Dropdown>

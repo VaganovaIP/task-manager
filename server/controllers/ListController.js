@@ -5,7 +5,7 @@ class ListController {
     static async createList(req, res) {
         const {list_id, board_id, nameList} = req.body;
         await db.List.create({list_id:list_id, name_list:nameList, board_id:board_id})
-            .then(res.status(200).send({message: 'New list created'}))
+            .then(res.status(201).send({message: 'New list created'}))
             .catch((err) => {console.log(err)})
     }
 
@@ -28,7 +28,7 @@ class ListController {
                 list_id:list_id,
             }
         })
-            .then(res.status(200).send({message: 'Delete member board'}))
+            .then(res.status(204).send({message: 'Delete member board'}))
             .catch((err) => {console.log(err)})
     }
 }

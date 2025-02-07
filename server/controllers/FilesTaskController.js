@@ -12,7 +12,7 @@ class FilesTaskController {
         }
 
         await db.FileTask.create({file_id: fileId, task_id: task_id, name_file: file_name})
-            .then(res.send('Файл успешно загружен.'))
+            .then(res.status(201).send('Файл успешно загружен.'))
             .catch((err) => {console.log(err)})
 
     }
@@ -53,7 +53,7 @@ class FilesTaskController {
                 file_id:file_id,
             }
         })
-            .then(res.status(200).send({message: 'Delete file'}))
+            .then(res.status(204).send({message: 'Delete file'}))
             .catch((err) => {console.log(err)})
 
         const fileP = path.join(__dirname, "../uploads/", task_id, file_name);

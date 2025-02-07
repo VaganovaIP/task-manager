@@ -2,15 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const db = require("../config/db");
 
 
-const findUserById = async function (email){
-    const user = await db.User.findOne({
-        where:{
-            email:email
-        }
-    })
-    return (user.user_id);
-}
-
 class BoardController{
     static async  fetchDataBoards(req, res){
         const email = req.query.email;
@@ -46,7 +37,7 @@ class BoardController{
             user_id: user.user_id,
             board_id: board_id
         })
-        .then(res.status(200).send({ message: 'New list created'}))
+        .then(res.status(201).send({ message: 'New list created'}))
         .catch((err) => {console.log(err)})
     }
 
@@ -74,7 +65,7 @@ class BoardController{
                 where:{
                     board_id:board_id,
                 }
-            }).then(res.status(200).send({message: 'Delete board' }))
+            }).then(res.status(204).send({message: 'Delete board' }))
         } catch (err){
             console.log(err)
         }

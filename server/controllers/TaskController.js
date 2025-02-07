@@ -15,7 +15,7 @@ class TaskController {
             }
         })
         await db.Task.create({task_id, name_task, list_id, board_id:board_id, created_at:new Date(), owner_id:user.user_id})
-            .then(res.status(200).send({message: 'New task created'}))
+            .then(res.status(201).send({message: 'New task created'}))
             .catch((err) => {console.log(err)})
     }
 
@@ -51,7 +51,7 @@ class TaskController {
                 task_id:task_id,
             }
         })
-            .then(res.status(200).send({message: 'Delete task'}))
+            .then(res.status(204).send({message: 'Delete task'}))
             .catch((err) => {console.log(err)})
     }
 

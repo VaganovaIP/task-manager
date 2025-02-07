@@ -10,9 +10,6 @@ const TaskController = require("./TaskController");
 class TaskActions {
     static async getActions(req, res){
         const { type } = req.query;
-        console.log(type)
-        //
-
         switch (type) {
             case "data":
                 await TaskController.fetchDataTasks(req, res);
@@ -52,6 +49,7 @@ class TaskActions {
 
     static async putActions(req, res){
         const {formName} = req.body;
+        console.log(formName)
         switch (formName) {
             case "form-update-board":
                 await BoardController.updateNameBoard(req, res);
@@ -70,7 +68,6 @@ class TaskActions {
 
     static async deleteActions(req, res) {
         const {formName} = req.body;
-        console.log(formName + "111")
         switch (formName) {
             case "form-delete-assignment":
                 await AssignmentController.deleteAssignmentTask(req, res);
