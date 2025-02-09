@@ -3,7 +3,7 @@ const request = require("supertest");
 const app = require("../server")
 const SECRET_KEY = process.env.JWT_SECRET;
 const {v4: uuidv4} = require("uuid");
-
+const listID = "31dd4e1b-90ef-429c-a0d0-0172c13447bf"
 
 describe(('List controller'), () => {
     let accessToken;
@@ -24,7 +24,7 @@ describe(('List controller'), () => {
             .post('/board/test')
             .send({
                 formName: "form-add-list",
-                list_id: uuidv4(),
+                list_id: listID,
                 board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65",
                 nameList: "в процессе"
             })
@@ -37,7 +37,7 @@ describe(('List controller'), () => {
             .post('/board/test')
             .send({
                 formName: "form-add-list",
-                list_id: uuidv4(),
+                list_id: listID,
                 board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65",
                 nameList: "в процессе"
             })
@@ -50,11 +50,23 @@ describe(('List controller'), () => {
             .put('/board/test')
             .send({
                 formName: "form-update-list",
-                list_id: "ed5a1562-3f66-4a82-a233-23a709ea657b",
+                list_id: listID,
                 name_list: "готово"
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(200)
+    })
+
+    it('Изменение названия списка 404 (put(/board/:name_board)', async () =>{
+        const res = await request(app)
+            .put('/board/test')
+            .send({
+                formName: "form-update-list",
+                list_id: "",
+                name_list: "готово"
+            })
+            .set('Authorization', `Bearer ${accessToken}`)
+        expect(res.status).toBe(404)
     })
 
     it('Изменение названия списка. Ошибка авторизации 401 (Unauthorized) (put(/board/:name_board)', async () =>{
@@ -62,7 +74,7 @@ describe(('List controller'), () => {
             .put('/board/test')
             .send({
                 formName: "form-update-list",
-                list_id: "ed5a1562-3f66-4a82-a233-23a709ea657b",
+                list_id: listID,
                 name_list: "готово"
             })
             .set('Authorization', `Bearer 122`)
@@ -74,10 +86,21 @@ describe(('List controller'), () => {
             .delete('/board/test')
             .send({
                 formName: "form-delete-list",
-                list_id: "ed5a1562-3f66-4a82-a233-23a709ea657b"
+                list_id: listID
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(204)
+    })
+
+    it('Удаление списка 404 (delete(/board/:name_board)', async () =>{
+        const res = await request(app)
+            .delete('/board/test')
+            .send({
+                formName: "form-delete-list",
+                list_id: ""
+            })
+            .set('Authorization', `Bearer ${accessToken}`)
+        expect(res.status).toBe(404)
     })
 
     // it('', async () =>{
@@ -99,7 +122,7 @@ describe(('List controller'), () => {
             .delete('/board/test')
             .send({
                 formName: "form-delete-list",
-                list_id: "ed5a1562-3f66-4a82-a233-23a709ea657b"
+                list_id: listID
             })
             .set('Authorization', `Bearer 122`)
         expect(res.status).toBe(401)

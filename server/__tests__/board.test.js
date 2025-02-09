@@ -3,17 +3,13 @@ const request = require("supertest");
 const app = require("../server")
 const SECRET_KEY = process.env.JWT_SECRET;
 const {v4: uuidv4} = require("uuid");
-let server;
+
 
 describe(('Board controller'), () =>{
     let accessToken;
 
-    beforeAll(()=>{
-        server = app.listen(5000);
-    })
-
     afterAll(() => {
-        server.close();
+        app.close();
     });
 
     beforeEach(() =>{
@@ -28,7 +24,7 @@ describe(('Board controller'), () =>{
     })
 
     it('Получение списка досок пользователя выполнено успешно 200 (get(/boards)', async () =>{
-        const res = await request(server)
+        const res = await request(app)
             .get('/boards')
             .query({email: "user1@example.ru"})
             .set('Authorization', `Bearer ${accessToken}`)
@@ -36,8 +32,16 @@ describe(('Board controller'), () =>{
         expect(res.body).toHaveProperty('boards')
     })
 
+    it('Получение списка досок пользователя выполнено успешно 404 (get(/boards)', async () =>{
+        const res = await request(app)
+            .get('/boards')
+            .query({email: ""})
+            .set('Authorization', `Bearer ${accessToken}`)
+        expect(res.status).toBe(404)
+    })
+
     it('Ошибка авторизации 401 (Unauthorized) (get(/boards)', async () =>{
-        const res = await request(server)
+        const res = await request(app)
             .get('/boards')
             .query({email: "user1@example.ru"})
             .set('Authorization', `Bearer 122`);
@@ -46,10 +50,10 @@ describe(('Board controller'), () =>{
 
 
     it('Создание новой доски 201 (post(/boards)', async () =>{
-        const res = await request(server)
+        const res = await request(app)
             .post('/boards')
             .send({
-                board_id: uuidv4(),
+                board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65",
                 name_board: "test",
                 email:"user1@example.ru",
             })
@@ -58,10 +62,10 @@ describe(('Board controller'), () =>{
     })
 
     it('Создание доски. Ошибка авторизации 401 (Unauthorized) (post(/boards)', async () =>{
-        const res = await request(server)
+        const res = await request(app)
             .post('/boards')
             .send({
-                board_id: uuidv4(),
+                board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65",
                 name_board: "test",
                 email:"user1@example.ru",
             })
@@ -69,8 +73,20 @@ describe(('Board controller'), () =>{
         expect(res.status).toBe(401)
     })
 
+    it('Создание доски. Ошибка авторизации 404 (Unauthorized) (post(/boards)', async () =>{
+        const res = await request(app)
+            .post('/boards')
+            .send({
+                board_id: uuidv4(),
+                name_board: "test",
+                email:"Erroruser1@example.ru",
+            })
+            .set('Authorization', `Bearer ${accessToken}`)
+        expect(res.status).toBe(404)
+    })
+
     it('Изменение названия доски 200 (put(/boards) ', async () =>{
-        const res = await request(server)
+        const res = await request(app)
             .put('/board/test')
             .send({
                 formName: "form-update-board",
@@ -83,7 +99,7 @@ describe(('Board controller'), () =>{
 
 
     it('Изменение названия доски. Ошибка авторизации 401 (Unauthorized) (put(/boards) ', async () =>{
-        const res = await request(server)
+        const res = await request(app)
             .put('/board/test')
             .send({
                 formName: "form-update-list",
@@ -94,18 +110,28 @@ describe(('Board controller'), () =>{
         expect(res.status).toBe(401)
     })
 
-    it('Удаление доски 200 (delete(/boards)', async () =>{
-        const res = await request(server)
+    it('Удаление доски 204 (delete(/boards)', async () =>{
+        const res = await request(app)
             .delete('/boards')
-            .query({board_id: "75817c00-412f-4881-9b24-35f4c833acf0"})
+            .query({board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65"})
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(204)
     })
 
-    it('Ошибка авторизации 401 (Unauthorized) (delete(/boards)', async () =>{
-        const res = await request(server)
+    it('Удаление доски 404 (delete(/boards)', async () =>{
+        const res = await request(app)
             .delete('/boards')
-            .query({board_id: "75817c00-412f-4881-9b24-35f4c833acf0"})
+            .query({
+                board_id: ""
+            })
+            .set('Authorization', `Bearer ${accessToken}`)
+        expect(res.status).toBe(404)
+    })
+
+    it('Ошибка авторизации 401 (Unauthorized) (delete(/boards)', async () =>{
+        const res = await request(app)
+            .delete('/boards')
+            .query({board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65"})
             .set('Authorization', `Bearer 122`)
         expect(res.status).toBe(401)
     })
