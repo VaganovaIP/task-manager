@@ -1,5 +1,4 @@
 const db = require("../config/db");
-
 class ListController {
     static async createList(req, res) {
         const {list_id, board_id, nameList} = req.body;
@@ -16,7 +15,7 @@ class ListController {
                     {where:{ list_id: list_id}})
                 res.status(200).send({message: `List ${name_list} updated`})
             } catch (err){console.log(err)}
-        } else res.status(404).send({ message: 'List not found'})
+        } else res.status(400).send({ message: 'List not found'})
     }
 
     static async deleteListBoard(req, res){
@@ -27,8 +26,7 @@ class ListController {
                     where:{ list_id:list_id}})
                 res.status(204).send({message: 'Delete list board'})
             } catch (err){console.log(err)}
-        } else res.status(404).send({ message: 'List not found'})
+        } else res.status(400).send({ message: 'List not found'})
     }
 }
-
 module.exports = ListController;

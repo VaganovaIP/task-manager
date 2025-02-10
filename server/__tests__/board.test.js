@@ -3,6 +3,7 @@ const request = require("supertest");
 const app = require("../server")
 const SECRET_KEY = process.env.JWT_SECRET;
 const {v4: uuidv4} = require("uuid");
+const db = require("../config/db");
 
 
 describe(('Board controller'), () =>{
@@ -85,6 +86,18 @@ describe(('Board controller'), () =>{
         expect(res.status).toBe(404)
     })
 
+    it('Создание доски. Ошибка авторизации 400 (post(/boards)', async () =>{
+        const res = await request(app)
+            .post('/boards')
+            .send({
+                board_id: "",
+                name_board: "test",
+                email:"Erroruser1@example.ru",
+            })
+            .set('Authorization', `Bearer ${accessToken}`)
+        expect(res.status).toBe(400)
+    })
+
     it('Изменение названия доски 200 (put(/boards) ', async () =>{
         const res = await request(app)
             .put('/board/test')
@@ -96,6 +109,35 @@ describe(('Board controller'), () =>{
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(200)
     })
+
+    it('Изменение названия доски 200 (put(/boards) ', async () =>{
+        const res = await request(app)
+            .put('/board/test')
+            .send({
+                formName: "form-update-board",
+                board_id: "",
+                name_board: "test - update",
+            })
+            .set('Authorization', `Bearer ${accessToken}`)
+        expect(res.status).toBe(400)
+    })
+
+    // it('Изменение названия доски 500 (put(/boards) ', async () =>{
+    //     jest.spyOn(db.Board, 'update').mockRejectedValueOnce(new Error('Database connection failed'))
+    //     const res = await request(app)
+    //         .put('/board/test')
+    //         .send({
+    //             formName: "form-update-board",
+    //             board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65",
+    //             name_board: "test - update",
+    //         })
+    //         .set('Authorization', `Bearer ${accessToken}`)
+    //         .expect(500)
+    //
+    //     expect(res.body).toHaveProperty('error');
+    //     expect(res.body.error).toBe('Internal Server Error');
+    //
+    // })
 
 
     it('Изменение названия доски. Ошибка авторизации 401 (Unauthorized) (put(/boards) ', async () =>{

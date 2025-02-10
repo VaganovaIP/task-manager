@@ -20,6 +20,7 @@ class BoardController{
 
     static async addBoard(req, res){
         const { board_id, name_board, email } = req.body;
+        if(!board_id) return res.status(400).send({ message: 'Id not found'})
         const user = await db.User.findOne({
             attributes:['user_id', 'username','email'],
             where:{ email:email }
@@ -38,12 +39,13 @@ class BoardController{
 
     static async updateNameBoard(req, res){
         const {name_board, board_id} = req.body;
+        if(!board_id) res.status(400).send({ message: 'Id not found'})
         try{
             await db.Board.update({name_board: name_board}, {
                 where:{ board_id: board_id }
             })
             await res.status(200).send({ message: 'Update board'})
-        } catch (err) {console.log(err)}
+        } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
     }
 
     static async deleteBoard(req, res){

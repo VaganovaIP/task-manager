@@ -86,6 +86,7 @@ export function ModalEditTask (props){
     const onUploadFile = (e) => {
         const file = e.target.files[0];
         setFile(file);
+        console.log(file)
         const formData = new FormData();
         let fileId = uuid();
         formData.append('file', file);

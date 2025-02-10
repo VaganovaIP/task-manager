@@ -9,24 +9,22 @@ class AuthController{
         const { username, first_name, last_name, email, password } = req.body;
         try{
             if(!email || !password || !username) {
-                return res.status(400).send({message: 'заполните поля'})
+                return res.status(400).send({message: 'Нет полученных данных'})
             }
 
             if(await db.User.findOne({where: {email}})) {
                 return res.status(401).json({ message: 'Пользователь существует' });
             }
 
-            const defaultRole = await db.Role.findOne({ where: { name_role: 'User' } });
-                if (!defaultRole) {
-                    throw new Error('Роль "User" не найдена в базе данных');
-                }
+            const defaultRole = await db.Role.findOne({
+                where: { name_role: 'User' }
+            });
+            if (!defaultRole) return res.status(404).send({message: 'Роль "User" не найдена в базе данных'})
 
             await db.User.create({user_id: uuid.v4(), username, first_name, last_name, email,
-                password_user: bcrypt.hashSync(password, 8), roleId: defaultRole.role_id})
-                .then(res.status(201).send({message: 'New user created'}))
-                .catch((err) => {console.log(err)})
-        } catch (err){console.log(err)}
-
+                password_user: bcrypt.hashSync(password, 8), roleId: defaultRole.role_id});
+            return res.status(201).send({message: 'New user created'});
+        } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
     }
 
     static async loginUser(req, res){
@@ -42,18 +40,15 @@ class AuthController{
                 return res.status(401).send({ accessToken: null, message: 'неправильный пароль' });
             }
 
-            const accessToken = jwt
-                .sign(
-                    {
-                        id: user.user_id,
-                    },
-                    SECRET_KEY,
-                    { expiresIn: "1d" }
-                )
-            return res
-                .status(200)
-                .json({ message: "user logged in", accessToken: accessToken, email: email });
-        } catch (err){console.log(err)}
+            const accessToken = jwt.sign({
+                        id: user.user_id},
+                        SECRET_KEY,
+                { expiresIn: "1d" })
+
+            if (!accessToken) res.status(401).send({ accessToken: null, message: 'Ошибка формирования токена' })
+
+            return res.status(200).json({ message: "user logged in", accessToken: accessToken, email: email });
+        } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
     }
 }
 

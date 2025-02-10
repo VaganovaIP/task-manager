@@ -10,61 +10,52 @@ class TaskController {
             'YYYY/MM/DD HH:mm:ss');
         const user = await db.User.findOne({
             attributes:['user_id'],
-            where:{
-                email:email
-            }
+            where:{ email:email}
         })
-        await db.Task.create({task_id, name_task, list_id, board_id:board_id, created_at:new Date(), owner_id:user.user_id})
-            .then(res.status(201).send({message: 'New task created'}))
-            .catch((err) => {console.log(err)})
+        if(user){
+            try{
+                await db.Task.create({task_id, name_task, list_id, board_id:board_id, created_at:new Date(), owner_id:user.user_id});
+                await res.status(201).send({message: 'New task created'});
+            } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
+        } else {
+            res.status(404).send({ message: 'Email not found'})
+        }
     }
 
     static async saveTask (req, res){
         const {task_id, name_task,description,date_start,date_end,list_id,importance,status} = req.body;
-        await db.Task.update({name_task:name_task, description:description, date_start:date_start,
-                date_end:date_end, list_id:list_id, importance:importance, status:status },
-            {
-                where: {
-                    task_id:task_id,
-                },
-            })
-            .then(res.status(200).send({message: `Task ${name_task} updated`}))
-            .catch((err) => {console.log(err)})
+        if (task_id){
+            try{
+                await db.Task.update({name_task:name_task, description:description, date_start:date_start,
+                        date_end:date_end, list_id:list_id, importance:importance, status:status },
+                    { where: {task_id: task_id}});
+                await res.status(200).send({message: `Task ${name_task} updated`})
+            } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
+        } else res.status(400).send({ message: 'TaskId not found'});
     }
 
     static async deleteTask(req, res){
-        const {task_id, email} = req.body;
-        await db.Task.destroy({
-            where:{
-                task_id:task_id,
-            }
-        })
-        const user = await db.User.findOne({
-            attributes:['user_id'],
-            where:{
-                email:email
-            }
-        })
-
-        await db.TaskAssignment.destroy({
-            where:{
-                task_id:task_id,
-            }
-        })
-            .then(res.status(204).send({message: 'Delete task'}))
-            .catch((err) => {console.log(err)})
+        const {task_id} = req.body;
+        if (task_id){
+            try{
+                await db.Task.destroy({where:{task_id:task_id}});
+                await db.TaskAssignment.destroy({where:{ task_id:task_id}});
+                await res.status(204).send({message: 'Delete task'});
+            } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
+        } else res.status(400).send({ message: 'TaskId not found'});
     }
 
     static async fetchDataTasks(req, res){
         const board_id = req.query.board_id;
         const email = req.query.email;
-
+        if(!board_id || !email) return res.status(400).send({ message: 'Data not found'});
         try {
             let board = await db.Board.findOne({
                 attributes:['name_board', 'user_id'],
                 include:{model:db.User, attributes:['user_id', 'username', 'first_name', 'last_name']},
                 where: {board_id: board_id},
             })
+            if(!board) return res.status(404).send({ message: 'Board not found'});
 
             let lists = await db.List.findAll({
                 attributes: ['list_id', 'name_list'],
@@ -78,8 +69,7 @@ class TaskController {
                 include:[
                     {model: db.List},
                     {model: db.User , attributes:['user_id', 'username', 'first_name', 'last_name']},
-                    {model: db.Board},
-                ],
+                    {model: db.Board}],
                 where:{board_id:board_id},
                 order:[['createdAt', 'DESC']],
             })
@@ -95,9 +85,7 @@ class TaskController {
                     {model:db.Task,
                         where:{board_id:board_id},
                         include:[{model: db.User , attributes:['user_id', 'username', 'first_name', 'last_name']},]
-                    }
-                ]
-            })
+                    }]})
 
             let users = await db.User.findAll({
                 attributes: ['user_id', 'username', 'first_name', 'last_name'],
@@ -105,49 +93,39 @@ class TaskController {
 
             let userAuth = await db.User.findOne({
                 attributes:['user_id', 'username','email', 'first_name', 'last_name'],
-                where:{
-                    email:email
-                }
+                where:{email:email}
             })
-
-            await res.status(200).json({lists:lists, tasks:tasks, members:members,
+            if(!userAuth) return res.status(404).send({ message: 'User not found'});
+            return await res.status(200).json({lists:lists, tasks:tasks, members:members,
                 assignments:assignments, users:users, board:board, user:userAuth})
-        } catch (err){
-            console.log(err)
-        }
+        } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
+
     }
 
     static async fetchDataTasksAll(req, res){
         const email = req.query.email;
+        let tasks;
         try {
-            const user = await db.User.findOne({
+            let user = await db.User.findOne({
                 attributes:['user_id', 'username','email', 'first_name', 'last_name'],
-                where:{
-                    email:email
-                }
+                where:{email:email}
             })
-
-            let tasks = await db.TaskAssignment.findAll({
-                include:[
-                    {model:db.Task, attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
-                            'importance', 'owner_id', 'status', 'list_id'],
-                        include:[
-                            {model: db.List},
-                            {model: db.User , attributes:['user_id', 'username',
-                                    'first_name', 'last_name']},
-                            {model: db.Board},
-                        ]
-                    },
-                ],
-                where:{user_id:user.user_id},
-            })
-
-            await res.status(200).json({tasks:tasks, user:user})
-        } catch (err){
-            console.log(err)
-        }
+            if(user){
+                tasks = await db.TaskAssignment.findAll({
+                    include:[
+                        {model:db.Task, attributes:['task_id', 'board_id', 'name_task', 'description','date_end', 'date_start',
+                                'importance', 'owner_id', 'status', 'list_id'],
+                            include:[
+                                {model: db.List},
+                                {model: db.User , attributes:['user_id', 'username',
+                                        'first_name', 'last_name']},
+                                {model: db.Board}]}],
+                    where:{user_id:user.user_id},
+                })
+                await res.status(200).json({tasks:tasks, user:user})
+            } else return res.status(404).send({ message: 'Email not found'});
+        } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
     }
-
 }
 
 module.exports = TaskController;

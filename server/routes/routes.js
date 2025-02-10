@@ -15,17 +15,12 @@ const storageConfig = multer.diskStorage({
     destination: function (req, file, cb) {
         const task_id = req.headers['task-id'];
         const taskDir = path.join(__dirname, '../uploads', task_id);
-
-        if (!fs.existsSync(taskDir)) {
-            fs.mkdirSync(taskDir, { recursive: true });
-        }
-
+        if (!fs.existsSync(taskDir)) fs.mkdirSync(taskDir, { recursive: true });
         cb(null, taskDir);
     },
     filename: (req, file, cb) =>{
         const originalName = Buffer.from(
-            file.originalname, 'latin1')
-            .toString('utf-8');
+            file.originalname, 'latin1').toString('utf-8');
         cb(null, originalName);
     }
 });
@@ -48,6 +43,5 @@ router.delete('/boards', passport.authenticate('jwt', { session: false }), board
 
 router.post('/register', AuthController.registerUser);
 router.post('/login', AuthController.loginUser);
-
 
 module.exports = router;

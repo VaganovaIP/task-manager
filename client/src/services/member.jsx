@@ -2,7 +2,9 @@ import axios from "axios";
 import {BASE_API_URL} from "../utils/api.js";
 
 
-export const addMemberBoard=async (name_board, user_id, board_id, token) => {
+export const addMemberBoard = async (name_board, user_id, board_id, token) => {
+    console.log(user_id)
+    console.log(board_id)
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`, {
             formName: "form-add-members",

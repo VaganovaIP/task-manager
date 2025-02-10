@@ -66,7 +66,7 @@ describe(('List controller'), () => {
                 name_list: "готово"
             })
             .set('Authorization', `Bearer ${accessToken}`)
-        expect(res.status).toBe(404)
+        expect(res.status).toBe(400)
     })
 
     it('Изменение названия списка. Ошибка авторизации 401 (Unauthorized) (put(/board/:name_board)', async () =>{
@@ -92,7 +92,7 @@ describe(('List controller'), () => {
         expect(res.status).toBe(204)
     })
 
-    it('Удаление списка 404 (delete(/board/:name_board)', async () =>{
+    it('Удаление списка 400 (delete(/board/:name_board)', async () =>{
         const res = await request(app)
             .delete('/board/test')
             .send({
@@ -100,7 +100,7 @@ describe(('List controller'), () => {
                 list_id: ""
             })
             .set('Authorization', `Bearer ${accessToken}`)
-        expect(res.status).toBe(404)
+        expect(res.status).toBe(400)
     })
 
     // it('', async () =>{

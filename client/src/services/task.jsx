@@ -97,8 +97,7 @@ export const deleteTask = async (task_id, name_board, email, token) => {
             },
             data:{
                 formName: "form-delete-task",
-                task_id: task_id,
-                email:email
+                task_id: task_id
             }
         })
         .then(function (response) {
