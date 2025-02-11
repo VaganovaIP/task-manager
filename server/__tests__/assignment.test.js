@@ -43,7 +43,7 @@ describe(('Assignment controller'), () => {
         expect(res.status).toBe(400)
     })
 
-    it('Назначение ответсвенного 401 (post(/board/:name_board)', async () =>{
+    it('Назначение ответсвенного 401 (Unauthorized) (post(/board/:name_board)', async () =>{
         const res = await request(app)
             .post('/board/test')
             .send({
@@ -55,7 +55,7 @@ describe(('Assignment controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Удаление ответсвенного 200 (Ok) (delete(/board/:name_board)', async () =>{
+    it('Удаление ответсвенного 204 (Ok) (delete(/board/:name_board)', async () =>{
         const res = await request(app)
             .delete('/board/test')
             .send({
@@ -66,7 +66,7 @@ describe(('Assignment controller'), () => {
         expect(res.status).toBe(204)
     })
 
-    it('Удаление ответсвенного 200 (Ok) (delete(/board/:name_board)', async () =>{
+    it('Удаление ответсвенного 400 (delete(/board/:name_board)', async () =>{
         const res = await request(app)
             .delete('/board/test')
             .send({
@@ -77,7 +77,7 @@ describe(('Assignment controller'), () => {
         expect(res.status).toBe(400)
     })
 
-    it('Удаление ответсвенного 401 () (delete(/board/:name_board)', async () =>{
+    it('Удаление ответсвенного 401 (Unauthorized) (delete(/board/:name_board)', async () =>{
         const res = await request(app)
             .delete('/board/test')
             .send({

@@ -56,7 +56,7 @@ describe(('Member controller'), () => {
         expect(res.status).toBe(400)
     })
 
-    it('Добавление участника доски 401 (post(/board/:name_board)', async () =>{
+    it('Добавление участника доски. Ошибка 401 (Unauthorized) (post(/board/:name_board)', async () =>{
         const res = await request(app)
             .post('/board/test')
             .send({
@@ -68,7 +68,7 @@ describe(('Member controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Исключение участника доски 200 (Ok) (delete(/board/:name_board)', async () =>{
+    it('Исключение участника доски 204 (No content) (delete(/board/:name_board)', async () =>{
         const res = await request(app)
             .delete('/board/test')
             .send({
@@ -79,7 +79,7 @@ describe(('Member controller'), () => {
         expect(res.status).toBe(204)
     })
 
-    it('Исключение участника доски 400 (Ok) (delete(/board/:name_board)', async () =>{
+    it('Исключение участника доски 400 (delete(/board/:name_board)', async () =>{
         const res = await request(app)
             .delete('/board/test')
             .send({
@@ -90,7 +90,7 @@ describe(('Member controller'), () => {
         expect(res.status).toBe(400)
     })
 
-    it('Исключение участника доски 401 () (delete(/board/:name_board)', async () =>{
+    it('Исключение участника доски. Ошибка 401 (Unauthorized) (delete(/board/:name_board)', async () =>{
         const res = await request(app)
             .delete('/board/test')
             .send({

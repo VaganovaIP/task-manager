@@ -34,11 +34,11 @@ describe(('Board controller'), () =>{
     })
 
     it('Получение списка досок пользователя выполнено успешно 404 (get(/boards)', async () =>{
-        const res = await request(app)
+        await request(app)
             .get('/boards')
             .query({email: ""})
             .set('Authorization', `Bearer ${accessToken}`)
-        expect(res.status).toBe(404)
+            .expect().toBe(404)
     })
 
     it('Ошибка авторизации 401 (Unauthorized) (get(/boards)', async () =>{
@@ -74,7 +74,7 @@ describe(('Board controller'), () =>{
         expect(res.status).toBe(401)
     })
 
-    it('Создание доски. Ошибка авторизации 404 (Unauthorized) (post(/boards)', async () =>{
+    it('Создание доски. Ошибка авторизации 404 (post(/boards)', async () =>{
         const res = await request(app)
             .post('/boards')
             .send({
@@ -110,7 +110,7 @@ describe(('Board controller'), () =>{
         expect(res.status).toBe(200)
     })
 
-    it('Изменение названия доски 200 (put(/boards) ', async () =>{
+    it('Изменение названия доски 400 (put(/boards) ', async () =>{
         const res = await request(app)
             .put('/board/test')
             .send({

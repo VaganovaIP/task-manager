@@ -56,7 +56,7 @@ describe(('Files controller'), () => {
         expect(res.status).toBe(201);
     })
 
-    it('Получение списка файлов задачи 200 (get(/)', async () =>{
+    it('Получение списка файлов задачи 200 (get()', async () =>{
         const res = await request(app)
             .get('/board/test')
             .query({
@@ -67,7 +67,7 @@ describe(('Files controller'), () => {
         expect(res.status).toBe(200)
     })
 
-    it('Получение списка файлов задачи 400 (get(/)', async () =>{
+    it('Получение списка файлов задачи 400 (get()', async () =>{
         const res = await request(app)
             .get('/board/test')
             .query({
@@ -78,7 +78,7 @@ describe(('Files controller'), () => {
         expect(res.status).toBe(400)
     })
 
-    it('Скачивание файла 200 (delete(/boards)', async () =>{
+    it('Скачивание файла 200 ', async () =>{
         const res = await request(app)
             .get('/board/test')
             .query({

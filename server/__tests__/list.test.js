@@ -19,7 +19,7 @@ describe(('List controller'), () => {
             )
     })
 
-    it('Создание списка 200 (post(/board/:name_board)', async () =>{
+    it('Создание списка 201 (post(/board/:name_board)', async () =>{
         const res = await request(app)
             .post('/board/test')
             .send({
@@ -45,7 +45,7 @@ describe(('List controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Изменение названия списка 200 (put(/board/:name_board)', async () =>{
+    it('Изменение названия списка 200 (Ok) (put(/board/:name_board)', async () =>{
         const res = await request(app)
             .put('/board/test')
             .send({
@@ -57,7 +57,7 @@ describe(('List controller'), () => {
         expect(res.status).toBe(200)
     })
 
-    it('Изменение названия списка 404 (put(/board/:name_board)', async () =>{
+    it('Изменение названия списка 400 (put(/board/:name_board)', async () =>{
         const res = await request(app)
             .put('/board/test')
             .send({
@@ -81,7 +81,7 @@ describe(('List controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Удаление списка 200 (delete(/board/:name_board)', async () =>{
+    it('Удаление списка 204 (delete(/board/:name_board)', async () =>{
         const res = await request(app)
             .delete('/board/test')
             .send({

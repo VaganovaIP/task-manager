@@ -171,7 +171,7 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Получение данных задач доски 200 (get(/boards)', async () =>{
+    it('Получение данных задач доски 400 (get(/boards)', async () =>{
         const res = await request(app)
             .get('/board/test')
             .query({
@@ -227,7 +227,7 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Получение всех назначенных задач пользователя 200 (get(/all-tasks)', async () =>{
+    it('Получение всех назначенных задач пользователя 404 (get(/all-tasks)', async () =>{
         const res = await request(app)
             .get('/all-tasks')
             .query({
