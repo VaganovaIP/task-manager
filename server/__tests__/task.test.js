@@ -35,6 +35,21 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(201)
     })
 
+    it('Создание задачи. Task_id уже есть 409 (post(/board/name_board)', async () =>{
+        const res = await request(app)
+            .post('/board/test')
+            .send({
+                formName:"form-add-task",
+                board_id: boardID,
+                name_task:"test task",
+                task_id: taskID,
+                list_id: listID,
+                email:"user1@example.ru",
+            })
+            .set('Authorization', `Bearer ${accessToken}`)
+        expect(res.status).toBe(409)
+    })
+
     it('Создание задачи. Ошибка авторизации 401 (Unauthorized) (post(/board/name_board)', async () =>{
         const res = await request(app)
             .post('/board/test')

@@ -73,7 +73,7 @@ describe(('Member controller'), () => {
             .delete('/board/test')
             .send({
                 formName: "form-delete-member",
-                member_id: "189"
+                member_id: "155"
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(204)

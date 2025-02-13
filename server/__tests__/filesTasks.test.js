@@ -90,4 +90,16 @@ describe(('Files controller'), () => {
         expect(res.status).toBe(200)
     })
 
+    it('Удаление файла  (delete(/)', async () =>{
+        const res = await request(app)
+            .delete('/board/test')
+            .send({
+                formName: "form-delete-file",
+                task_id: taskID,
+                file_name: 'test.txt',
+                file_id:fileID
+            })
+            .set('Authorization', `Bearer ${accessToken}`)
+        expect(res.status).toBe(204)
+    })
 })

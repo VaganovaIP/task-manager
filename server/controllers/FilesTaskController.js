@@ -10,7 +10,6 @@ class FilesTaskController {
         if (!req.file) {
             return res.status(400).send('Файл не был загружен.');
         }
-
         try{
             await db.FileTask.create({file_id: fileId, task_id: task_id, name_file: file_name});
             return res.status(201).send('Файл успешно загружен.');
@@ -23,7 +22,7 @@ class FilesTaskController {
         const fileP = path.join(__dirname, "../uploads/", task_id, '/');
         try {
             fs.createReadStream(fileP + file_name).pipe(res);
-        } catch (e) {
+        } catch (err) {
             res.status(500).json({message: "Download error"})
         }
     }
@@ -52,9 +51,7 @@ class FilesTaskController {
         try {
             fs.unlinkSync(fileP);
             console.log('Deleted file');
-        } catch (e) {
-            console.log(e);
-        }
+        } catch (err) {console.log(err)}
     }
 
 }

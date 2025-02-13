@@ -12,7 +12,7 @@ describe(('Auth controller'), () => {
                 username: "user6",
                 first_name: "",
                 last_name: "",
-                email: "user10@example.ru",
+                email: "user12@example.ru",
                 password: "1234"
             })
             .expect(201)

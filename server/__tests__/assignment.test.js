@@ -25,7 +25,7 @@ describe(('Assignment controller'), () => {
             .send({
                 formName: "form-add-assignments",
                 user_id: userID,
-                task_id: "5d2c1e91-aba3-b25b-f948-b20b5fd04a9a",
+                task_id: "c6139210-ead3-403d-90c6-6f46dbc3be17",
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(201)
@@ -82,7 +82,7 @@ describe(('Assignment controller'), () => {
             .delete('/board/test')
             .send({
                 formName: "form-delete-assignment",
-                assignment_id: "1"
+                assignment_id: "3"
             })
             .set('Authorization', `Bearer `)
         expect(res.status).toBe(401)

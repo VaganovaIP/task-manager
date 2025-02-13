@@ -14,8 +14,11 @@ class TaskController {
         })
         if(user){
             try{
-                await db.Task.create({task_id, name_task, list_id, board_id:board_id, created_at:new Date(), owner_id:user.user_id});
-                await res.status(201).send({message: 'New task created'});
+                const task = await db.Task.findOne({where: {task_id: task_id}});
+                if (!task) {
+                    await db.Task.create({task_id, name_task, list_id, board_id:board_id, created_at:new Date(), owner_id:user.user_id});
+                    await res.status(201).send({message: 'New task created'});
+                } else return res.status(409).json({ message: 'Задача существует' });
             } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
         } else {
             res.status(404).send({ message: 'Email not found'})
