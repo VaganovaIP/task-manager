@@ -1,17 +1,13 @@
 const jwt = require("jsonwebtoken");
 const request = require("supertest");
-const app = require("../server")
+const app = require("../../server")
 const SECRET_KEY = process.env.JWT_SECRET;
 const {v4: uuidv4} = require("uuid");
-const db = require("../config/db");
+const db = require("../../config/db");
 
 
 describe(('Board controller'), () =>{
     let accessToken;
-
-    afterAll(() => {
-        app.close();
-    });
 
     beforeEach(() =>{
         accessToken = jwt
@@ -34,11 +30,11 @@ describe(('Board controller'), () =>{
     })
 
     it('Получение списка досок пользователя выполнено успешно 404 (get(/boards)', async () =>{
-        await request(app)
+        const res = await request(app)
             .get('/boards')
             .query({email: ""})
             .set('Authorization', `Bearer ${accessToken}`)
-            .expect().toBe(404)
+        expect(res.status).toBe(404)
     })
 
     it('Ошибка авторизации 401 (Unauthorized) (get(/boards)', async () =>{
@@ -122,22 +118,22 @@ describe(('Board controller'), () =>{
         expect(res.status).toBe(400)
     })
 
-    // it('Изменение названия доски 500 (put(/boards) ', async () =>{
-    //     jest.spyOn(db.Board, 'update').mockRejectedValueOnce(new Error('Database connection failed'))
-    //     const res = await request(app)
-    //         .put('/board/test')
-    //         .send({
-    //             formName: "form-update-board",
-    //             board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65",
-    //             name_board: "test - update",
-    //         })
-    //         .set('Authorization', `Bearer ${accessToken}`)
-    //         .expect(500)
-    //
-    //     expect(res.body).toHaveProperty('error');
-    //     expect(res.body.error).toBe('Internal Server Error');
-    //
-    // })
+    it('Изменение названия доски 500 (put(/boards) ', async () =>{
+        jest.spyOn(db.Board, 'update').mockRejectedValueOnce(new Error('Database connection failed'))
+        const res = await request(app)
+            .put('/board/test')
+            .send({
+                formName: "form-update-board",
+                board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65",
+                name_board: "test - update",
+            })
+            .set('Authorization', `Bearer ${accessToken}`)
+            .expect(500)
+
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error).toBe('Internal Server Error');
+
+    })
 
 
     it('Изменение названия доски. Ошибка авторизации 401 (Unauthorized) (put(/boards) ', async () =>{

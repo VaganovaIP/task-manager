@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../server")
+const app = require("../../server")
 const {v4: uuidv4} = require("uuid");
 const userID = "25e13d64-a8d4-4a6f-bd1a-8463f728690b"
 

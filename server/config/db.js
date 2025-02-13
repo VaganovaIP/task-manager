@@ -1,9 +1,9 @@
 const {Sequelize, DataTypes} = require('sequelize');
 
 const sequelize = new Sequelize(
-    'ProjectManagement', 'postgres', '',
-    {
+    'ProjectManagement', 'postgres', '', {
         dialect: "postgres",
+        logging: false,
     });
 
 const db = {}

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const request = require("supertest");
-const app = require("../server")
+const app = require("../../server")
 const SECRET_KEY = process.env.JWT_SECRET;
 const {v4: uuidv4} = require("uuid");
 const path = require("path");
@@ -36,7 +36,7 @@ describe(('Files controller'), () => {
     });
 
     it('Загрузка файла и сохранение данных файла в бд 201', async () => {
-        let filePath = path.join(__dirname, '../uploads', taskID);
+        let filePath = path.join(__dirname, '../../uploads', taskID);
         if (!fs.existsSync(filePath)) fs.mkdirSync(filePath, { recursive: true });
         filePath = path.join(__dirname, '../uploads', taskID, '/test.txt');
         if (!fs.existsSync(filePath)) {

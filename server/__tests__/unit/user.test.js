@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const request = require("supertest");
-const app = require("../server")
+const app = require("../../server")
 const SECRET_KEY = process.env.JWT_SECRET;
 const {v4: uuidv4} = require("uuid");
 const userID = "524f88f7-246d-40dc-881d-f86cb6d7747d"
