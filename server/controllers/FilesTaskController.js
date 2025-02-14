@@ -12,7 +12,7 @@ class FilesTaskController {
         }
         try{
             await db.FileTask.create({file_id: fileId, task_id: task_id, name_file: file_name});
-            return res.status(201).send('Файл успешно загружен.');
+            return res.status(201).send({message:'Файл успешно загружен'});
         } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
     }
 

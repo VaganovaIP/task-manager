@@ -31,7 +31,7 @@ class BoardController{
                     user_id: user.user_id,
                     board_id: board_id
                 })
-                res.status(201).send({ message: 'New list created'})
+                res.status(201).send({ message: 'New board created'})
         } else {
             res.status(404).send({ message: 'Email not found'})
         }

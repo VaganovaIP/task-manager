@@ -13,7 +13,7 @@ class AuthController{
             }
 
             if(await db.User.findOne({where: {email}})) {
-                return res.status(401).json({ message: 'Пользователь существует' });
+                return res.status(409).json({ message: 'Пользователь существует' });
             }
 
             const defaultRole = await db.Role.findOne({

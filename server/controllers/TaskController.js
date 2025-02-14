@@ -58,7 +58,7 @@ class TaskController {
                 include:{model:db.User, attributes:['user_id', 'username', 'first_name', 'last_name']},
                 where: {board_id: board_id},
             })
-            if(!board) return res.status(404).send({ message: 'Board not found'});
+            if(!board) return res.status(404).send({ message: 'Data not found'});
 
             let lists = await db.List.findAll({
                 attributes: ['list_id', 'name_list'],
@@ -98,7 +98,7 @@ class TaskController {
                 attributes:['user_id', 'username','email', 'first_name', 'last_name'],
                 where:{email:email}
             })
-            if(!userAuth) return res.status(404).send({ message: 'User not found'});
+            if(!userAuth) return res.status(404).send({ message: 'Data not found'});
             return await res.status(200).json({lists:lists, tasks:tasks, members:members,
                 assignments:assignments, users:users, board:board, user:userAuth})
         } catch (err) {res.status(500).json({error: 'Internal Server Error'})}

@@ -16,7 +16,7 @@ export const registerUser = async (username, first_name, last_name, email, passw
             setError('');
         })
         .catch(function (error) {
-            if (error.response && error.response.status === 401) {
+            if (error.response && error.response.status === 409) {
                 setError('Пользователь уже существует');
                 setSuccess('');
             } else {
