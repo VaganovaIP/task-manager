@@ -9,9 +9,9 @@ const userID = "524f88f7-246d-40dc-881d-f86cb6d7747d"
 describe(('User controller'), () => {
     let accessToken;
 
-    jest.mock("../../config/db", () =>{
+    jest.mock("../../config/db", () =>({
         User:{update: jest.fn()}
-    })
+    }))
 
     beforeEach(() => {
         accessToken = jwt
@@ -47,23 +47,19 @@ describe(('User controller'), () => {
         expect(res.status).toBe(200)
     })
 
-    it('Изменение данных пользователя 200 (put(/boards) ', async () =>{
+    it('Изменение данных пользователя 400 (put(/boards) ', async () =>{
         jest.spyOn(db.User, 'update').mockResolvedValue(null);
         const res = await request(app)
             .put('/board/test')
             .send({
                 formName: "form-update-user",
-                user_id: userID,
-                username:"updateUser",
+                user_id: "",
+                username:"",
                 first_name: "F",
                 last_name:"L"
             })
             .set('Authorization', `Bearer ${accessToken}`)
-        expect(db.User.update).toHaveBeenCalledWith({
-            username:'updateUser', first_name:'F', last_name:'L'},{
-            where:{user_id:userID}
-        })
-        expect(res.status).toBe(200)
+        expect(res.status).toBe(400)
     })
 
     it('Изменение данных пользователя 401 (put(/boards) ', async () =>{

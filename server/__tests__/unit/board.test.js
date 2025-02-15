@@ -40,21 +40,6 @@ describe(('Board controller'), () =>{
         jest.clearAllMocks();
     });
 
-    beforeAll(async () => {
-        await db.User.create({
-            user_id: userID,
-            username: "userTest",
-            first_name: "",
-            last_name: "",
-            email: "userTest00@example.ru",
-            password: "1234"})
-
-    })
-
-    afterAll(async () => {
-        await db.User.destroy({ where: {email: "userTest00@example.ru"} });
-    });
-
     it('Создание новой доски 201 (post(/boards)', async () =>{
         const user = {user_id: userID, username: 'testuser', email: 'userTest00@example.ru'};
 
@@ -262,7 +247,7 @@ describe(('Board controller'), () =>{
         jest.spyOn(db.BoardMember, 'destroy').mockResolvedValue(null);
         const res = await request(app)
             .delete('/boards')
-            .query({board_id: boardID})
+            .query({board_id: ''})
             .set('Authorization', `Bearer ${accessToken}`)
 
         expect(db.Board.destroy).toHaveBeenCalledWith( {

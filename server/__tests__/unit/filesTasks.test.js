@@ -5,13 +5,23 @@ const SECRET_KEY = process.env.JWT_SECRET;
 const {v4: uuidv4} = require("uuid");
 const path = require("path");
 const fs = require("fs");
-const userID = "524f88f7-246d-40dc-881d-f86cb6d7747d"
+const db = require("../../config/db");
+const userID = uuidv4()
 const fileID = uuidv4()
-const taskID = "6a715c1c-ec38-43b5-9a3f-7e17041acda6"
+const taskID = '6a715c1c-ec38-43b5-9a3f-7e17041acda6'
 
 
 describe(('Files controller'), () => {
     let accessToken;
+
+    jest.mock("../../config/db", ()=> ({
+        User: {findOne: jest.fn()},
+        FilesTask: {
+            create: jest.fn(),
+            destroy: jest.fn(),
+            findAll:jest.fn(),
+        },
+    }));
 
     beforeEach(() => {
         accessToken = jwt
@@ -23,6 +33,10 @@ describe(('Files controller'), () => {
                 {expiresIn: "1d"}
             )
     })
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
     it('Файл не был загружен 400', async () => {
         const res = await request(app)
@@ -42,6 +56,9 @@ describe(('Files controller'), () => {
         if (!fs.existsSync(filePath)) {
             fs.writeFileSync(filePath, 'создан тест файл.');
         }
+
+        jest.spyOn(db.FileTask, 'create').mockResolvedValue({});
+
         const res = await request(app)
             .post('/board/test')
             .field({
@@ -53,10 +70,18 @@ describe(('Files controller'), () => {
             .attach('file', filePath)
             .set('Authorization', `Bearer ${accessToken}`)
             .set('task-id', taskID)
+
+        expect(db.FileTask.create).toHaveBeenCalledWith(
+        {file_id: fileID, task_id: taskID, name_file: "testfile.txt"})
         expect(res.status).toBe(201);
+        expect(res.body).toHaveProperty('message', 'Файл успешно загружен');
     })
 
     it('Получение списка файлов задачи 200 (get()', async () =>{
+        const file = {file_id: fileID, task_id: taskID, name_file: "testfile.txt"}
+
+        jest.spyOn(db.FileTask, 'findAll').mockResolvedValue(file);
+
         const res = await request(app)
             .get('/board/test')
             .query({
@@ -64,7 +89,10 @@ describe(('Files controller'), () => {
                 task_id:taskID,
             })
             .set('Authorization', `Bearer ${accessToken}`)
-        expect(res.status).toBe(200)
+
+        expect(db.FileTask.findAll).toHaveBeenCalledWith({where:{task_id:taskID}});
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('files');
     })
 
     it('Получение списка файлов задачи 400 (get()', async () =>{
@@ -91,6 +119,7 @@ describe(('Files controller'), () => {
     })
 
     it('Удаление файла  (delete(/)', async () =>{
+        jest.spyOn(db.FileTask, 'destroy').mockResolvedValue(fileID);
         const res = await request(app)
             .delete('/board/test')
             .send({
@@ -100,6 +129,10 @@ describe(('Files controller'), () => {
                 file_id:fileID
             })
             .set('Authorization', `Bearer ${accessToken}`)
+
+        expect(db.FileTask.destroy).toHaveBeenCalledWith( {
+            where:{ file_id:fileID}
+        })
         expect(res.status).toBe(204)
     })
 })
