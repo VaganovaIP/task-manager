@@ -5,9 +5,9 @@ class AssignmentController{
         const {user_id, task_id} = req.body;
         if (user_id || task_id){
             try{
-                await db.TaskAssignment.create({user_id, task_id});
-                await res.status(201).send({message: 'New assignment created'})
-            } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
+                const member = await db.TaskAssignment.create({user_id, task_id});
+                await res.status(201).send({id: member.members_id, message: 'New assignment created'})
+            } catch (err) {res.status(500).json({ error: 'Internal Server Error'})}
         } else res.status(400).send({ message: 'Id not found'})
     }
 
@@ -16,7 +16,7 @@ class AssignmentController{
         if(assignment_id){
             try{
                 await db.TaskAssignment.destroy({ where:{ members_id:assignment_id }});
-                await res.status(204).send({message: 'Delete assignment task'});
+                await res.status(204).send({ message: 'Delete assignment task'});
             } catch (err) {res.status(500).json({error: 'Internal Server Error'})};
         } else res.status(400).send({ message: 'Id not found'})
     }

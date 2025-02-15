@@ -10,6 +10,7 @@ const taskID = uuidv4()
 const userID = uuidv4()
 describe(('Assignment controller'), () => {
     let accessToken;
+    let id;
 
     beforeEach(() => {
         accessToken = jwt
@@ -28,7 +29,7 @@ describe(('Assignment controller'), () => {
             username: "userTest",
             first_name: "",
             last_name: "",
-            email: "userTest00@example.ru",
+            email: "userTest01@example.ru",
             password: "1234"})
         await db.Board.create({board_id:boardID, name_board:"", user_id: userID})
         await db.List.create({
@@ -46,7 +47,7 @@ describe(('Assignment controller'), () => {
     })
 
     afterAll(async () => {
-        await db.User.destroy({ where: {email: "userTest00@example.ru"} });
+        await db.User.destroy({ where: {email: "userTest01@example.ru"} });
         await db.List.destroy({ where: {list_id: listID} });
         await db.Task.destroy({ where: {task_id: taskID} });
         await db.Board.destroy({ where: {board_id:boardID} });
@@ -58,10 +59,12 @@ describe(('Assignment controller'), () => {
             .send({
                 formName: "form-add-assignments",
                 user_id: userID,
-                task_id: "c6139210-ead3-403d-90c6-6f46dbc3be17",
+                task_id: taskID,
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(201)
+        id = res.body.id;
+        console.log(id)
         expect(res.body).toHaveProperty('message', 'New assignment created');
     })
 
@@ -71,7 +74,7 @@ describe(('Assignment controller'), () => {
             .send({
                 formName: "form-add-assignments",
                 user_id: userID+55,
-                task_id: "c6139210-ead3-403d-90c6-6f46dbc3be17",
+                task_id: taskID,
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(500)
@@ -96,7 +99,7 @@ describe(('Assignment controller'), () => {
             .delete('/board/test')
             .send({
                 formName: "form-delete-assignment",
-                assignment_id: "8"
+                assignment_id: id
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(204)

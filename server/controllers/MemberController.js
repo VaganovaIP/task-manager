@@ -6,8 +6,8 @@ class MemberController{
         const {user_id, board_id} = req.body;
         if (user_id && board_id){
             try{
-                await db.BoardMember.create({board_id:board_id, user_id:user_id});
-                await res.status(201).send({message: 'New member created'});
+                const member = await db.BoardMember.create({board_id:board_id, user_id:user_id});
+                await res.status(201).send({id: member.members_id, message: 'New member created'});
             } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
         } else res.status(400).send({ message: 'Id not found'})
     }

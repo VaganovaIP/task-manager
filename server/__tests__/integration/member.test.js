@@ -9,6 +9,7 @@ const userID = uuidv4()
 
 describe(('Member controller'), () => {
     let accessToken;
+    let id;
 
     beforeEach(() => {
         accessToken = jwt
@@ -46,6 +47,7 @@ describe(('Member controller'), () => {
                 board_id: boardID,
             })
             .set('Authorization', `Bearer ${accessToken}`)
+        id = res.body.id;
         expect(res.status).toBe(201)
         expect(res.body).toHaveProperty('message', 'New member created');
     })
@@ -82,7 +84,7 @@ describe(('Member controller'), () => {
             .delete('/board/test')
             .send({
                 formName: "form-delete-member",
-                member_id: "155"
+                member_id: 219
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(204)

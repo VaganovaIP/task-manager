@@ -25,12 +25,12 @@ describe(('User controller'), () => {
             username: "userTest",
             first_name: "",
             last_name: "",
-            email: "userTest00@example.ru",
+            email: "userTest09@example.ru",
             password: "1234"})
     })
 
     afterAll(async () => {
-        await db.User.destroy({ where: {email: "userTest00@example.ru"} });
+        await db.User.destroy({ where: {email: "userTest09@example.ru"} });
     });
 
     it('Изменение данных пользователя 200 (put(/boards) ', async () =>{

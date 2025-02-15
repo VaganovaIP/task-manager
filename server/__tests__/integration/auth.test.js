@@ -11,7 +11,7 @@ describe(('Auth controller'), () => {
     })
 
     afterAll(async () => {
-        await db.User.destroy({ where: {email: "userTest00@example.ru"} });
+        await db.User.destroy({ where: {email: "userTest04@example.ru"} });
     });
 
     it('Создание пользователя 201 (post(/register)', async () =>{
@@ -21,13 +21,13 @@ describe(('Auth controller'), () => {
                 username: "user",
                 first_name: "",
                 last_name: "",
-                email: "userTest00@example.ru",
+                email: "userTest04@example.ru",
                 password: "1234"
             })
         expect(res.status).toBe(201);
         expect(res.body).toHaveProperty('message', 'New user created')
 
-        const user = await db.User.findOne({ where: { email: 'userTest00@example.ru' } });
+        const user = await db.User.findOne({ where: { email: 'userTest04@example.ru' } });
         expect(user).not.toBeNull();
         expect(user.username).toBe('user');
     })

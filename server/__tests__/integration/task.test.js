@@ -28,7 +28,7 @@ describe(('Task controller'), () => {
             username: "userTest",
             first_name: "",
             last_name: "",
-            email: "userTest00@example.ru",
+            email: "userTest02@example.ru",
             password: "1234"})
         await db.Board.create({board_id:boardID, name_board:"", user_id: userID})
         await db.List.create({
@@ -39,10 +39,10 @@ describe(('Task controller'), () => {
     })
 
     afterAll(async () => {
+        await db.User.destroy({ where: {email: "userTest02@example.ru"} });
         await db.List.destroy({ where: {list_id: listID} });
         await db.Task.destroy({ where: {task_id: taskID} });
         await db.Board.destroy({ where: {board_id:boardID} });
-        await db.User.destroy({ where: {email: "userTest00@example.ru"} });
     });
 
     it('Создание задачи 201 (post(/board/name_board)', async () =>{
