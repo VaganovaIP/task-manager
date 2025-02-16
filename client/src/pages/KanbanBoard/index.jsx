@@ -208,14 +208,14 @@ const KanbanBoard = ({token, email}) =>{
                             <Dropdown.Toggle className="list-members">
                                 Участники
                             </Dropdown.Toggle>
-                            <Dropdown.Menu>
+                            <Dropdown.Menu className="dropdown-member">
                                 {members.map((member) =>(
-                                    <Dropdown.Item key={member.members_id}>
+                                    <Dropdown.Item key={member.user_id}>
                                         <div className="member-info">
-                                            {member.user_id === boardName.owner ?
+                                            {member.user_id === boardName.user_id ?
                                                 <div className="admin-user">
                                                     <p className="name-member">{member.User.username}</p>
-                                                    <p className="admin">{member.User.first_name} {member.User.last_name} админ</p>
+                                                    <p className="admin">{member.User.first_name} {member.User.last_name} (админ)</p>
                                                 </div>
                                                 : <div className="admin-user">
                                                     <p className="name-member">{member.User.username}</p>
@@ -224,8 +224,8 @@ const KanbanBoard = ({token, email}) =>{
                                             }
                                             <Button className="members-btn"
                                                 onClick={()=>{
-                                                    deleteMemberBoard(member.members_id, name_board, token);
-                                                    onDeleteMember(member.members_id);
+                                                    deleteMemberBoard(member.user_id, name_board, token);
+                                                    onDeleteMember(member.user_id);
                                                 }
                                                 }>
                                                 Исключить
@@ -320,7 +320,7 @@ const KanbanBoard = ({token, email}) =>{
                                 assignments={assignments}
                                 name_board={name_board}
                                 token = {token}
-                                owner = {boardName.owner}
+                                owner = {boardName.user_id}
                             />
                             <ModalAddMembers
                                 show={modalMembersIsOpen}

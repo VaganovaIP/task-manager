@@ -205,7 +205,7 @@ export function ModalEditTask (props){
                             <Dropdown.Toggle className="list-members-button">
                                 Ответственные
                             </Dropdown.Toggle>
-                            <Dropdown.Menu>
+                            <Dropdown.Menu className="dropdown-member">
                                 {assignment.map((item, key) => (
                                     item.task_id === data_task.task_id) && (
                                         <Dropdown.Item key={key}>
@@ -213,7 +213,7 @@ export function ModalEditTask (props){
                                                 {item.User.user_id === owner ?
                                                     <div className="admin-user">
                                                         <p className="name-member">{item.User.username}</p>
-                                                        <p className="admin">{item.User.first_name} {item.User.last_name} админ</p>
+                                                        <p className="admin">{item.User.first_name} {item.User.last_name}  (админ.)</p>
                                                     </div>
                                                     : <div className="admin-user">
                                                         <p className="name-member">{item.User.username}</p>
@@ -235,12 +235,12 @@ export function ModalEditTask (props){
                                 <Dropdown.Divider></Dropdown.Divider>
                                 <p className="label-member">Участники доски</p>
                                 {members.map((member) => (
-                                    <Dropdown.Item key={member.members_id}>
+                                    <Dropdown.Item key={member.user_id}>
                                         <div className="member-info">
                                             {member.user_id === owner ?
                                                 <div className="admin-user">
                                                     <p className="name-member">{member.User.username}</p>
-                                                    <p className="admin">{member.User.first_name} {member.User.last_name} админ</p>
+                                                    <p className="admin">{member.User.first_name} {member.User.last_name}  (админ.)</p>
                                                 </div>
                                                 : <div className="admin-user">
                                                     <p className="name-member">{member.User.username}</p>

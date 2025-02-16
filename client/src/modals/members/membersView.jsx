@@ -1,17 +1,22 @@
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {addMemberBoard} from "../../services/member.jsx"
 import Fuse from "fuse.js";
 import "./index.css"
 
 
 export function ModalAddMembers(props){
-    const {members, users, name_board, board_id, token} = props;
+    const {members, users, name_board, board_id, token, show} = props;
     const [searchResults, setSearchResults] = useState(users);
     const options = {keys:["username", "first_name", "last_name"]};
     const fuse = new Fuse(users, options);
     const [onSearch, setOnSearch] = useState(false);
+
+    useEffect(()=>{
+        setSearchResults(null)
+        setOnSearch(false);
+    },[show])
 
     const onChangeBoardSearch = (event) =>{
         const {value} = event.target;
@@ -43,7 +48,7 @@ export function ModalAddMembers(props){
                     </Modal.Title>
                 </div>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body  className="modal-data-user">
                 <Form.Control
                     type="search"
                     placeholder="Поиск"
@@ -61,7 +66,7 @@ export function ModalAddMembers(props){
                                     <p className="name-member">{user.username}</p>
                                     <p className="user-app-full">{user.first_name} {user.last_name}</p>
                                 </div>
-                                <button className="add-button-member"
+                                <button className="members-btn-add"
                                         type="button" onClick={() => addMemberBoard(name_board, user.user_id, board_id, token)}>
                                     Добавить
                                 </button>

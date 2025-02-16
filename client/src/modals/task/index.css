@@ -370,4 +370,10 @@
     color: #960E0E;
 }
 
-
+.dropdown-member{
+    height: auto;
+    max-height: 250px;
+    min-width: 200px;
+    overflow-y: scroll;
+    scrollbar-color: #455AA0 #F2F5FF;
+}

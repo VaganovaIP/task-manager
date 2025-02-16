@@ -7,8 +7,17 @@
 .modal-content{
     background-color: #F2F5FF;
 }
+
 .modal-body{
     min-height: 300px;
+    height: 400px;
+
+}
+
+.modal-data-user{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-color: #455AA0 #F2F5FF;
 }
 
 .header-user-modal{
@@ -59,4 +68,33 @@ li{
 .user-app .name-member{
     height: 15px;
     font-size: 14px;
+}
+
+.members-btn-add{
+    font-size: 0.75rem;
+    padding: 6px;
+    height: 20px;
+    --bs-btn-padding-x: 0rem;
+    --bs-btn-padding-y: 0rem;
+    --bs-btn-active-bg:none;
+    --bs-btn-hover-bg:none;
+    color: #1E2B32;
+    background-color: transparent;
+    border: none;
+}
+
+.members-btn-add:hover{
+    color: rgb(50, 52, 122);
+}
+
+.members-btn-add:active{
+    color: rgb(255, 255, 255);
+}
+
+.members-btn-add:after{
+    color: rgb(255, 255, 255);
+}
+
+.members-btn-add:before{
+    background-color:#960E0E;
 }

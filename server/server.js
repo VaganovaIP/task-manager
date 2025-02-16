@@ -19,6 +19,7 @@ app.use(cors());
 app.use('/', router);
 
 db.sequelize.sync({force:false}).then(()=>{
+        console.log(`Listen server port ${port}`)
         app.listen(port);
     })
     .catch(err => console.log(err))

@@ -259,6 +259,7 @@ a{
 
 .members-btn:hover{
     color: rgba(203, 51, 51, 0.86);
+    background-color: transparent;
 }
 
 .list-members{
@@ -350,3 +351,24 @@ hr{
     padding: 10px;
 }
 
+.dropdown-member{
+    height: auto;
+    max-height: 350px;
+    min-width: 200px;
+    overflow-y: scroll;
+    scrollbar-color: #455AA0 #F2F5FF;
+}
+
+.item-admin{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.adminB{
+    font-size: 0.67rem;
+    color: rgba(0, 0, 0, 0.62);
+    font-weight: initial;
+    padding: 0;
+}
