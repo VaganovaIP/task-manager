@@ -31,11 +31,12 @@ class FilesTaskController {
         const task_id = req.query.task_id;
         if(!task_id) return res.status(400).send({ message: 'Data not found'})
          try{
-            let files = await db.FileTask.findAll({
-                    where:{task_id:task_id}
-                }
-            )
-            return res.status(200).json({files:files})
+            let files = await db.FileTask.findAll({where:{task_id:task_id}})
+            let history = await db.History.findAll({
+                where:{task_id:task_id},
+                order:[['createdAt', 'DESC']]
+            });
+            return res.status(200).json({files:files, history:history})
         } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
     }
 

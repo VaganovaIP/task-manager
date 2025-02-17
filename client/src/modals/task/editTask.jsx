@@ -12,22 +12,25 @@ import "./index.css"
 import "../task/index.css"
 import {deleteFile, downloadFile, fetchFilesTask, uploadFile} from "../../services/file.js";
 import uuid from "react-uuid";
+import convertDate from "../../utils/helpers.jsx";
 
 export function ModalEditTask (props){
-    const {members, data_task, lists, assignments, name_board, token, owner} = props;
+    const {members, data_task, lists, assignments, name_board, token, owner, user} = props;
     const [nameTask,setNameTask] = useState('');
     const [descriptionTask,setDescriptionTask] = useState('');
     const [list, setList] = useState('');
     const [nameList, setNameList] = useState('')
     const [importance, setImportance] = useState('');
     const [status, setStatus] = useState(false);
+    const [statusEdit, setStatusEdit] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [assignment, setAssignments] = useState([])
     const [filesTask, setFilesTask] = useState([])
+    const [history, setHistory] = useState([])
 
     useEffect(()=>{
-        fetchFilesTask(name_board, data_task?.task_id, setFilesTask, token)
+        fetchFilesTask(name_board, data_task?.task_id, setFilesTask, token, setHistory)
             .then(function (response) {
             console.log(response);
         })
@@ -46,9 +49,17 @@ export function ModalEditTask (props){
     },[data_task])
 
     const onSaveTaskState = async () => {
+        let text_event = status ? `Пользователь ${user.first_name} ${user.last_name} изменил(а) статус задачи  на "Выполнено"`
+                : `Пользователь ${user.first_name} ${user.last_name} изменил(а) статус задачи  на "Невыполнено"`;
+
+        if (data_task.status !== status) {
+            setStatusEdit(true);
+            text_event = text_event;
+        }
+        console.log(statusEdit)
         saveTask(data_task.task_id, nameTask, descriptionTask,
             startDate, endDate,
-            list, importance, status, name_board, token)
+            list, importance, status, name_board, token, statusEdit, text_event)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         setList(null);
@@ -64,8 +75,9 @@ export function ModalEditTask (props){
         props.onHide();
     };
 
-    const onAddAssignment=(name_board, user_id, task_id, username)=>{
-        onAddAssignmentTask(name_board, user_id, task_id, token)
+    const onAddAssignment=(name_board, user_id, task_id, username, first_name, last_name)=>{
+        let text_event = `Пользователь ${user.first_name} ${user.last_name} назначил(а) ${first_name} ${last_name} ответственныи за выполнение задачи`;
+        onAddAssignmentTask(name_board, user_id, task_id, token, text_event)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_assignment = {
@@ -173,6 +185,7 @@ export function ModalEditTask (props){
                             <Form.Control type="file" className="file-upload" title={"Прикрепить"}
                                 onChange={onUploadFile}
                             />
+
                         </Form.Group>
                         <div className="list-files">
                             {filesTask.map((file) =>
@@ -186,7 +199,20 @@ export function ModalEditTask (props){
                             )
                             }
                         </div>
+                        <Form.Label>История действий</Form.Label>
+                        <div className="list-event-history">
+                            {history.map((event) =>
+                                <div key={event.event_id}>
+                                    <div className="text-event">{event.text_event}</div>
+                                    <p className="date-event">{convertDate(event.createdAt)}</p>
+                                </div>
+
+                            )
+                            }
+                        </div>
                     </Form.Group>
+
+
                     <Form.Group className="form-data-task2">
                         <Form.Label>Важность</Form.Label>
                         <Form.Select value={importance || ""} className="form-input"
@@ -221,9 +247,9 @@ export function ModalEditTask (props){
                                                     </div>
                                                 }
                                                 <button className="members-btn-del"
-                                                    onClick={()=>
-                                                        {
-                                                            deleteAssignment(item.members_id, name_board, token);
+                                                    onClick={()=> {
+                                                            let text_event = `Пользователь ${user.first_name} ${user.last_name} снял(а) ${item.User.first_name} ${item.User.last_name} с задачи`;
+                                                            deleteAssignment(item.members_id, name_board, token, text_event);
                                                             onDeleteAssignment(item.members_id);
                                                         }}>
                                                     Исключить
@@ -249,7 +275,8 @@ export function ModalEditTask (props){
                                             }
                                             <button className="members-btn"
                                                     type="button"
-                                                    onClick={() => onAddAssignment(name_board, member.User.user_id, data_task.task_id, member.User.username)}>
+                                                    onClick={() => onAddAssignment(name_board, member.User.user_id, data_task.task_id,
+                                                        member.User.username, member.User.first_name, member.User.last_name)}>
                                                 Добавить
                                             </button>
                                         </div>
@@ -258,9 +285,12 @@ export function ModalEditTask (props){
                             </Dropdown.Menu>
                         </Dropdown>
                         <div className="status">
-                            <Form.Check type={'checkbox'} checked={status || false} onChange={() => setStatus(!status)}>
+                            <Form.Check type={'checkbox'} checked={status || false} onChange={() => {
+                                setStatus(!status);
+                                setStatusEdit(true)
+                            }}>
                             </Form.Check>
-                            <p className="label-status">{status ? "Выполнено" : "Не выполнено"}</p>
+                            <p className="label-status">{status ? "Выполнено" : "Невыполнено"}</p>
                         </div>
                     </Form.Group>
                 </Form>

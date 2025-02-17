@@ -16,12 +16,12 @@ export function ModalAddMembers(props){
     useEffect(()=>{
         setSearchResults(null)
         setOnSearch(false);
-    },[show])
+    },[])
 
-    const onChangeBoardSearch = (event) =>{
+    const onChangeUserSearch = (event) =>{
         const {value} = event.target;
         if (value.length === 0){
-            setSearchResults(users);
+            setSearchResults(null);
             setOnSearch(false);
             return;
         }
@@ -30,6 +30,10 @@ export function ModalAddMembers(props){
         const filterItems = items.filter((item) => !members.some((item2)=>item.user_id === item2.user_id))
         setSearchResults(filterItems);
         setOnSearch(true);
+    }
+
+    const onClickAddMember = (user_id) =>{
+        addMemberBoard(name_board, user_id, board_id, token);
     }
 
 
@@ -54,12 +58,12 @@ export function ModalAddMembers(props){
                     placeholder="Поиск"
                     className="me-2"
                     aria-label="Search"
-                    onChange={onChangeBoardSearch}
+                    onChange={onChangeUserSearch}
                     name=""
                 />
                 {
                     onSearch &&
-                    searchResults.map((user) =>(
+                    searchResults?.map((user) =>(
                         <li key={user.user_id}>
                             <div className="member-info">
                                 <div className="user-app">
@@ -67,7 +71,7 @@ export function ModalAddMembers(props){
                                     <p className="user-app-full">{user.first_name} {user.last_name}</p>
                                 </div>
                                 <button className="members-btn-add"
-                                        type="button" onClick={() => addMemberBoard(name_board, user.user_id, board_id, token)}>
+                                        type="button" onClick={() => onClickAddMember(user.user_id)}>
                                     Добавить
                                 </button>
                             </div>

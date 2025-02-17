@@ -19,7 +19,7 @@ export const uploadFile = async (name_board, formData, task_id, token) => {
         });
 }
 
-export const fetchFilesTask = async (name_board, task_id, setFilesTask, token) => {
+export const fetchFilesTask = async (name_board, task_id, setFilesTask, token, setHistory) => {
     await axios
         .get(`${BASE_API_URL}/board/${name_board}?type=files`, {
             headers: {
@@ -31,6 +31,7 @@ export const fetchFilesTask = async (name_board, task_id, setFilesTask, token) =
         })
         .then(res => {
             setFilesTask(res.data.files);
+            setHistory(res.data.history);
         })
         .catch(function (error) {
             console.log(error);

@@ -1,9 +1,9 @@
 const {Sequelize, DataTypes} = require('sequelize');
-
+const { v4: uuidv4 } = require('uuid');
 const sequelize = new Sequelize(
     'ProjectManagement', 'postgres', '', {
         dialect: "postgres",
-        logging: false,
+        // logging: false,
     });
 
 const db = {}
@@ -16,6 +16,7 @@ db.List = require('../models/List')(sequelize, DataTypes);
 db.Task = require('../models/Task')(sequelize, DataTypes);
 db.TaskAssignment = require('../models/TaskAssignment')(sequelize, DataTypes);
 db.FileTask = require('../models/FileTask')(sequelize, DataTypes);
+db.History = require('../models/History')(sequelize, DataTypes);
 
 //
 db.Role.hasMany(db.User, { foreignKey: 'roleId' });
@@ -64,6 +65,10 @@ db.Task.hasMany(db.TaskAssignment, { foreignKey: 'task_id' });
 // Ассоциации между TaskAssignment и User
 db.TaskAssignment.belongsTo(db.User, { foreignKey: 'user_id' });
 db.User.hasMany(db.TaskAssignment, { foreignKey: 'user_id' });
+
+//
+db.Task.hasMany(db.History,{foreignKey: 'task_id'});
+db.History.belongsTo(db.Task,{foreignKey: 'task_id'});
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;

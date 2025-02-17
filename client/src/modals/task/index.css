@@ -1,5 +1,4 @@
 .modal{
-    min-height: 400px;
     min-width: 500px;
 }
 
@@ -17,12 +16,19 @@
     }
 }
 
+.modal-content{
+    max-height: 800px;
+    height: auto;
+}
+
 .modal-header {
     padding: 10px 16px 10px 16px;
 }
 
 .modal-body  {
     padding: 8px 16px 8px 16px;
+    height: auto;
+    max-height: 800px;
 }
 
 .modal-footer {
@@ -69,6 +75,7 @@
 
 .form-task{
     width: 100%;
+    height: auto;
 }
 
 .form-input{
@@ -330,7 +337,8 @@
     flex-direction: column;
     padding:5px;
     border-radius: 10px;
-    height: 100px;
+    height: auto;
+    max-height: 100px;
     overflow-y: auto;
     scrollbar-color: #455AA0 #F2F5FF;
 }
@@ -350,7 +358,6 @@
 .name-file{
     width: 100%;
     font-size: 0.84rem;
-
 }
 .button-delete-file{
     font-size: 0.7rem;
@@ -376,4 +383,26 @@
     min-width: 200px;
     overflow-y: scroll;
     scrollbar-color: #455AA0 #F2F5FF;
+}
+
+.list-event-history{
+    display: flex;
+    flex-direction: column;
+    padding:5px;
+    border-radius: 10px;
+    height: auto;
+    max-height: 200px;
+    overflow-y: auto;
+    scrollbar-color: #455AA0 #F2F5FF;
+}
+
+.text-event{
+    font-size: 0.77rem;
+    justify-content: space-between;
+}
+
+.date-event{
+    font-size: 0.74rem;
+    color: #1E2B32;
+    margin-bottom: 5px;
 }

@@ -42,7 +42,7 @@ export async function fetchDataTasks(email, setTasks, token, setUser) {
             setUser(res.data.user);
         })
 }
-export const createTask = async (task_id, name_board, list_id, board_id, name_task, email, token) => {
+export const createTask = async (task_id, name_board, list_id, board_id, name_task, email, token, text_event) => {
     await axios
         .post(`${BASE_API_URL}/board/${name_board}`, {
             formName:"form-add-task",
@@ -51,6 +51,7 @@ export const createTask = async (task_id, name_board, list_id, board_id, name_ta
             name_task: name_task,
             list_id:list_id,
             email:email,
+            text_event:text_event,
         },
     {
         headers: {
@@ -64,7 +65,7 @@ export const createTask = async (task_id, name_board, list_id, board_id, name_ta
         });
 };
 
-export const saveTask = async (task_id, name, description, dateStart, dateEnd, list_id, importance, status, name_board, token)=>{
+export const saveTask = async (task_id, name, description, dateStart, dateEnd, list_id, importance, status, name_board, token, statusEdit, text_event)=>{
     await axios
         .put(`${BASE_API_URL}/board/${name_board}`, {
             formName: "form-save-task",
@@ -75,7 +76,9 @@ export const saveTask = async (task_id, name, description, dateStart, dateEnd, l
             date_end:dateEnd,
             list_id:list_id,
             importance:importance,
-            status:status
+            status:status,
+            statusEdit: statusEdit,
+            text_event:text_event
         },
     {
         headers: {

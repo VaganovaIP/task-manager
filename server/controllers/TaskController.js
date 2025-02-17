@@ -5,7 +5,7 @@ const db = require("../config/db");
 
 class TaskController {
     static async createTask(req, res) {
-        const {board_id, name_task, list_id, task_id, email} = req.body;
+        const {board_id, name_task, list_id, task_id, email, text_event} = req.body;
         const value = date.format((new Date()),
             'YYYY/MM/DD HH:mm:ss');
         const user = await db.User.findOne({
@@ -17,6 +17,11 @@ class TaskController {
                 const task = await db.Task.findOne({where: {task_id: task_id}});
                 if (!task) {
                     await db.Task.create({task_id, name_task, list_id, board_id:board_id, created_at:new Date(), owner_id:user.user_id});
+                    await db.History.create({
+                            event_id: uuidv4(),
+                            text_event: text_event,
+                            task_id: task_id
+                        })
                     await res.status(201).send({message: 'New task created'});
                 } else return res.status(409).json({ message: 'Задача существует' });
             } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
@@ -26,12 +31,19 @@ class TaskController {
     }
 
     static async saveTask (req, res){
-        const {task_id, name_task,description,date_start,date_end,list_id,importance,status} = req.body;
+        const {task_id, name_task,description,date_start,date_end,list_id,importance,status, statusEdit, text_event} = req.body;
         if (task_id){
             try{
                 await db.Task.update({name_task:name_task, description:description, date_start:date_start,
                         date_end:date_end, list_id:list_id, importance:importance, status:status },
                     { where: {task_id: task_id}});
+                if(statusEdit){
+                    await db.History.create({
+                        event_id: uuidv4(),
+                        text_event: text_event,
+                        task_id: task_id
+                    })
+                }
                 await res.status(200).send({message: `Task ${name_task} updated`})
             } catch (err) {res.status(500).json({error: 'Internal Server Error'})}
         } else res.status(400).send({ message: 'TaskId not found'});

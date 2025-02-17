@@ -41,13 +41,14 @@ const KanbanBoard = ({token, email}) =>{
     const [updateName, setUpdateName] = useState("")
     const [saveList, setUpdateNameList] = useState("")
     const [boardName, setBoardName] = useState("")
+    const [edit, setEdit] = useState(false)
 
     useEffect( () => {
         fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments,
             setUsers, setBoardName, token, email, setUser)
             .catch(err => console.log(err));
         setUpdateName(boardName.name_board);
-    }, [members]);
+    }, [setTasks, edit]);
 
     const onCreateListCard = async (event) => {
         event.preventDefault();
@@ -70,7 +71,8 @@ const KanbanBoard = ({token, email}) =>{
         event.preventDefault();
         const name = event.target.name.value;
         let task_id = uuid();
-        createTask(task_id, name_board, activeList, board_id, name, email, token)
+        let text_event = `Пользователь ${user.first_name} ${user.last_name} создал(а) задачу ${name}`;
+        createTask(task_id, name_board, activeList, board_id, name, email, token, text_event)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
         const new_task = {
@@ -82,6 +84,9 @@ const KanbanBoard = ({token, email}) =>{
         setTasks([new_task, ...tasks])
         setNameTask("");
         setOnClickCreateTask(false)
+        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments,
+            setUsers, setBoardName, token, email, setUser)
+            .catch(err => console.log(err));
     };
 
     ///
@@ -98,10 +103,8 @@ const KanbanBoard = ({token, email}) =>{
     };
 
     const closeModalMembers = () => {
-        fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments,
-            setUsers, setBoardName, token, setUser)
-            .catch(err => console.log(err));
         setModalMembersIsOpen(false);
+        setEdit(!edit)
     };
 
     const handleClickCreateList=()=> {
@@ -185,9 +188,6 @@ const KanbanBoard = ({token, email}) =>{
         const newList = tasks.filter(item => item.task_id !== id);
         setTasks(newList);
     }
-
-
-
 
     return(
         <div className="f-container">
@@ -321,6 +321,7 @@ const KanbanBoard = ({token, email}) =>{
                                 name_board={name_board}
                                 token = {token}
                                 owner = {boardName.user_id}
+                                user = {user}
                             />
                             <ModalAddMembers
                                 show={modalMembersIsOpen}
