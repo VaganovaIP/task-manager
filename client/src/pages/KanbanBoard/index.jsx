@@ -47,7 +47,7 @@ const KanbanBoard = ({token, email}) =>{
             setUsers, setBoardName, token, email, setUser)
             .catch(err => console.log(err));
         setUpdateName(boardName.name_board);
-    }, []);
+    }, [members]);
 
     const onCreateListCard = async (event) => {
         event.preventDefault();
@@ -98,10 +98,10 @@ const KanbanBoard = ({token, email}) =>{
     };
 
     const closeModalMembers = () => {
-        setModalMembersIsOpen(false);
         fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments,
             setUsers, setBoardName, token, setUser)
             .catch(err => console.log(err));
+        setModalMembersIsOpen(false);
     };
 
     const handleClickCreateList=()=> {

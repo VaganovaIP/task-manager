@@ -51,7 +51,7 @@ const Login = ({ setToken }) =>{
                         <Form.Control type="email" className={!emailError ? "form-input-login" : "input-error"}
                                       placeholder="Email*"
                                       value={email} onChange={(e)=>setEmail(e.target.value)}/>
-                        <input type="text" className={!passwordError ? "form-input-login" : "input-error"}
+                        <input type="password" className={!passwordError ? "form-input-login" : "input-error"}
                                placeholder="Пароль*"
                                value={password} onChange={(e)=>setPassword(e.target.value)}/>
                         <button className="form-button" type="submit" name="form-auth-button">Войти</button>
