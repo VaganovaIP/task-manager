@@ -49,7 +49,7 @@ const renderListTasks=(task)=>{
                             <p className="title">
                                 Колонка
                             </p>
-                            <p>{task.Task?.List.name_list}</p>
+                            <p>{task.Task.List.name_list}</p>
                         </div>
                     </div>
                 </Accordion.Body>

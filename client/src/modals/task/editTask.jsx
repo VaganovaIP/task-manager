@@ -52,11 +52,6 @@ export function ModalEditTask (props){
         let text_event = status ? `Пользователь ${user.first_name} ${user.last_name} изменил(а) статус задачи  на "Выполнено"`
                 : `Пользователь ${user.first_name} ${user.last_name} изменил(а) статус задачи  на "Невыполнено"`;
 
-        if (data_task.status !== status) {
-            setStatusEdit(true);
-            text_event = text_event;
-        }
-        console.log(statusEdit)
         saveTask(data_task.task_id, nameTask, descriptionTask,
             startDate, endDate,
             list, importance, status, name_board, token, statusEdit, text_event)
@@ -83,9 +78,18 @@ export function ModalEditTask (props){
         const new_assignment = {
             user_id:user_id,
             task_id:task_id,
-            User:{username:username}
+            User:{username:username,
+                first_name:first_name,
+                last_name:last_name
+            },
         }
         setAssignments([...assignment, new_assignment]);
+        const new_event = {
+            event_id:uuid(),
+            text_event:text_event,
+            createdAt:new Date()
+        }
+        setHistory([...history, new_event]);
     }
 
     const onDeleteAssignment = (id)=>{
@@ -251,6 +255,12 @@ export function ModalEditTask (props){
                                                             let text_event = `Пользователь ${user.first_name} ${user.last_name} снял(а) ${item.User.first_name} ${item.User.last_name} с задачи`;
                                                             deleteAssignment(item.members_id, name_board, token, text_event);
                                                             onDeleteAssignment(item.members_id);
+                                                        const new_event = {
+                                                            event_id:uuid(),
+                                                            text_event:text_event,
+                                                            createdAt:new Date()
+                                                        }
+                                                        setHistory([...history, new_event]);
                                                         }}>
                                                     Исключить
                                                 </button>
@@ -287,7 +297,7 @@ export function ModalEditTask (props){
                         <div className="status">
                             <Form.Check type={'checkbox'} checked={status || false} onChange={() => {
                                 setStatus(!status);
-                                setStatusEdit(true)
+                                setStatusEdit(true);
                             }}>
                             </Form.Check>
                             <p className="label-status">{status ? "Выполнено" : "Невыполнено"}</p>
