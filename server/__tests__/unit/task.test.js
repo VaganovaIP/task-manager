@@ -23,6 +23,9 @@ describe(('Task controller'), () => {
         TaskAssignment:{
             findAll: jest.fn(),
             destroy: jest.fn()
+        },
+        History:{
+            create: jest.fn()
         }
     }));
 
@@ -41,22 +44,24 @@ describe(('Task controller'), () => {
         jest.clearAllMocks();
     });
 
-    it('Создание задачи 201 (post(/board/name_board)', async () =>{
+    it('Создание задачи 201 ', async () =>{
         const user = {user_id: userID, username: 'testuser', email: 'userTest00@example.ru'};
         const task = {task_id:taskID, name_task:'task', list_id:listID, board_id:boardID,
                 owner_id:userID}
+        const event = {text_event: "text_event", task_id: taskID}
+        jest.spyOn(db.History, 'create').mockResolvedValue({});
         jest.spyOn(db.User, 'findOne').mockResolvedValue(user);
         jest.spyOn(db.Task, 'create').mockResolvedValue({});
 
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_task')
             .send({
-                formName:"form-add-task",
                 board_id: boardID,
                 name_task:"task",
                 task_id: taskID,
                 list_id: listID,
                 email:"userTest00@example.ru",
+                text_event: "text_event",
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(db.User.findOne).toHaveBeenCalledWith({
@@ -64,11 +69,12 @@ describe(('Task controller'), () => {
             where: { email: 'userTest00@example.ru' },
         });
         expect(db.Task.create).toHaveBeenCalledWith(expect.objectContaining(task));
+        expect(db.History.create).toHaveBeenCalledWith(expect.objectContaining(event));
         expect(res.status).toBe(201);
         expect(res.body).toHaveProperty('message', 'New task created');
     })
 
-    it('Создание задачи. Task_id уже есть 409 (post(/board/name_board)', async () =>{
+    it('Создание задачи. Task_id уже есть 409 ', async () =>{
         const user = {user_id: userID, username: 'testuser', email: 'userTest00@example.ru'};
         const task = {task_id:taskID, name_task:'task', list_id:listID, board_id:boardID,
             owner_id:userID}
@@ -77,9 +83,8 @@ describe(('Task controller'), () => {
         jest.spyOn(db.Task, 'create').mockResolvedValue();
 
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_task')
             .send({
-                formName:"form-add-task",
                 board_id: boardID,
                 name_task:"task",
                 task_id: taskID,
@@ -98,11 +103,10 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('message', 'Задача существует');
     })
 
-    it('Создание задачи. Ошибка авторизации 401 (Unauthorized) (post(/board/name_board)', async () =>{
+    it('Создание задачи. Ошибка авторизации 401 (Unauthorized)', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_task')
             .send({
-                formName:"form-add-task",
                 board_id: boardID,
                 name_task:"test task",
                 task_id: taskID,
@@ -113,14 +117,13 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Создание задачи 404 (not found email) (post(/board/name_board)', async () =>{
+    it('Создание задачи 404 (not found email)', async () =>{
         const user = {user_id: userID, username: 'testuser', email: 'userTest00@example.ru'};
         jest.spyOn(db.User, 'findOne').mockResolvedValue(null);
 
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_task')
             .send({
-                formName:"form-add-task",
                 board_id: boardID,
                 name_task:"task",
                 task_id: taskID,
@@ -136,14 +139,16 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('message', 'Email not found');
     })
 
-    it('Изменение задачи 200 (put(/board/name_board) ', async () =>{
+    it('Изменение задачи 200 ', async () =>{
         const task = {name_task:"task", description:"text", date_start:'',
                  date_end:'', list_id:listID, importance: "низкая", status: false}
+        const event = {text_event: "text_event", task_id: taskID}
         jest.spyOn(db.Task, 'update').mockResolvedValue(taskID);
+        jest.spyOn(db.History, 'create').mockResolvedValue({});
+
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_task')
             .send({
-                formName: "form-save-task",
                 task_id:taskID,
                 name_task: "task",
                 description: "text",
@@ -151,20 +156,23 @@ describe(('Task controller'), () => {
                 date_end: '',
                 list_id: listID,
                 importance: "низкая",
-                status: false
+                status: false,
+                text_event: "text_event",
+                statusEdit:true,
             })
             .set('Authorization', `Bearer ${accessToken}`)
+
         expect(db.Task.update).toHaveBeenCalledWith(expect.objectContaining(task),
             { where: {task_id: taskID}})
+        expect(db.History.create).toHaveBeenCalledWith(expect.objectContaining(event));
         expect(res.status).toBe(200);
         expect(res.body).toHaveProperty('message', 'Task task updated');
     })
 
     it('Изменение задачи 400 (put(/board/name_board) ', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_task')
             .send({
-                formName: "form-save-task",
                 task_id:"",
                 name_task: "Update test task",
                 description: "text",
@@ -179,7 +187,7 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('message', 'TaskId not found');
     })
 
-    it('Изменение задачи. Ошибка авторизации 401 (Unauthorized) (put(/board/name_board) ', async () =>{
+    it('Изменение задачи. Ошибка авторизации 401 (Unauthorized)  ', async () =>{
         const res = await request(app)
             .put('/board/test')
             .send({
@@ -196,13 +204,12 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Удаление задачи 204 (delete(/boards)', async () =>{
+    it('Удаление задачи 204 ', async () =>{
         jest.spyOn(db.Task, 'destroy').mockResolvedValue(taskID);
         jest.spyOn(db.TaskAssignment, 'destroy').mockResolvedValue(taskID);
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_task')
             .send({
-                formName:"form-delete-task",
                 task_id: taskID
             })
             .set('Authorization', `Bearer ${accessToken}`)
@@ -215,19 +222,18 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(204)
     })
 
-    it('Удаление задачи 400 (delete(/boards)', async () =>{
+    it('Удаление задачи 400 ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_task')
             .send({
-                formName:"form-delete-task",
                 task_id: ""})
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(400)
     })
 
-    it('Удаление задачи 401 (delete(/boards)', async () =>{
+    it('Удаление задачи 401', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_task')
             .send({task_id: taskID})
             .set('Authorization', `Bearer `)
         expect(res.status).toBe(401)
@@ -245,11 +251,10 @@ describe(('Task controller'), () => {
     //     expect(res.status).toBe(200)
     // })
 
-    it('Получение данных задач доски 401 (get(/boards)', async () =>{
+    it('Получение данных задач доски 401 ', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/task')
             .query({
-                type:"data",
                 board_id:boardID,
                 email: "user1@example.ru",
             })
@@ -257,11 +262,10 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Получение данных задач доски 400 (get(/boards)', async () =>{
+    it('Получение данных задач доски 400 ', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/task')
             .query({
-                type:"data",
                 board_id:"",
                 email: "user1@example.ru",
             })
@@ -269,11 +273,10 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(400)
     })
 
-    it('Получение данных задач доски 404 (get(/boards)', async () =>{
+    it('Получение данных задач доски 404 ', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/task')
             .query({
-                type:"data",
                 board_id:"fa6b3d18-5547-14cb-0b28-f2f168c84588",
                 email: "user1@example.ru",
             })
@@ -281,11 +284,10 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(404)
     })
 
-    it('Получение данных задач доски 404 (get(/boards)', async () =>{
+    it('Получение данных задач доски 404 ', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/task')
             .query({
-                type:"data",
                 board_id:boardID,
                 email: "test1@example.ru",
             })

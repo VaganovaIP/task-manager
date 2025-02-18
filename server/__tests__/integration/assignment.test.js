@@ -53,11 +53,10 @@ describe(('Assignment controller'), () => {
         await db.Board.destroy({ where: {board_id:boardID} });
     });
 
-    it('Назначение ответсвенного 200 (post(/board/:name_board)', async () =>{
+    it('Назначение ответсвенного 200 ', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_assignment')
             .send({
-                formName: "form-add-assignments",
                 user_id: userID,
                 task_id: taskID,
             })
@@ -68,11 +67,10 @@ describe(('Assignment controller'), () => {
         expect(res.body).toHaveProperty('message', 'New assignment created');
     })
 
-    it('Назначение ответсвенного 500 (post(/board/:name_board)', async () =>{
+    it('Назначение ответсвенного 500 ', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_assignment')
             .send({
-                formName: "form-add-assignments",
                 user_id: userID+55,
                 task_id: taskID,
             })
@@ -81,11 +79,10 @@ describe(('Assignment controller'), () => {
         expect(res.body).toHaveProperty('error', 'Internal Server Error');
     })
 
-    it('Назначение ответсвенного 400 (post(/board/:name_board)', async () =>{
+    it('Назначение ответсвенного 400 ', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_assignment')
             .send({
-                formName: "form-add-assignments",
                 user_id: "",
                 task_id: "",
             })
@@ -94,22 +91,20 @@ describe(('Assignment controller'), () => {
         expect(res.body).toHaveProperty('message', 'Id not found');
     })
 
-    it('Удаление ответсвенного 204 (Ok) (delete(/board/:name_board)', async () =>{
+    it('Удаление ответсвенного 204 (Ok) ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_assignment')
             .send({
-                formName: "form-delete-assignment",
                 assignment_id: id
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(204)
     })
 
-    it('Удаление ответсвенного 400 (delete(/board/:name_board)', async () =>{
+    it('Удаление ответсвенного 400 ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_assignment')
             .send({
-                formName: "form-delete-assignment",
                 assignment_id: ""
             })
             .set('Authorization', `Bearer ${accessToken}`)

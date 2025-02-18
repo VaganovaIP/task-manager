@@ -41,15 +41,14 @@ describe(('List controller'), () => {
 
     });
 
-    it('Создание списка 201 (post(/board/:name_board)', async () => {
+    it('Создание списка 201 ', async () => {
         const list = {list_id:listID, name_list:'nameList', board_id:boardID}
 
         jest.spyOn(db.List, 'create').mockResolvedValue({})
 
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_list')
             .send({
-                formName: "form-add-list",
                 list_id: listID,
                 board_id: boardID,
                 nameList: "nameList"
@@ -60,11 +59,10 @@ describe(('List controller'), () => {
         expect(res.body).toHaveProperty('message', 'New list created')
     })
 
-    it('Создание списка. Ошибка авторизации 401 (Unauthorized) (post(/board/:name_board)', async () =>{
+    it('Создание списка. Ошибка авторизации 401 (Unauthorized) ', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_list')
             .send({
-                formName: "form-add-list",
                 list_id: listID,
                 board_id: boardID,
                 nameList: "в процессе"
@@ -73,12 +71,11 @@ describe(('List controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Изменение названия списка 200 (post(/board/:name_board)', async () => {
+    it('Изменение названия списка 200 ', async () => {
         jest.spyOn(db.List, 'update').mockResolvedValue(listID)
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_list')
             .send({
-                formName: "form-update-list",
                 list_id: listID,
                 name_list: "готово"
             })
@@ -90,11 +87,10 @@ describe(('List controller'), () => {
         expect(res.body).toHaveProperty('message', 'List готово updated')
     })
 
-    it('Изменение названия списка 400 (post(/board/:name_board)', async () => {
+    it('Изменение названия списка 400 ', async () => {
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_list')
             .send({
-                formName: "form-update-list",
                 list_id: "",
                 name_list: "готово"
             })
@@ -103,11 +99,10 @@ describe(('List controller'), () => {
         expect(res.body).toHaveProperty('message', 'List not found')
     })
 
-    it('Изменение названия списка. Ошибка авторизации 401 (Unauthorized) (put(/board/:name_board)', async () =>{
+    it('Изменение названия списка. Ошибка авторизации 401 (Unauthorized)', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_list')
             .send({
-                formName: "form-update-list",
                 list_id: listID,
                 name_list: "готово"
             })
@@ -115,12 +110,11 @@ describe(('List controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Удаление списка 204 (delete(/board/:name_board)', async () =>{
+    it('Удаление списка 204', async () =>{
         jest.spyOn(db.List, 'destroy').mockResolvedValue(listID);
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_list')
             .send({
-                formName: "form-delete-list",
                 list_id: listID
             })
             .set('Authorization', `Bearer ${accessToken}`)
@@ -130,11 +124,10 @@ describe(('List controller'), () => {
         expect(res.status).toBe(204)
     })
 
-    it('Удаление списка 400 (delete(/board/:name_board)', async () =>{
+    it('Удаление списка 400 ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_list')
             .send({
-                formName: "form-delete-list",
                 list_id: ""
             })
             .set('Authorization', `Bearer ${accessToken}`)
@@ -143,9 +136,8 @@ describe(('List controller'), () => {
 
     it('Удаление списка. Ошибка авторизации 401 (Unauthorized) (delete(/board/:name_board)', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_list')
             .send({
-                formName: "form-delete-list",
                 list_id: listID
             })
             .set('Authorization', `Bearer 122`)

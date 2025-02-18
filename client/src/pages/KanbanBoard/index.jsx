@@ -224,8 +224,8 @@ const KanbanBoard = ({token, email}) =>{
                                             }
                                             <Button className="members-btn"
                                                 onClick={()=>{
-                                                    deleteMemberBoard(member.user_id, name_board, token);
-                                                    onDeleteMember(member.user_id);
+                                                    deleteMemberBoard(member.members_id, name_board, token);
+                                                    onDeleteMember(member.members_id);
                                                 }
                                                 }>
                                                 Исключить

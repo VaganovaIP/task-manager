@@ -173,9 +173,8 @@ describe(('Board controller'), () =>{
     it('Изменение названия доски 200 (put(/boards) ', async () =>{
         jest.spyOn(db.Board, 'update').mockResolvedValue(boardID);
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_board')
             .send({
-                formName: "form-update-board",
                 board_id: boardID,
                 name_board: "test - update",
             })
@@ -188,9 +187,8 @@ describe(('Board controller'), () =>{
 
     it('Изменение названия доски 400 (put(/boards) ', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_board')
             .send({
-                formName: "form-update-board",
                 board_id: "",
                 name_board: "test - update",
             })
@@ -201,9 +199,8 @@ describe(('Board controller'), () =>{
     it('Изменение названия доски 500 (put(/boards) ', async () =>{
         jest.spyOn(db.Board, 'update').mockRejectedValueOnce(new Error('Database connection failed'))
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_board')
             .send({
-                formName: "form-update-board",
                 board_id: boardID,
                 name_board: "test - update",
             })
@@ -216,9 +213,8 @@ describe(('Board controller'), () =>{
 
     it('Изменение названия доски. Ошибка авторизации 401 (Unauthorized) (put(/boards) ', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_board')
             .send({
-                formName: "form-update-list",
                 board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65",
                 name_board: "test - update",
             })
@@ -227,8 +223,8 @@ describe(('Board controller'), () =>{
     })
 
     it('Удаление доски 204 (delete(/boards)', async () =>{
-        jest.spyOn(db.Board, 'destroy').mockResolvedValue(boardID);
-        jest.spyOn(db.BoardMember, 'destroy').mockResolvedValue(boardID);
+        jest.spyOn(db.Board, 'destroy').mockResolvedValue(null);
+        jest.spyOn(db.BoardMember, 'destroy').mockResolvedValue(null);
         const res = await request(app)
             .delete('/boards')
             .query({board_id: boardID})
@@ -247,11 +243,11 @@ describe(('Board controller'), () =>{
         jest.spyOn(db.BoardMember, 'destroy').mockResolvedValue(null);
         const res = await request(app)
             .delete('/boards')
-            .query({board_id: ''})
+            .query({board_id: null})
             .set('Authorization', `Bearer ${accessToken}`)
 
         expect(db.Board.destroy).toHaveBeenCalledWith( {
-            where:{ board_id: boardID }
+            where:{ board_id: null }
         })
         expect(db.BoardMember.destroy).toHaveBeenCalledWith( {
             where:{ board_id: boardID }

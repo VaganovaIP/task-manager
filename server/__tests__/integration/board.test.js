@@ -21,7 +21,7 @@ describe(('Board controller'), () =>{
     })
 
 
-    it('Создание новой доски 201 (post(/boards)', async () =>{
+    it('Создание новой доски 201 ', async () =>{
         const res = await request(app)
             .post('/boards')
             .send({
@@ -34,7 +34,7 @@ describe(('Board controller'), () =>{
         expect(res.body).toHaveProperty('message', 'New board created');
     })
 
-    it('Создание доски 404 (post(/boards)', async () =>{
+    it('Создание доски 404', async () =>{
         const res = await request(app)
             .post('/boards')
             .send({
@@ -47,11 +47,10 @@ describe(('Board controller'), () =>{
         expect(res.body).toHaveProperty('message', 'Email not found');
     })
 
-    it('Изменение названия доски 200 (put(/boards) ', async () =>{
+    it('Изменение названия доски 200  ', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_board')
             .send({
-                formName: "form-update-board",
                 board_id: boardID,
                 name_board: "test - update",
             })
@@ -60,12 +59,11 @@ describe(('Board controller'), () =>{
         expect(res.body).toHaveProperty('message', 'Update board');
     })
 
-    it('Изменение названия доски 500 (put(/boards) ', async () =>{
+    it('Изменение названия доски 500 ', async () =>{
         jest.spyOn(db.Board, 'update').mockRejectedValueOnce(new Error('Database connection failed'))
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_board')
             .send({
-                formName: "form-update-board",
                 board_id: boardID+55,
                 name_board: "test - update",
             })
@@ -76,7 +74,7 @@ describe(('Board controller'), () =>{
 
     })
 
-    it('Получение списка досок пользователя выполнено успешно 200 (get(/boards)', async () =>{
+    it('Получение списка досок пользователя выполнено успешно 200 ', async () =>{
         const res = await request(app)
             .get('/boards')
             .query({email: "user1@example.ru"})
@@ -85,7 +83,7 @@ describe(('Board controller'), () =>{
         expect(res.body).toHaveProperty('boards')
     })
 
-    it('Получение списка досок пользователя 404 (get(/boards)', async () =>{
+    it('Получение списка досок пользователя 404', async () =>{
         const res = await request(app)
             .get('/boards')
             .query({email: ""})
@@ -94,7 +92,7 @@ describe(('Board controller'), () =>{
         expect(res.body).toHaveProperty('message', 'Email not found');
     })
 
-    it('Удаление доски 204 (delete(/boards)', async () =>{
+    it('Удаление доски 204 ', async () =>{
         const res = await request(app)
             .delete('/boards')
             .query({board_id: boardID})
@@ -102,7 +100,7 @@ describe(('Board controller'), () =>{
         expect(res.status).toBe(204)
     })
 
-    it('Удаление доски 404 (delete(/boards)', async () =>{
+    it('Удаление доски 404 ', async () =>{
         const res = await request(app)
             .delete('/boards')
             .query({

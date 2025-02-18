@@ -32,13 +32,12 @@ describe(('Member controller'), () => {
         jest.clearAllMocks();
     });
 
-    it('Добавление участника доски 201 (post(/board/:name_board)', async () =>{
+    it('Добавление участника доски 201 ', async () =>{
         const member = {user_id: userID, board_id:boardID}
         jest.spyOn(db.BoardMember, 'create').mockResolvedValue({});
         const res = await request(app)
-            .post('/board/test2')
+            .post('/board/test2/add_member')
             .send({
-                formName: "form-add-members",
                 user_id: userID,
                 board_id: boardID,
             })
@@ -48,11 +47,10 @@ describe(('Member controller'), () => {
         expect(res.body).toHaveProperty('message', 'New member created')
     })
 
-    it('Добавление участника доски 400 (post(/board/:name_board)', async () =>{
+    it('Добавление участника доски 400 ', async () =>{
         const res = await request(app)
-            .post('/board/test2')
+            .post('/board/test2/add_member')
             .send({
-                formName: "form-add-members",
                 user_id: null,
                 board_id: null
             })
@@ -61,11 +59,10 @@ describe(('Member controller'), () => {
         expect(res.body).toHaveProperty('message', 'Id not found')
     })
 
-    it('Добавление участника доски. Ошибка 401 (Unauthorized) (post(/board/:name_board)', async () =>{
+    it('Добавление участника доски. Ошибка 401 (Unauthorized) ', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_member')
             .send({
-                formName: "form-add-members",
                 user_id: userID,
                 board_id: boardID,
             })
@@ -73,12 +70,11 @@ describe(('Member controller'), () => {
         expect(res.status).toBe(401)
     })
 
-    it('Исключение участника доски 204 (No content) (delete(/board/:name_board)', async () =>{
+    it('Исключение участника доски 204 (No content) ', async () =>{
         jest.spyOn(db.BoardMember, 'destroy').mockResolvedValue(155);
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_member')
             .send({
-                formName: "form-delete-member",
                 member_id: 155
             })
             .set('Authorization', `Bearer ${accessToken}`)
@@ -88,11 +84,10 @@ describe(('Member controller'), () => {
         expect(res.status).toBe(204)
     })
 
-    it('Исключение участника доски 400 (delete(/board/:name_board)', async () =>{
+    it('Исключение участника доски 400 ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_member')
             .send({
-                formName: "form-delete-member",
                 member_id: null
             })
             .set('Authorization', `Bearer ${accessToken}`)
@@ -101,11 +96,10 @@ describe(('Member controller'), () => {
 
     })
 
-    it('Исключение участника доски. Ошибка 401 (Unauthorized) (delete(/board/:name_board)', async () =>{
+    it('Исключение участника доски. Ошибка 401 (Unauthorized) ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_member')
             .send({
-                formName: "form-delete-member",
                 member_id: "1"
             })
             .set('Authorization', `Bearer `)

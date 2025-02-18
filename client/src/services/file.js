@@ -4,7 +4,7 @@ import {BASE_API_URL} from "../utils/api.js";
 
 export const uploadFile = async (name_board, formData, task_id, token) => {
     await axios
-        .post(`${BASE_API_URL}/board/${name_board}`, formData, {
+        .post(`${BASE_API_URL}/board/${name_board}/upload_file`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data; charset=UTF-8',
                 Authorization: `Bearer ${token}`,
@@ -21,7 +21,7 @@ export const uploadFile = async (name_board, formData, task_id, token) => {
 
 export const fetchFilesTask = async (name_board, task_id, setFilesTask, token, setHistory) => {
     await axios
-        .get(`${BASE_API_URL}/board/${name_board}?type=files`, {
+        .get(`${BASE_API_URL}/board/${name_board}/files`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -39,7 +39,7 @@ export const fetchFilesTask = async (name_board, task_id, setFilesTask, token, s
 }
 
 export const downloadFile = async (name_board, task_id, name_file, token) =>{
-    await fetch(`${BASE_API_URL}/board/${name_board}?type=download`,
+    await fetch(`${BASE_API_URL}/board/${name_board}/download`,
         {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ export const downloadFile = async (name_board, task_id, name_file, token) =>{
 
 export const deleteFile = async (name_board, file_id, task_id, file_name, token) => {
     await axios
-        .delete(`${BASE_API_URL}/board/${name_board}`, {
+        .delete(`${BASE_API_URL}/board/${name_board}/delete_file`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

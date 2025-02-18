@@ -33,9 +33,8 @@ describe(('Files controller'), () => {
             fs.writeFileSync(filePath, 'создан тест файл.');
         }
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/upload_file')
             .field({
-                formName: "form-upload-file",
                 fileId:fileID,
                 task_id:taskID,
                 file_name:"testfile.txt",
@@ -49,9 +48,8 @@ describe(('Files controller'), () => {
 
     it('Получение списка файлов задачи 200 (get()', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/files')
             .query({
-                type:"files",
                 task_id:taskID,
             })
             .set('Authorization', `Bearer ${accessToken}`)
@@ -60,9 +58,8 @@ describe(('Files controller'), () => {
 
     it('Удаление файла  (delete(/)', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_file')
             .send({
-                formName: "form-delete-file",
                 task_id: taskID,
                 file_name: 'test.txt',
                 file_id:fileID

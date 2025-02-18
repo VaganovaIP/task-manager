@@ -4,7 +4,6 @@ import {BASE_API_URL} from "../utils/api.js";
 export const updateDataUser = async (user_id, username, first_name, last_name, path, token) => {
     await axios
         .put(`${BASE_API_URL}${path}`, {
-                formName: "form-update-user",
                 user_id: user_id,
                 username: username,
                 first_name: first_name,

@@ -19,11 +19,10 @@ describe(('List controller'), () => {
             )
     })
 
-    it('Создание списка 201 (post(/board/:name_board)', async () =>{
+    it('Создание списка 201', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_list')
             .send({
-                formName: "form-add-list",
                 list_id: listID,
                 board_id: "87c5cd4f-8fa4-4480-9f1e-2b75133f6d65",
                 nameList: "в процессе"
@@ -33,11 +32,10 @@ describe(('List controller'), () => {
         expect(res.body).toHaveProperty('message', 'New list created');
     })
 
-    it('Изменение названия списка 200 (Ok) (put(/board/:name_board)', async () =>{
+    it('Изменение названия списка 200 (Ok) ', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_list')
             .send({
-                formName: "form-update-list",
                 list_id: listID,
                 name_list: "готово"
             })
@@ -46,11 +44,10 @@ describe(('List controller'), () => {
         expect(res.body).toHaveProperty('message', 'List готово updated');
     })
 
-    it('Изменение названия списка 400 (put(/board/:name_board)', async () =>{
+    it('Изменение названия списка 400', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_list')
             .send({
-                formName: "form-update-list",
                 list_id: "",
                 name_list: "готово"
             })
@@ -59,22 +56,20 @@ describe(('List controller'), () => {
         expect(res.body).toHaveProperty('message', 'List not found');
     })
 
-    it('Удаление списка 204 (delete(/board/:name_board)', async () =>{
+    it('Удаление списка 204 ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_list')
             .send({
-                formName: "form-delete-list",
                 list_id: listID
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(204)
     })
 
-    it('Удаление списка 400 (delete(/board/:name_board)', async () =>{
+    it('Удаление списка 400', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_list')
             .send({
-                formName: "form-delete-list",
                 list_id: ""
             })
             .set('Authorization', `Bearer ${accessToken}`)

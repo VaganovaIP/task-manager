@@ -47,9 +47,8 @@ describe(('Task controller'), () => {
 
     it('Создание задачи 201 (post(/board/name_board)', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_task')
             .send({
-                formName:"form-add-task",
                 board_id: boardID,
                 name_task:"test task",
                 task_id: taskID,
@@ -61,11 +60,10 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('message', 'New task created');
     })
 
-    it('Создание задачи. Task_id уже есть 409 (post(/board/name_board)', async () =>{
+    it('Создание задачи. Task_id уже есть 409 ', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_task')
             .send({
-                formName:"form-add-task",
                 board_id: boardID,
                 name_task:"test task",
                 task_id: taskID,
@@ -77,11 +75,10 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('message', 'Задача существует');
     })
 
-    it('Создание задачи 404 (not found email) (post(/board/name_board)', async () =>{
+    it('Создание задачи 404 (not found email)', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_task')
             .send({
-                formName:"form-add-task",
                 board_id: boardID,
                 name_task:"test task",
                 task_id: taskID,
@@ -93,11 +90,10 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('message', 'Email not found');
     })
 
-    it('Изменение задачи 200 (put(/board/name_board) ', async () =>{
+    it('Изменение задачи 200 ', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_task')
             .send({
-                formName: "form-save-task",
                 task_id:taskID,
                 name_task: "Update test task",
                 description: "text",
@@ -112,11 +108,10 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('message', 'Task Update test task updated');
     })
 
-    it('Изменение задачи 500 (put(/board/name_board) ', async () =>{
+    it('Изменение задачи 500 ', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_task')
             .send({
-                formName: "form-save-task",
                 task_id:taskID,
                 name_task: "Update test task",
                 description: "text",
@@ -131,11 +126,10 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('error', 'Internal Server Error');
     })
 
-    it('Изменение задачи 400 (put(/board/name_board) ', async () =>{
+    it('Изменение задачи 400 ', async () =>{
         const res = await request(app)
-            .put('/board/test')
+            .put('/board/test/update_task')
             .send({
-                formName: "form-save-task",
                 task_id:"",
                 name_task: "Update test task",
                 description: "text",
@@ -151,32 +145,29 @@ describe(('Task controller'), () => {
     })
 
 
-    it('Удаление задачи 204 (delete(/boards)', async () =>{
+    it('Удаление задачи 204 ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_task')
             .send({
-                formName:"form-delete-task",
                 task_id: taskID
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(204)
     })
 
-    it('Удаление задачи 400 (delete(/boards)', async () =>{
+    it('Удаление задачи 400 ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_task')
             .send({
-                formName:"form-delete-task",
                 task_id: ""})
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(400)
     })
 
-    it('Получение данных задач доски 200 (get(/boards)', async () =>{
+    it('Получение данных задач доски 200', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/task')
             .query({
-                type:"data",
                 board_id:boardID,
                 email: "user1@example.ru",
             })
@@ -184,11 +175,10 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(200)
     })
 
-    it('Получение данных задач доски 404 Not taskId(get(/boards)', async () =>{
+    it('Получение данных задач доски 404 Not taskId', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/task')
             .query({
-                type:"data",
                 board_id:boardID,
                 email: "user1NoDB@example.ru",
             })
@@ -197,11 +187,10 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('message', 'Data not found');
     })
 
-    it('Получение данных задач доски 404 Not boardId (get(/boards)', async () =>{
+    it('Получение данных задач доски 404 Not boardId ', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/task')
             .query({
-                type:"data",
                 board_id:taskID,
                 email: "user1@example.ru",
             })
@@ -210,11 +199,10 @@ describe(('Task controller'), () => {
         expect(res.body).toHaveProperty('message', 'Data not found');
     })
 
-    it('Получение данных задач доски 500 (get(/boards)', async () =>{
+    it('Получение данных задач доски 500 ', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/task')
             .query({
-                type:"data",
                 board_id:boardID+55,
                 email: "user1@example.ru",
             })
@@ -222,7 +210,6 @@ describe(('Task controller'), () => {
         expect(res.status).toBe(500)
         expect(res.body).toHaveProperty('error', 'Internal Server Error');
     })
-
 
     it('Получение всех назначенных задач пользователя 200 (get(/all-tasks)', async () =>{
         const res = await request(app)

@@ -8,7 +8,7 @@ class FilesTaskController {
         const {fileId, task_id, file_name} = req.body;
 
         if (!req.file) {
-            return res.status(400).send('Файл не был загружен.');
+            return res.status(404).send('Файл не был загружен.');
         }
         try{
             await db.FileTask.create({file_id: fileId, task_id: task_id, name_file: file_name});

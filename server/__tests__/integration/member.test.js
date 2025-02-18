@@ -38,11 +38,10 @@ describe(('Member controller'), () => {
         await db.Board.destroy({ where: {board_id:boardID}});
     });
 
-    it('Добавление участника доски 201 (post(/board/:name_board)', async () =>{
+    it('Добавление участника доски 201', async () =>{
         const res = await request(app)
-            .post('/board/test2')
+            .post('/board/test2/add_member')
             .send({
-                formName: "form-add-members",
                 user_id: userID,
                 board_id: boardID,
             })
@@ -52,11 +51,10 @@ describe(('Member controller'), () => {
         expect(res.body).toHaveProperty('message', 'New member created');
     })
 
-    it('Добавление участника доски 500 (post(/board/:name_board)', async () =>{
+    it('Добавление участника доски 500 ', async () =>{
         const res = await request(app)
-            .post('/board/test2')
+            .post('/board/test2/add_member')
             .send({
-                formName: "form-add-members",
                 user_id: userID+55,
                 board_id: "40dbd6c6-374e-c28f-ce89-c89c66ce1",
             })
@@ -65,12 +63,10 @@ describe(('Member controller'), () => {
         expect(res.body).toHaveProperty('error', 'Internal Server Error');
     })
 
-
-    it('Добавление участника доски 400 (post(/board/:name_board)', async () =>{
+    it('Добавление участника доски 400', async () =>{
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/add_member')
             .send({
-                formName: "form-add-members",
                 user_id: "",
                 board_id: "d5bc5d07-7694-3560-307c-04f40b1d379c",
             })
@@ -79,22 +75,20 @@ describe(('Member controller'), () => {
         expect(res.body).toHaveProperty('message', 'Id not found');
     })
 
-    it('Исключение участника доски 204 (No content) (delete(/board/:name_board)', async () =>{
+    it('Исключение участника доски 204 (No content) ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_member')
             .send({
-                formName: "form-delete-member",
                 member_id: 219
             })
             .set('Authorization', `Bearer ${accessToken}`)
         expect(res.status).toBe(204)
     })
 
-    it('Исключение участника доски 400 (delete(/board/:name_board)', async () =>{
+    it('Исключение участника доски 400 ', async () =>{
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_member')
             .send({
-                formName: "form-delete-member",
                 member_id: ""
             })
             .set('Authorization', `Bearer ${accessToken}`)

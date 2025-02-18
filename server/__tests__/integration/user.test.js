@@ -33,11 +33,10 @@ describe(('User controller'), () => {
         await db.User.destroy({ where: {email: "userTest09@example.ru"} });
     });
 
-    it('Изменение данных пользователя 200 (put(/boards) ', async () =>{
+    it('Изменение данных пользователя 200  ', async () =>{
         const res = await request(app)
             .put('/board/test')
             .send({
-                formName: "form-update-user",
                 user_id: userID,
                 username:"updateUser",
                 first_name: "F",
@@ -49,11 +48,10 @@ describe(('User controller'), () => {
     })
 
 
-    it('Изменение данных пользователя 500 (put(/boards) ', async () =>{
+    it('Изменение данных пользователя 500 ', async () =>{
         const res = await request(app)
             .put('/board/test')
             .send({
-                formName: "form-update-user",
                 user_id: userID+55,
                 username:"updateUser",
                 first_name: "F",

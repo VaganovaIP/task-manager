@@ -6,8 +6,7 @@ export const addMemberBoard = async (name_board, user_id, board_id, token) => {
     console.log(user_id)
     console.log(board_id)
     await axios
-        .post(`${BASE_API_URL}/board/${name_board}`, {
-            formName: "form-add-members",
+        .post(`${BASE_API_URL}/board/${name_board}/add_member`, {
             user_id: user_id,
             board_id: board_id
         },
@@ -25,12 +24,11 @@ export const addMemberBoard = async (name_board, user_id, board_id, token) => {
 
 export const deleteMemberBoard = async (member_id, name_board, token) => {
     await axios
-        .delete(`${BASE_API_URL}/board/${name_board}`, {
+        .delete(`${BASE_API_URL}/board/${name_board}/delete_member`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
             data:{
-                formName: "form-delete-member",
                 member_id: member_id
             }
         })

@@ -38,15 +38,14 @@ describe(('Files controller'), () => {
         jest.clearAllMocks();
     });
 
-    it('Файл не был загружен 400', async () => {
+    it('Файл не был загружен 404', async () => {
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/files')
             .send({
-                formName: "form-upload-file",
-                file: null,
+                file: '',
             })
             .set('Authorization', `Bearer ${accessToken}`)
-        expect(res.status).toBe(400);
+        expect(res.status).toBe(404);
     });
 
     it('Загрузка файла и сохранение данных файла в бд 201', async () => {
@@ -60,9 +59,8 @@ describe(('Files controller'), () => {
         jest.spyOn(db.FileTask, 'create').mockResolvedValue({});
 
         const res = await request(app)
-            .post('/board/test')
+            .post('/board/test/upload_file')
             .field({
-                formName: "form-upload-file",
                 fileId:fileID,
                 task_id:taskID,
                 file_name:"testfile.txt",
@@ -83,9 +81,8 @@ describe(('Files controller'), () => {
         jest.spyOn(db.FileTask, 'findAll').mockResolvedValue(file);
 
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/files')
             .query({
-                type:"files",
                 task_id:taskID,
             })
             .set('Authorization', `Bearer ${accessToken}`)
@@ -97,9 +94,8 @@ describe(('Files controller'), () => {
 
     it('Получение списка файлов задачи 400 (get()', async () =>{
         const res = await request(app)
-            .get('/board/test')
+            .get('/board/test/files')
             .query({
-                type:"files",
                 task_id:"",
             })
             .set('Authorization', `Bearer ${accessToken}`)
@@ -108,10 +104,7 @@ describe(('Files controller'), () => {
 
     it('Скачивание файла 200 ', async () =>{
         const res = await request(app)
-            .get('/board/test')
-            .query({
-                type:"download",
-            })
+            .get('/board/test/download')
             .set('Authorization', `Bearer ${accessToken}`)
             .set('task_id', taskID)
             .set('file_name', 'test.txt')
@@ -121,9 +114,8 @@ describe(('Files controller'), () => {
     it('Удаление файла  (delete(/)', async () =>{
         jest.spyOn(db.FileTask, 'destroy').mockResolvedValue(fileID);
         const res = await request(app)
-            .delete('/board/test')
+            .delete('/board/test/delete_file')
             .send({
-                formName: "form-delete-file",
                 task_id: taskID,
                 file_name: 'test.txt',
                 file_id:fileID

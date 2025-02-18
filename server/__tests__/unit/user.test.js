@@ -33,7 +33,6 @@ describe(('User controller'), () => {
         const res = await request(app)
             .put('/board/test')
             .send({
-                formName: "form-update-user",
                 user_id: userID,
                 username:"updateUser",
                 first_name: "F",
@@ -52,7 +51,6 @@ describe(('User controller'), () => {
         const res = await request(app)
             .put('/board/test')
             .send({
-                formName: "form-update-user",
                 user_id: "",
                 username:"",
                 first_name: "F",
@@ -67,7 +65,6 @@ describe(('User controller'), () => {
         const res = await request(app)
             .put('/board/test')
             .send({
-                formName: "form-update-user",
                 user_id: userID,
                 username:"updateUser",
                 first_name: "F",
