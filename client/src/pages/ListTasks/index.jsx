@@ -124,13 +124,13 @@ const ListTasks=({token, email})=>{
                             <Form.Group className="filter">
                                 <div className="date">
                                     <i className="bi bi-calendar4-week"/>
-                                    <DatePicker className="form-input"  locale={'ru'} placeholderText="Дата начала" dateFormat={'DD/MM/YYYY'}
+                                    <DatePicker className="form-input"  locale={'ru'} placeholderText="Дата начала" dateFormat={'d/MM/YYYY'}
                                         selected={dateStart} onChange={(date)=>setDateStart(date)}
                                     />
                                 </div>
                                 <div className="date">
                                     <i className="bi bi-calendar4-week"/>
-                                    <DatePicker className="form-input"  locale={'ru'} placeholderText="Дата конца" dateFormat={'DD/MM/YYYY'}
+                                    <DatePicker className="form-input"  locale={'ru'} placeholderText="Дата конца" dateFormat={'d/MM/YYYY'}
                                                 selected={dateEnd} onChange={(date)=>setDateEnd(date)}
                                     />
                                 </div>

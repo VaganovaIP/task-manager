@@ -25,7 +25,7 @@ ul li{
     display: flex;
     flex-direction: column;
     margin: 0;
-    height: calc(100% - 60px);
+    height: 100%;
     flex-grow: 1;
     /*background-color: rgba(0, 0, 0, 0.03);*/
     border-radius: 10px;
@@ -97,7 +97,7 @@ ul li{
 
 .info-header{
     flex:2;
-    padding-right: 27px;
+    padding-right: 55px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

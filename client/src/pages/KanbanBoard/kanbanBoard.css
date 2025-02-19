@@ -42,6 +42,9 @@ a{
 
 
 /*Kanban*/
+.content{
+    height: 100%;
+}
 
 .kanban-board{
     height: 100%;
@@ -140,8 +143,23 @@ a{
 }
 
 
+/*Карточка задачи*/
+.card-space{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
 .task-card{
-    min-height: 70px;
+    min-height: 65px;
+    display: flex;
+    align-content: flex-start;
+    border-left-width: 0.7rem;
+    border-color: rgba(30, 124, 22, 0.62);
+}
+
+.not-done-task{
+    min-height: 65px;
     display: flex;
     align-content: flex-start;
 }
@@ -152,7 +170,7 @@ a{
 }
 
 .name-task{
-    font-size: 14px;
+    font-size: 0.81rem;
     padding: 2px;
     margin-bottom: 7px;
     color: var(--font-main);

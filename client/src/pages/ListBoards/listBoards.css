@@ -57,7 +57,8 @@ a{
 
 .main{
     display: flex;
-    background: -webkit-linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* Chrome 10-25, Safari 5.1-6 */                          background: linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: -webkit-linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(180deg, #f5f5f5,#b7c4f0,#c0cbf2);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     overflow: hidden;
     scrollbar-color: #455AA0 #F2F5FF;
     height: calc(100% - 68px);

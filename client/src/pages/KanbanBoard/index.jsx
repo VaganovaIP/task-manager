@@ -100,6 +100,7 @@ const KanbanBoard = ({token, email}) =>{
         fetchDataBoard(board_id, name_board, setLists, setTasks, setMembers, setAssignments,
             setUsers, setBoardName, token, email, setUser)
             .catch(err => console.log(err));
+        setEdit(!edit)
     };
 
     const closeModalMembers = () => {
