@@ -92,6 +92,16 @@ a:active, a:hover, a{
     font-family: "Lato", sans-serif;
     font-stretch: semi-expanded;
 }
+.action-page{
+    display: flex;
+    flex-direction: row;
+    grid-gap:20px;
+    height: 50px;
+    justify-content: space-between;
+    margin: 0;
+    padding: 10px;
+    box-shadow: 2px 1px 5px var(--shadow);
+}
 
 .action-page-button{
     background-color:#455AA0;

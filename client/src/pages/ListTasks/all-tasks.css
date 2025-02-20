@@ -55,6 +55,7 @@ ul li{
     flex-direction: row;
     gap:5px;
     align-items: flex-end;
+    align-content: center;
 }
 
 .tasks-list{
@@ -216,6 +217,9 @@ p{
     min-width: 120px;
 }
 
+.me-2{
+    font-size: .85rem;
+}
 
 .form-input{
     width: 100%;
@@ -295,13 +299,19 @@ p{
 }
 
 .label-status{
-    align-content: flex-start;
-    font-size: .82rem;;
+    font-size: .75rem;
+    height: .95rem;
+    letter-spacing: 0.001rem;
 }
 
 .action-filter{
     display: flex;
     gap: 20px;
+}
+
+.form-check-input {
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .button-filter{

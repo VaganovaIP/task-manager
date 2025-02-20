@@ -18,7 +18,8 @@ const ListTasks=({token, email})=>{
     const [dateStart, setDateStart] = useState(null);
     const [dateEnd, setDateEnd] = useState(null);
     const [importance, setImportance] = useState('');
-    const [statusTask, setStatusTask] = useState(false);
+    const [statusTaskDone, setStatusTaskDone] = useState(false);
+    const [statusTaskNotDone, setStatusTaskNotDone] = useState(false);
     const [onFilter, setOnFilter] = useState(false);
     const [searchResults, setSearchResults] = useState(tasks);
     const [filtersResults, setFiltersResults] = useState(tasks);
@@ -49,7 +50,7 @@ const ListTasks=({token, email})=>{
     }
 
     const onTaskFilter= () =>{
-        let importanceFilter, statusFilter, dateFilter;
+        let importanceFilter, statusFilter1, statusFilter2, dateFilter;
         const filterData = tasks.filter((task)=>{
             if (dateStart && dateEnd) {
                 if (task.Task?.date_start) {
@@ -90,9 +91,11 @@ const ListTasks=({token, email})=>{
 
             importanceFilter = importance ? (task.Task?.importance === importance) : true;
 
-            statusFilter = statusTask ? (task.Task?.status === statusTask) : true;
+            statusFilter1 = statusTaskDone ? (task.Task?.status === true) : true;
 
-            return dateFilter && statusFilter && importanceFilter;
+            statusFilter2 = statusTaskNotDone ? (task.Task?.status === false) : true;
+
+            return dateFilter && statusFilter1 && statusFilter2 && importanceFilter;
         });
         setFiltersResults(filterData);
         setOnFilter(true);
@@ -147,10 +150,16 @@ const ListTasks=({token, email})=>{
                                 <div className="filter-status">
                                     {/*<p>Статус задачи</p>*/}
                                     <div className="status">
-                                        <Form.Check type={'checkbox'} checked={statusTask || false}
-                                                    onChange={() => setStatusTask(!statusTask)}>
+                                        <Form.Check type={'checkbox'} checked={statusTaskDone || false}
+                                                    onChange={() => setStatusTaskDone(!statusTaskDone)}>
                                         </Form.Check>
-                                        <p className="label-status">{statusTask ? "Выполненные задачи" : "Выполненные задачи"}</p>
+                                        <p className="label-status">Выполненные задачи</p>
+                                    </div>
+                                    <div className="status">
+                                        <Form.Check type={'checkbox'} checked={statusTaskNotDone || false}
+                                                    onChange={() => setStatusTaskNotDone(!statusTaskNotDone)}>
+                                        </Form.Check>
+                                        <p className="label-status">Невыполненные задачи</p>
                                     </div>
                                 </div>
                                 <div className="action-filter">
@@ -161,7 +170,8 @@ const ListTasks=({token, email})=>{
                                         onClick={()=>{
                                             setOnFilter(false);
                                             setImportance('');
-                                            setStatusTask(false);
+                                            setStatusTaskDone(false);
+                                            setStatusTaskNotDone(false);
                                             setDateStart(null);
                                             setDateEnd(null);
                                         }

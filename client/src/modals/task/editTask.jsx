@@ -306,18 +306,6 @@ export function ModalEditTask (props){
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                {/*<Button onClick={*/}
-                {/*    () => {*/}
-                {/*        setNameTask(null);*/}
-                {/*        setList(null);*/}
-                {/*        setNameList(null);*/}
-                {/*        setEndDate(null);*/}
-                {/*        setStartDate(null);*/}
-                {/*        setImportance(null)*/}
-                {/*        props.onHide();*/}
-
-                {/*    }}>*/}
-                {/*    Close</Button>*/}
                 <Button onClick={onSaveTaskState} className="button-save">
                     Сохранить
                 </Button>
