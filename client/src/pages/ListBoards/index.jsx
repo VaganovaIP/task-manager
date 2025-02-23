@@ -28,32 +28,6 @@ export default function ListBoards({token, email}) {
         fetchData();
     }, [email]);
 
-    const renderListBoards = (item) => {
-        return(
-            <div>
-                    <Card key={item.board_id} >
-                        <Card.Body className="item-board">
-                            <Link to={`/board/${item.Board?.name_board}`}
-                                  state = {{board_id:item.Board?.board_id, name_board:item.Board?.name_board}}>
-                                <Card.Title className="card-name-board">
-                                    {item.Board?.name_board}
-                                </Card.Title>
-                            </Link>
-                        </Card.Body>
-                        <div className="delete-board">
-                            <Button className="delete-board-btn" variant="secondary"
-                                onClick={()=>
-                                {
-                                    deleteBoard(item.Board?.board_id, token);
-                                    onDeleteBoard(item.Board?.board_id);
-                                }}>
-                                <i className="bi bi-trash"></i> Удалить доску
-                            </Button>
-                        </div>
-                    </Card>
-            </div>
-        )
-    }
 
     const handleSubmitCardBoard = async (event) => {
         event.preventDefault();
@@ -81,28 +55,6 @@ export default function ListBoards({token, email}) {
         setOnClickCreateBoard(false)
         setName('');
     }
-    const addCardBoard=(name, setName)=>{
-       return(
-           <Card border="primary" className="item-board-add">
-               <Card.Body>
-                   <Form onSubmit={handleSubmitCardBoard}>
-                       <Form.Group className="mb-3" controlId="formBasicEmail">
-                           <Form.Control className="form-board"
-                               type="text" placeholder="" value={name }
-                               onChange={(e) => setName(e.target.value)}/>
-                       </Form.Group>
-                       <div className="card-create">
-                           <Button className="add-button" variant="secondary" type="submit">
-                               Добавить доску
-                           </Button>
-                           <button className="button-close" onClick={handleClickCloseCreateBoard}>
-                               <i className="bi bi-x-lg"></i></button>
-                       </div>
-                   </Form>
-               </Card.Body>
-           </Card>
-       )
-    }
 
     const onChangeBoardSearch= (event) =>{
         const {value} = event.target;
@@ -120,6 +72,54 @@ export default function ListBoards({token, email}) {
     const onDeleteBoard = (id)=>{
         const newList = boards.filter(item => item.Board?.board_id !== id);
         setBoards(newList);
+    }
+    const renderListBoards = (item) => {
+        return(
+            <div>
+                <Card key={item.board_id} >
+                    <Card.Body className="item-board">
+                        <Link to={`/board/${item.Board?.name_board}`}
+                              state = {{board_id:item.Board?.board_id, name_board:item.Board?.name_board}}>
+                            <Card.Title className="card-name-board">
+                                {item.Board?.name_board}
+                            </Card.Title>
+                        </Link>
+                    </Card.Body>
+                    <div className="delete-board">
+                        <Button className="delete-board-btn" variant="secondary"
+                                onClick={()=>
+                                {
+                                    deleteBoard(item.Board?.board_id, token);
+                                    onDeleteBoard(item.Board?.board_id);
+                                }}>
+                            <i className="bi bi-trash"></i> Удалить доску
+                        </Button>
+                    </div>
+                </Card>
+            </div>
+        )
+    }
+    const addCardBoard=(name, setName)=>{
+        return(
+            <Card border="primary" className="item-board-add">
+                <Card.Body>
+                    <Form onSubmit={handleSubmitCardBoard}>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Control className="form-board"
+                                          type="text" placeholder="" value={name }
+                                          onChange={(e) => setName(e.target.value)}/>
+                        </Form.Group>
+                        <div className="card-create">
+                            <Button className="add-button" variant="secondary" type="submit">
+                                Добавить доску
+                            </Button>
+                            <button className="button-close" onClick={handleClickCloseCreateBoard}>
+                                <i className="bi bi-x-lg"></i></button>
+                        </div>
+                    </Form>
+                </Card.Body>
+            </Card>
+        )
     }
 
     return (

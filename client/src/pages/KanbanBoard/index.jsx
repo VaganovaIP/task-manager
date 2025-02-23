@@ -124,6 +124,22 @@ const KanbanBoard = ({token, email}) =>{
         setOnClickCreateTask(false)
         setNameTask('');
     }
+    const onKeyDownNameList=(list_id)=>{
+        updateNameList(saveList, list_id, name_board, token).then(r => console.log(r));
+    }
+
+    const onDeleteMember = (id)=>{
+        const newList = members.filter(item => item.members_id !== id);
+        setMembers(newList);
+    }
+    const onDeleteList = (id)=>{
+        const newList = lists.filter(item => item.list_id !== id);
+        setLists(newList);
+    }
+    const onDeleteTask = (id)=>{
+        const newList = tasks.filter(item => item.task_id !== id);
+        setTasks(newList);
+    }
     const CardCreateList = () =>{
         return(
                 <Card border="primary" className="item-board">
@@ -171,23 +187,6 @@ const KanbanBoard = ({token, email}) =>{
                 </Card>
             </div>
         )
-    }
-
-    const onKeyDownNameList=(list_id)=>{
-        updateNameList(saveList, list_id, name_board, token).then(r => console.log(r));
-    }
-
-    const onDeleteMember = (id)=>{
-        const newList = members.filter(item => item.members_id !== id);
-        setMembers(newList);
-    }
-    const onDeleteList = (id)=>{
-        const newList = lists.filter(item => item.list_id !== id);
-        setLists(newList);
-    }
-    const onDeleteTask = (id)=>{
-        const newList = tasks.filter(item => item.task_id !== id);
-        setTasks(newList);
     }
 
     return(
