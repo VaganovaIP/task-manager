@@ -9,9 +9,6 @@ module.exports = (sequelize, DataTypes) => {
             name_file:{
                 type:DataTypes.STRING,
             },
-            file_path:{
-                type:DataTypes.STRING,
-            },
         },
     )
     return FileTask

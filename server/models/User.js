@@ -1,4 +1,3 @@
-const db = require("../config/db");
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define(

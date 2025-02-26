@@ -8,7 +8,7 @@ export const HeaderMain=()=>{
     return (
         <header className="main-header">
             <div className="logo">
-                <p className="logo-name">Taskania</p>
+                <Link to={"/home"} className="logo-name">Taskania</Link>
             </div>
             <nav className="main-menu">
                 <ul className="main-menu-list">

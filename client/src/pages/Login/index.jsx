@@ -49,7 +49,7 @@ const Login = ({ setToken }) =>{
                     <form className="form-auth-reg" method="post" onSubmit={onLoginSubmit}>
                         <div className="title-message-error">{errorInput ? "Заполните поля" : ""}</div>
                         <Form.Control type="email" className={!emailError ? "form-input-login" : "input-error"}
-                                      placeholder="Email*"
+                                      placeholder="Email*" autoComplete="email"
                                       value={email} onChange={(e)=>setEmail(e.target.value)}/>
                         <input type="password" className={!passwordError ? "form-input-login" : "input-error"}
                                placeholder="Пароль*"

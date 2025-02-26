@@ -14,7 +14,7 @@ export const HeaderMenu=({userInfo})=>{
     return (
         <header className="main-header">
             <div className="logo">
-                <p className="logo-name" >Taskania</p>
+                <Link to={"/boards"} className="logo-name">Taskania</Link>
             </div>
             <nav className="main-menu">
                 <div className="user-info" onClick={Show}>
@@ -24,7 +24,6 @@ export const HeaderMenu=({userInfo})=>{
                     !show && <ProfileUser user={userInfo}></ProfileUser>
                 }
             </nav>
-
         </header>
     );
 }

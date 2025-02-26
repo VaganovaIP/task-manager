@@ -30,7 +30,7 @@ export function ModalEditTask (props){
     const [history, setHistory] = useState([])
 
     useEffect(()=>{
-        fetchFilesTask(name_board, data_task?.task_id, setFilesTask, token, setHistory)
+        fetchFilesTask(name_board, data_task.task_id, setFilesTask, token, setHistory)
             .then(function (response) {
             console.log(response);
         })
@@ -46,12 +46,15 @@ export function ModalEditTask (props){
         setStartDate(data_task.date_start);
         setEndDate(data_task.date_end);
         setAssignments(assignments);
+        setStatusEdit(false);
+
     },[data_task])
 
     const onSaveTaskState = async () => {
         let text_event = status ? `Пользователь ${user.first_name} ${user.last_name} изменил(а) статус задачи  на "Выполнено"`
                 : `Пользователь ${user.first_name} ${user.last_name} изменил(а) статус задачи  на "Невыполнено"`;
-
+        if (status !== data_task.status) setStatusEdit(true)
+        console.log(statusEdit)
         saveTask(data_task.task_id, nameTask, descriptionTask,
             startDate, endDate,
             list, importance, status, name_board, token, statusEdit, text_event)
@@ -71,7 +74,7 @@ export function ModalEditTask (props){
     };
 
     const onAddAssignment=(name_board, user_id, task_id, username, first_name, last_name)=>{
-        let text_event = `Пользователь ${user.first_name} ${user.last_name} назначил(а) ${first_name} ${last_name} ответственныи за выполнение задачи`;
+        let text_event = `Пользователь ${user.first_name} ${user.last_name} назначил(а) ${first_name} ${last_name} ответственным за выполнение задачи`;
         onAddAssignmentTask(name_board, user_id, task_id, token, text_event)
             .then(r=>console.log(r))
             .catch(err => console.log(err));
@@ -89,7 +92,7 @@ export function ModalEditTask (props){
             text_event:text_event,
             createdAt:new Date()
         }
-        setHistory([...history, new_event]);
+        setHistory([new_event, ...history]);
     }
 
     const onDeleteAssignment = (id)=>{
@@ -297,7 +300,6 @@ export function ModalEditTask (props){
                         <div className="status">
                             <Form.Check type={'checkbox'} checked={status || false} onChange={() => {
                                 setStatus(!status);
-                                setStatusEdit(true);
                             }}>
                             </Form.Check>
                             <p className="label-status">{status ? "Выполнено" : "Невыполнено"}</p>
