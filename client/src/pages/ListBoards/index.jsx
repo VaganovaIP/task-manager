@@ -156,16 +156,6 @@ export default function ListBoards({token, email}) {
                                         <li >
                                             {renderListBoards(board)}
                                         </li>
-                                        <div className="delete-board">
-                                            <Button className="delete-board-btn" variant="secondary" type="submit"
-                                                onClick={()=>
-                                                    {
-                                                        deleteBoard(board.Board?.board_id, token);
-                                                        onDeleteBoard(board.Board?.board_id);
-                                                    }}>
-                                                <i className="bi bi-trash"></i> Удалить доску
-                                            </Button>
-                                        </div>
                                     </div>
                                     )
                             ) : (

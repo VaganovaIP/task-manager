@@ -82,8 +82,12 @@ const ListTasks=({token, email})=>{
 
             if (dateStart && !dateEnd) {
                 if (task.Task.date_start) {
-                    const itemDate = task.Task?.date_start;
-                    if (convertDate(itemDate) >= convertDate(dateStart)) dateFilter = itemDate;
+                    const itemDate = task.Task.date_start;
+                    dateFilter = isWithinInterval(itemDate,
+                        {
+                            start: dateStart,
+                            end: new Date(),
+                        });
                 } else {
                     dateFilter = true;
                 }

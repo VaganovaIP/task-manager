@@ -98,7 +98,7 @@ ul li{
 
 .info-header{
     flex:2;
-    padding-right: 55px;
+    padding-right: 40px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -156,7 +156,7 @@ ul li{
 .info{
     flex: 2;
     display: flex;
-    gap:9px;
+    gap:12px;
     flex-direction: row;
     justify-content: flex-end;
 }
