@@ -1,7 +1,7 @@
 import "./login.css"
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
-import React, {useState} from "react";
 import {HeaderMain} from "../../components/HeaderMain.jsx";
 import Form from "react-bootstrap/Form";
 import {loginUser} from "../../services/auth.jsx";
@@ -15,6 +15,10 @@ const Login = ({ setToken }) =>{
     const [success, setSuccess] = useState('')
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        if (error === '') navigate("/boards");
+    },[error])
 
     const onLoginSubmit = (event) => {
         event.preventDefault();
@@ -32,8 +36,6 @@ const Login = ({ setToken }) =>{
         if (email && password){
             loginUser(email, password, setError, setSuccess, setToken);
             setErrorInput(false);
-            navigate("/boards");
-
         }
 
     }
@@ -52,7 +54,7 @@ const Login = ({ setToken }) =>{
                                       placeholder="Email*" autoComplete="email"
                                       value={email} onChange={(e)=>setEmail(e.target.value)}/>
                         <input type="password" className={!passwordError ? "form-input-login" : "input-error"}
-                               placeholder="Пароль*"
+                               placeholder="Пароль*" autoComplete={"current-password"}
                                value={password} onChange={(e)=>setPassword(e.target.value)}/>
                         <button className="form-button" type="submit" name="form-auth-button">Войти</button>
                         <div className="title-message-ok">{success}</div>
